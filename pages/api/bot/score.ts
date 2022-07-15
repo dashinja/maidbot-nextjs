@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient } from '@prisma/client'
+import simpleCrypto from '../../../Utils/encrypt'
+
 
 const prisma = new PrismaClient()
 const {bots} = prisma
@@ -24,6 +26,18 @@ export default function handler (req: NextApiRequest, res: NextApiResponse) {
         }
       })
       .catch((err: Error) => console.error(err))
+  } else if (req.method === 'POST') {
+    const newValue = { workDone: req.body.workDone + 5 }
+
+    bots.update({
+      data: newValue,
+      where: {
+        name: simpleCrypto.encrypt(req.body.botName),
+      }
+    })
+      .then((result: any) => {
+        res.send(result)
+      })
   }
   
 }
