@@ -4,7 +4,7 @@ import axios, { AxiosResponse } from 'axios'
 //Helpers and Constants
 import { CONSTANTS } from '../Utils/constants'
 import { Task, Pattern } from '../Utils/patterns'
-import { speakerHandler, createValidation, choreSequence, femaleDefault, femaleDefensive } from '../Utils/helpers'
+import { speakerHandler, createValidation, choreSequence, femaleDefault, femaleDefensive, ExecutionerStateProps, executioner } from '../Utils/helpers'
 
 //Classes
 import Destroyer, { DestroyerType } from '../Utils/bots'
@@ -17,22 +17,36 @@ import CreateForm from '../Components/CreateForm/index'
 
 let createdBots: any[] = []
 
-type botInfo = {
+type BotInfo = {
   botName: string,
   botType: string,
   semiPermaName: string
+}
+
+export type WorkTaskProp = {
+  workDone: number,
+  currentTask: string,
+  nextTask: number,
+  choreList: string,
+  taskIsComplete: boolean
+}
+
+export type CounterProp = {
+  choreClick: number,
+  submitClick: number,
+  progressInterval: number
 }
 
 const App = () => {
 
   // speakerHandler(0, "Testing, Testing")
 
-  const [bot, setbot] = useState<botInfo>({
+  const [bot, setbot] = useState<BotInfo>({
     botName: '',
     botType: 'Bibedal',
     semiPermaName: 'Bot'
   })
-  const [workTasks, setWorkTasks] = useState({
+  const [workTasks, setWorkTasks] = useState<WorkTaskProp>({
     workDone: 0,
     currentTask: 'Awaiting Bot Creation',
     nextTask: 0,
@@ -46,12 +60,19 @@ const App = () => {
   })
   const [score, setScore] = useState('high score')
   const [winner, setWinner] = useState()
-  const [counters, setCounters] = useState({
+  const [counters, setCounters] = useState<CounterProp>({
     choreClick: 0,
     submitClick: 0,
     progressInterval: 0
   })
   const [changeState, setChangeState] = useState<{ [key: string]: string }>()
+
+  const executionState = {
+    counters,
+    setCounters,
+    workTasks,
+    setWorkTasks
+  } as ExecutionerStateProps
 
   // console.log('changeState: ', changeState)
   // const justWork = changeState
@@ -98,60 +119,58 @@ const App = () => {
     }
   }
 
-  const executioner = (array: string[], bot: any, scoreUpdate: string | Function, count: number) => {
-    //  const test =  bot['attackValue']('test')
-    let executionCount = count
+  // const executioner = (array: string[], bot: any, scoreUpdate: string | Function, count: number) => {
+  //   let executionCount = count
 
-    function hasKey<O>(obj: O, key: PropertyKey): key is keyof O {
-      return key in obj
-    }
+  //   function hasKey<O>(obj: O, key: PropertyKey): key is keyof O {
+  //     return key in obj
+  //   }
 
-    const command = array[0]
+  //   const command = array[0]
+  //   if (hasKey(bot, command)) {
+  //     console.log(this as DestroyerType)
 
-    if (hasKey(bot, command)) {
-      console.log(this as DestroyerType)
-      
-      // const botFunction = bot[this?.command]
-      const botFunction = bot.command
-      console.log('command: ', command)
-      if (command && typeof botFunction === 'function') {
-        // const test = Object.values(botFunction(bot.name, bot.type))
-        console.log('inside command function')
+  //     // const botFunction = bot[this?.command]
+  //     const botFunction = bot.command
+  //     console.log('command: ', command)
+  //     if (command && typeof botFunction === 'function') {
+  //       // const test = Object.values(botFunction(bot.name, bot.type))
+  //       console.log('inside command function')
 
-        setWorkTasks({ ...workTasks, ...{ nextTask: array.length, currentTask: botFunction().description, taskIsComplete: false } })
+  //       setWorkTasks({ ...workTasks, ...{ nextTask: array.length, currentTask: botFunction().description, taskIsComplete: false } })
 
-        speakerHandler(botFunction(bot.name, bot.type).eta, '')
-          .then(() => {
-            let nextArray = array.slice(1)
-            setWorkTasks({ ...workTasks, ...{ nextTask: nextArray.length } })
-            setCounters({ ...counters, ...{ progressInterval: counters.progressInterval + 1 } })
-            executionCount += 1
-            executioner(nextArray, bot, scoreUpdate, count)
-          })
-      } else {
+  //       speakerHandler(botFunction(bot.name, bot.type).eta, '')
+  //         .then(() => {
+  //           let nextArray = array.slice(1)
+  //           setWorkTasks({ ...workTasks, ...{ nextTask: nextArray.length } })
+  //           setCounters({ ...counters, ...{ progressInterval: counters.progressInterval + 1 } })
+  //           executionCount += 1
+  //           executioner(nextArray, bot, scoreUpdate, count)
+  //         })
+  //     } else {
 
-        if (executionCount >= 16) {
-          setWorkTasks({ ...workTasks, ...{ taskIsComplete: true } })
-          speakerHandler(0, `${bot.name} completed the task set! Standing by!`)
-        }
+  //       if (executionCount >= 16) {
+  //         setWorkTasks({ ...workTasks, ...{ taskIsComplete: true } })
+  //         speakerHandler(0, `${bot.name} completed the task set! Standing by!`)
+  //       }
 
-        if (typeof scoreUpdate === 'function') {
-          scoreUpdate()
-        }
+  //       if (typeof scoreUpdate === 'function') {
+  //         scoreUpdate()
+  //       }
 
-        speakerHandler(3, '')
-          .then(() => {
-            setWorkTasks({ ...workTasks, ...{ currentTask: `${bot.name} completed all tasks!` } })
-          })
-          .then(() => {
-            if (executionCount <= 15) {
-              speakerHandler(0, 'All Done! And ready for second breakfast, Elevensies and more! Yeah, totally stole that word from Pippin!')
-                .then(() => executionCount = 16)
-            }
-          })
-      }
-    }
-  }
+  //       speakerHandler(3, '')
+  //         .then(() => {
+  //           setWorkTasks({ ...workTasks, ...{ currentTask: `${bot.name} completed all tasks!` } })
+  //         })
+  //         .then(() => {
+  //           if (executionCount <= 15) {
+  //             speakerHandler(0, 'All Done! And ready for second breakfast, Elevensies and more! Yeah, totally stole that word from Pippin!')
+  //               .then(() => executionCount = 16)
+  //           }
+  //         })
+  //     }
+  //   }
+  // }
 
   const botStartup = () => {
     console.log('botStartup()')
@@ -160,7 +179,7 @@ const App = () => {
     const newestBot = createdBots[createdBots.length - 1]
     console.log('createdBots: ', createdBots)
     getScores()
-    executioner(Task.insideTasks, newestBot, score, 15)
+    executioner(Task.insideTasks, newestBot, score, 15, executionState)
 
     const creationData = {
       name: bot.botName,
@@ -218,12 +237,12 @@ const App = () => {
   const selectChores = (first: string[], second: string[], bot: any, count: number) => {
     const randChoice = () => Math.random()
     const executeFirstChoreSet = () => {
-      executioner(first, bot, getScores, count)
+      executioner(first, bot, getScores, count, executionState)
 
       setWorkTasks({ ...workTasks, ...{ choreList: 'Indoor Chores' } })
     }
     const executeSecondChoreSet = () => {
-      executioner(second, bot, getScores, count)
+      executioner(second, bot, getScores, count, executionState)
       setWorkTasks({ ...workTasks, ...{ choreList: 'Outdoor Chores' } })
     }
 
@@ -348,7 +367,7 @@ const App = () => {
         break
     }
 
-    executioner(choice, createdBots[createdBots.length - 1], getScores, 16)
+    executioner(choice, createdBots[createdBots.length - 1], getScores, 16, executionState)
 
     setWorkTasks({ ...workTasks, ...{ workDone: workTasks.workDone + 5 } })
     setIsDisabled({ isDisabledBurglar: true, isDisabledChore: true, isDisabledDrill: true })
