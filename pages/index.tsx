@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { EventHandler, FormEventHandler, MouseEventHandler, useState } from 'react'
 import axios, { AxiosResponse } from 'axios'
 
 //Helpers and Constants
@@ -53,12 +53,12 @@ const App = () => {
   })
   const [changeState, setChangeState] = useState<{ [key: string]: string }>()
 
-  console.log('changeState: ', changeState)
+  // console.log('changeState: ', changeState)
   // const justWork = changeState
   const getScores = async () => {
     try {
       const allScores = await axios.get('/api/bot/score')
-      console.log('await allScores.data: ', await allScores.data)
+      console.log('GET: api/bot/name: ', await allScores.data)
       setScore(allScores.data)
     } catch (error) {
       console.error(error)
@@ -66,6 +66,7 @@ const App = () => {
   }
 
   const botNameIsValid = async () => {
+    console.log('botNameIsValid()')
     let validationReturn: boolean | AxiosResponse<any, any>
 
     if (bot.botName === '') {
@@ -77,7 +78,7 @@ const App = () => {
       }
 
       try {
-        console.log("right here, first API call")
+        console.log("POST: api/bot/name")
         const result = await axios.post('api/bot/name', data)
 
         if (!result.data) {
@@ -97,7 +98,7 @@ const App = () => {
     }
   }
 
-  const executioner = (array: string[], bot: DestroyerType, scoreUpdate: string | Function, count: number) => {
+  const executioner = (array: string[], bot: any, scoreUpdate: string | Function, count: number) => {
     //  const test =  bot['attackValue']('test')
     let executionCount = count
 
@@ -108,11 +109,16 @@ const App = () => {
     const command = array[0]
 
     if (hasKey(bot, command)) {
-      const botFunction = bot[command]
+      console.log(this as DestroyerType)
+      
+      // const botFunction = bot[this?.command]
+      const botFunction = bot.command
+      console.log('command: ', command)
       if (command && typeof botFunction === 'function') {
         // const test = Object.values(botFunction(bot.name, bot.type))
+        console.log('inside command function')
 
-        setWorkTasks({ ...workTasks, ...{ nextTask: array.length, currentTask: botFunction(bot.name, bot.type).description, taskIsComplete: false } })
+        setWorkTasks({ ...workTasks, ...{ nextTask: array.length, currentTask: botFunction().description, taskIsComplete: false } })
 
         speakerHandler(botFunction(bot.name, bot.type).eta, '')
           .then(() => {
@@ -148,10 +154,11 @@ const App = () => {
   }
 
   const botStartup = () => {
-    createdBots.push(Destroyer(bot.botName, bot.botType))
+    console.log('botStartup()')
+    createdBots.push(new Destroyer(bot.botName, bot.botType))
 
     const newestBot = createdBots[createdBots.length - 1]
-
+    console.log('createdBots: ', createdBots)
     getScores()
     executioner(Task.insideTasks, newestBot, score, 15)
 
@@ -171,22 +178,28 @@ const App = () => {
       .then(() => setCounters({ ...counters, ...{ submitClick: 0 } }))
   }
 
-  const createBot = async (e: { preventDefault: () => void }) => {
+  const createBot = async (e) => {
+    console.log('createBot')
+
     e.preventDefault()
 
+
+    console.log('createBot`s e.target: ', e.target.value)
     getScores()
 
     const botNameValidation = await botNameIsValid()
 
     if (botNameValidation) {
+      console.log('botNameValidation: true')
       setWorkTasks({ ...workTasks, ...{ workTasks: 5 } })
-      setbot({ ...bot, ...{ botName: bot.botName, semiPermaName: bot.botName || 'Bot' } })
+      setbot({ ...bot, ...{ botName: bot.botName, semiPermaName: bot.botName || 'Unnamed Bot' } })
 
       const { submitClick } = counters
-
-      switch (bot.semiPermaName) {
+      console.log('bot before switch: ', bot)
+      switch (bot.botName) {
         case '':
         case 'Bot':
+          console.log('bot inside switch case 1: ', bot)
           createValidation(submitClick, '')
           setCounters({ ...counters, ...{ submitClick: submitClick + 1 } })
           break
@@ -395,21 +408,38 @@ const App = () => {
 
   const handleInputChange = (event: { target: any }) => {
     const { target } = event
-    const value = target.type === 'select' ? target.selected : target.value
+    let value: string
+    // console.log('target.type: ', target.type)
+    switch (target.type) {
+      case 'text':
+        // console.log('target.value for text: ', target.value)
+        setbot({ ...bot, ...{ botName: target.value } })
+        break
+      case 'select-one':
+        // console.log('target.value for select-one: ', target.value)
+        // console.log('target.name for select-one: ', target.name)
+        setbot({ ...bot, ...{ botType: target.value } })
+        break
+      case 'click':
+        // console.log('target type is CLICK')
+        break
+
+      default:
+        break
+    }
     const name = target.name
-
-    setChangeState({ [name]: value })
+    // console.log(`Ending name:${target.name} && value:${target.value}`)
+    setChangeState({ [name]: target.value })
   }
-
-
 
   return (
     <>
       <CreateForm
-        onSubmit={createBot}
+        onClick={createBot}
         botName={bot.botName}
         botType={bot.botType}
         handleInputChange={handleInputChange}
+        changeState={changeState}
       />
 
       <ButtonPanel

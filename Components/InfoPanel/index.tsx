@@ -11,8 +11,6 @@ import 'dotenv/config'
 // console.log(process.env)
 
 // const SimpleCrypto = require('simple-crypto-js').default
-console.log('process.env._secretKey RETRIEVED: ', process.env.secretKey)
-console.log('process.env.GOOGLE_APPLICATION_CREDENTIALS: ', process.env.GOOGLE_APPLICATION_CREDENTIALS)
 // const simpleCrypto = new SimpleCrypto(process.env.secretKey)
 
 
