@@ -1,42 +1,7 @@
 import { CONSTANTS } from './constants'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { DestroyerType } from './bots'
 import { CounterProp, WorkTaskProp } from '../pages'
-// import { useState, useEffect } from 'react'
-// import textToSpeech, { v1, protos} from '@google-cloud/text-to-speech'
-// import fs from 'fs'
-// import util from 'util'
-
-// // Creates a client
-// const client = new textToSpeech.TextToSpeechClient()
-// async function quickStart() {
-//   // The text to synthesize
-//   const text = 'hello, world!'
-
-//   // Construct the request
-//   const request = {
-//     input: { text: text },
-//     // Select the language and SSML voice gender (optional)
-//     voice: { languageCode: 'en-US', ssmlGender: 'NEUTRAL' },
-//     // select the type of audio encoding
-//     audioConfig: { audioEncoding: 'MP3' },
-//   } as unknown as protos.google.cloud.texttospeech.v1.SynthesizeSpeechRequest
-
-//   // Performs the text-to-speech request
-//   const response = await client.synthesizeSpeech(request)
-//   // Write the binary audio content to a local file
-//   const writeFile = util.promisify(fs.writeFile)
-//   await writeFile('output.mp3', response.audioContent, 'binary')
-//   console.log('Audio content written to file: output.mp3')
-// }
-// Imports the Google Cloud client library
-// import textToSpeech from '@google-cloud/text-to-speech'
-
-// Import other required libraries
-// import fs from 'fs'
-// import util from 'util'
-
-export const voice = { speak }
 
 type WhichVoiceOptions = {
   voice?: number,
@@ -60,77 +25,10 @@ async function speak(text: string, whichVoice: WhichVoiceOptions = defaultVoiceO
   msg.rate = whichVoice.rate
   msg.lang = whichVoice.lang
   msg.text = text
-  // msg.lang = "es-ES"
-  // console.log('get voices: ', speechSynthesis.getVoices())
   window.speechSynthesis.speak(msg)
-
-  // window.speechSynthesis.getVoices().forEach(function (voice) {
-  //   console.log(voice.name, voice.default ? voice.default : '')
-  // })
 }
 
-// export async function getStaticProps(context) {
-//   // Creates a client
-//   const client = new textToSpeech.TextToSpeechClient()
-//   const voice = { speak }
-
-//   async function speak(text: string, whichVoice = 'NEUTRAL') {
-//     // The text to synthesize
-//     // const text = 'hello, world!';
-
-//     // Construct the request
-//     const request = {
-//       input: { text: text },
-//       // Select the language and SSML voice gender (optional)
-//       voice: { languageCode: 'en-US', ssmlGender: whichVoice },
-//       // select the type of audio encoding
-//       audioConfig: { audioEncoding: 'MP3' },
-//     }
-
-//     var msg = new SpeechSynthesisUtterance()
-//     msg.text = text
-//     window.speechSynthesis.speak(msg)
-
-//     // Performs the text-to-speech request
-//     // const [response] = await client.synthesizeSpeech(request as any)
-//     // // Write the binary audio content to a local file
-//     // const writeFile = util.promisify(fs.writeFile)
-//     // const results = await writeFile('output.mp3', response?.audioContent || '', 'binary')
-//     // console.log('Audio content written to file: output.mp3 - ', results)
-//     // return response
-//   }
-//   return {
-//     props: { voice }, // will be passed to the page component as props
-//   }
-// }
-
-
-
-
-// export const useScript = (url: string, name: string) => {
-
-//   const [lib, setLib] = useState({})
-
-//   useEffect(() => {
-//     const script = document.createElement('script')
-
-//     script.src = url
-//     script.async = true
-//     script.onload = () => setLib({ [name]: window.name })
-
-//     document.body.appendChild(script)
-
-//     return () => {
-//       document.body.removeChild(script)
-//     }
-//     // eslint-disable-next-line react-hooks/exhaustive-deps
-//   }, [url])
-
-//   return lib
-
-// }
-
-
+export const voice = { speak }
 
 // Default Robot Commentary Setup
 const femaleDefaultVoice: WhichVoiceOptions = { lang: 'en', pitch: 2, rate: 1.7, voice: 3 }
@@ -150,25 +48,16 @@ export const femaleDefensive = {
   },
 }
 
-// export const Voices = {
-//   femaleDefault,
-//   femaleDefensive
-// }
+export const Voices = {
+  femaleDefault,
+  femaleDefensive
+}
 
 export const speakerHandler = async (waitTime: number, ttsString: string, whichVoice: WhichVoiceOptions = femaleDefaultVoice) => {
   return new Promise((res, rej) => {
     res(setTimeout(() => {
       voice.speak(ttsString, whichVoice)
     }, waitTime * 1000))
-
-    // and(ttsString, {
-    //   speechOptions, ...{
-    //     onend: () => setTimeout(() => {
-    //       res("Success")
-    //     }, waitTime * 1000),
-    //     onerror: () => rej("Speak Handler Failed")
-    //   }
-    // })
   })
 }
 
@@ -231,7 +120,6 @@ export const executioner = (array: string[], bot: any, scoreUpdate: string | Fun
     }
   }
 }
-
 
 export function createValidation(stage: number, state: string) {
   let noNameCount = stage
@@ -316,7 +204,6 @@ export function choreSequence(stage: number) {
   } else if (noNameCount === 18) {
     speakerHandler(0, CONSTANTS.SPEECH.CHORES.COMPLY)
       .then(() => noNameCount = 19)
-
   }
 }
 
