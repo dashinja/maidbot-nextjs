@@ -4,6 +4,7 @@ import ScoreBanner from './ScoreBanner'
 import TaskBanner from './TaskBanner'
 
 import 'dotenv/config'
+import { enabledButtonClasses } from '../ActionButton'
 
 export default function InfoPanel(props: any) {
   const highScore =
@@ -40,6 +41,7 @@ export default function InfoPanel(props: any) {
         <button
           type="submit"
           onClick={props.bonusSass}
+          className={enabledButtonClasses + ' bg-purple-600'}
         >
           Bonus Sass
       </button>
