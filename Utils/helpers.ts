@@ -121,7 +121,7 @@ export const executioner = (array: string[], bot: any, scoreUpdate: string | Fun
   }
 }
 
-export function createValidation(stage: number, state: string) {
+export async function createValidation(stage: number, state: string) {
   let noNameCount = stage
   let botNameState = state
 
@@ -167,27 +167,30 @@ export function createValidation(stage: number, state: string) {
       noNameCount = 5
     }
     if (noNameCount >= 1 && noNameCount <= 5) {
-      speakerHandler(0, CONSTANTS.SPEECH.CREATE.ALT[0])
-        .then(() => speakerHandler(1, `${botNameState} you call it?`))
-        .then(() => speakerHandler(1, CONSTANTS.SPEECH.CREATE.ALT[1]))
-        .then(() => speakerHandler(1, CONSTANTS.SPEECH.CREATE.ALT[2]))
-        .then(() => noNameCount += 10)
-        .then(() => speakerHandler(4, CONSTANTS.SPEECH.CREATE.ALT[3]))
-        .then(() => speakerHandler(0, CONSTANTS.SPEECH.CREATE.ALT[4]))
-        .then(() => speakerHandler(3, CONSTANTS.SPEECH.CREATE.ALT[5]))
-        .catch(error => console.error(error))
+      try {
+        await speakerHandler(0, CONSTANTS.SPEECH.CREATE.ALT[0])
+        await speakerHandler(1, `${botNameState} you call it?`)
+        await speakerHandler(1, CONSTANTS.SPEECH.CREATE.ALT[1])
+        await speakerHandler(1, CONSTANTS.SPEECH.CREATE.ALT[2])
+          .then(() => noNameCount += 10)
+        await speakerHandler(4, CONSTANTS.SPEECH.CREATE.ALT[3])
+        await speakerHandler(0, CONSTANTS.SPEECH.CREATE.ALT[4])
+        await speakerHandler(3, CONSTANTS.SPEECH.CREATE.ALT[5])
 
+      } catch (error) {
+        console.error(error)
+      }
     } else if (noNameCount < 1) {
       const uniquteText = `Well well then. ${botNameState}, ahah? - I see... - How unique of you`
 
-      speakerHandler(0, uniquteText)
+      await speakerHandler(0, uniquteText)
         .then(() => {
           noNameCount += 10
           speakerHandler(7, CONSTANTS.SPEECH.CREATE.NORMAL[0])
         })
-        .then(() => speakerHandler(10.5, CONSTANTS.SPEECH.CREATE.NORMAL[1]))
-        .then(() => speakerHandler(9.5, CONSTANTS.SPEECH.CREATE.NORMAL[2]))
-        .then(() => speakerHandler(6, CONSTANTS.SPEECH.CREATE.NORMAL[3]))
+      await speakerHandler(10.5, CONSTANTS.SPEECH.CREATE.NORMAL[1])
+      await speakerHandler(9.5, CONSTANTS.SPEECH.CREATE.NORMAL[2])
+      await speakerHandler(6, CONSTANTS.SPEECH.CREATE.NORMAL[3])
     }
   }
 }
@@ -206,7 +209,3 @@ export function choreSequence(stage: number) {
       .then(() => noNameCount = 19)
   }
 }
-
-
-
-

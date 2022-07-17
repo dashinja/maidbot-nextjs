@@ -1,4 +1,4 @@
-import React, { EventHandler, FormEventHandler, MouseEventHandler, useState } from 'react'
+import React, { useState } from 'react'
 import axios, { AxiosResponse } from 'axios'
 
 //Helpers and Constants
@@ -39,9 +39,13 @@ export type CounterProp = {
 
 const App = () => {
 
+<<<<<<< Updated upstream
   // speakerHandler(0, "Testing, Testing")
 
   const [bot, setbot] = useState<BotInfo>({
+=======
+  const [bot, setbot] = useState<botInfo>({
+>>>>>>> Stashed changes
     botName: '',
     botType: 'Bibedal',
     semiPermaName: 'Bot'
@@ -67,6 +71,7 @@ const App = () => {
   })
   const [changeState, setChangeState] = useState<{ [key: string]: string }>()
 
+<<<<<<< Updated upstream
   const executionState = {
     counters,
     setCounters,
@@ -76,6 +81,8 @@ const App = () => {
 
   // console.log('changeState: ', changeState)
   // const justWork = changeState
+=======
+>>>>>>> Stashed changes
   const getScores = async () => {
     try {
       const allScores = await axios.get('/api/bot/score')
@@ -87,7 +94,6 @@ const App = () => {
   }
 
   const botNameIsValid = async () => {
-    console.log('botNameIsValid()')
     let validationReturn: boolean | AxiosResponse<any, any>
 
     if (bot.botName === '') {
@@ -115,10 +121,10 @@ const App = () => {
       } catch (error) {
         console.error(error)
       }
-
     }
   }
 
+<<<<<<< Updated upstream
   // const executioner = (array: string[], bot: any, scoreUpdate: string | Function, count: number) => {
   //   let executionCount = count
 
@@ -171,13 +177,60 @@ const App = () => {
   //     }
   //   }
   // }
+=======
+  const executioner = (array: string[], bot: any, scoreUpdate: string | Function, count: number) => {
+    let executionCount = count
+
+    function hasKey<O>(obj: O, key: PropertyKey): key is keyof O {
+      return key in obj
+    }
+
+    const command = array[0]
+
+    if (hasKey(bot, command)) {
+      const botFunction = bot.command
+      if (command && typeof botFunction === 'function') {
+        setWorkTasks({ ...workTasks, ...{ nextTask: array.length, currentTask: botFunction().description, taskIsComplete: false } })
+
+        speakerHandler(botFunction(bot.name, bot.type).eta, '')
+          .then(() => {
+            let nextArray = array.slice(1)
+            setWorkTasks({ ...workTasks, ...{ nextTask: nextArray.length } })
+            setCounters({ ...counters, ...{ progressInterval: counters.progressInterval + 1 } })
+            executionCount += 1
+            executioner(nextArray, bot, scoreUpdate, count)
+          })
+      } else {
+
+        if (executionCount >= 16) {
+          setWorkTasks({ ...workTasks, ...{ taskIsComplete: true } })
+          speakerHandler(0, `${bot.name} completed the task set! Standing by!`)
+        }
+
+        if (typeof scoreUpdate === 'function') {
+          scoreUpdate()
+        }
+
+        speakerHandler(3, '')
+          .then(() => {
+            setWorkTasks({ ...workTasks, ...{ currentTask: `${bot.name} completed all tasks!` } })
+          })
+          .then(() => {
+            if (executionCount <= 15) {
+              speakerHandler(0, 'All Done! And ready for second breakfast, Elevensies and more! Yeah, totally stole that word from Pippin!')
+                .then(() => executionCount = 16)
+            }
+          })
+      }
+    }
+  }
+>>>>>>> Stashed changes
 
   const botStartup = () => {
     console.log('botStartup()')
     createdBots.push(new Destroyer(bot.botName, bot.botType))
 
     const newestBot = createdBots[createdBots.length - 1]
-    console.log('createdBots: ', createdBots)
     getScores()
     executioner(Task.insideTasks, newestBot, score, 15, executionState)
 
@@ -199,26 +252,19 @@ const App = () => {
 
   const createBot = async (e) => {
     console.log('createBot')
-
     e.preventDefault()
-
-
-    console.log('createBot`s e.target: ', e.target.value)
     getScores()
 
     const botNameValidation = await botNameIsValid()
 
     if (botNameValidation) {
-      console.log('botNameValidation: true')
       setWorkTasks({ ...workTasks, ...{ workTasks: 5 } })
       setbot({ ...bot, ...{ botName: bot.botName, semiPermaName: bot.botName || 'Unnamed Bot' } })
 
       const { submitClick } = counters
-      console.log('bot before switch: ', bot)
       switch (bot.botName) {
         case '':
         case 'Bot':
-          console.log('bot inside switch case 1: ', bot)
           createValidation(submitClick, '')
           setCounters({ ...counters, ...{ submitClick: submitClick + 1 } })
           break
@@ -237,8 +283,12 @@ const App = () => {
   const selectChores = (first: string[], second: string[], bot: any, count: number) => {
     const randChoice = () => Math.random()
     const executeFirstChoreSet = () => {
+<<<<<<< Updated upstream
       executioner(first, bot, getScores, count, executionState)
 
+=======
+      executioner(first, bot, getScores, count)
+>>>>>>> Stashed changes
       setWorkTasks({ ...workTasks, ...{ choreList: 'Indoor Chores' } })
     }
     const executeSecondChoreSet = () => {
@@ -324,18 +374,12 @@ const App = () => {
           clearTimeout(dontBother)
         }
       })
-
-
     speakerHandler(77, '')
       .then(() => setIsDisabled({ isDisabledBurglar: false, isDisabledChore: false, isDisabledDrill: false }))
-
-
-
   }
 
   function drillPractice(e: { preventDefault: () => void }) {
     e.preventDefault()
-
 
     femaleDefault.and(`${bot.semiPermaName || 'Bot'} activated and ready!}`)
 
@@ -415,7 +459,6 @@ const App = () => {
 
     speakerHandler(16, '')
       .then(() => setWinner(undefined))
-
   }
 
   const bonusSass = () => {
@@ -460,7 +503,6 @@ const App = () => {
         handleInputChange={handleInputChange}
         changeState={changeState}
       />
-
       <ButtonPanel
         formSubmit={createBot}
         botName={bot.botName}
@@ -473,7 +515,6 @@ const App = () => {
         burglarDefense={burglarDefense}
         isDisabledBurglar={isDisabled.isDisabledBurglar}
       />
-
       <InfoPanel
         currentTask={workTasks.currentTask}
         semiPermaName={bot.semiPermaName}
@@ -483,7 +524,6 @@ const App = () => {
         score={score} // taken from database
         bonusSass={bonusSass}
       />
-
     </>
   )
 }
