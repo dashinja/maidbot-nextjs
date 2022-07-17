@@ -2,13 +2,11 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient } from '.prisma/client'
 import simpleCrypto from '../../../Utils/encrypt'
 
-
 const prisma = new PrismaClient()
 const { bots } = prisma
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
-    console.log('score GET called')
     const result = await bots.findFirst({
       orderBy: {
         workDone: 'desc'
@@ -29,10 +27,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.json(result)
       res.end()
     }
-
   } else if (req.method === 'POST') {
     const newValue = { workDone: req.body.workDone + 5 }
-
     const result = await bots.update({
       data: newValue,
       where: {
@@ -41,9 +37,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     })
       .catch(err => console.error(err))
 
-    console.log('result of score POST')
+    console.log('result of score POST', result)
     res.send(result)
     res.end()
   }
-  // return 'complete'
 }

@@ -1,4 +1,4 @@
-import React, { EventHandler, FormEventHandler, MouseEventHandler, useState } from 'react'
+import React, { useState } from 'react'
 import axios, { AxiosResponse } from 'axios'
 
 //Helpers and Constants
@@ -7,7 +7,7 @@ import { Task, Pattern } from '../Utils/patterns'
 import { speakerHandler, createValidation, choreSequence, femaleDefault, femaleDefensive, ExecutionerStateProps, executioner } from '../Utils/helpers'
 
 //Classes
-import Destroyer, { DestroyerType } from '../Utils/bots'
+import Destroyer from '../Utils/bots'
 import Burglar from '../Utils/burglar'
 
 //Components
@@ -37,9 +37,12 @@ export type CounterProp = {
   progressInterval: number
 }
 
+type DisabledStateProp = {
+  isDisabledChore: boolean
+  isDisabledDrill: boolean
+  isDisabledBurglar: boolean
+}
 const App = () => {
-
-  // speakerHandler(0, "Testing, Testing")
 
   const [bot, setbot] = useState<BotInfo>({
     botName: '',
@@ -53,7 +56,7 @@ const App = () => {
     choreList: '',
     taskIsComplete: true
   })
-  const [isDisabled, setIsDisabled] = useState({
+  const [isDisabled, setIsDisabled] = useState<DisabledStateProp>({
     isDisabledChore: true,
     isDisabledBurglar: true,
     isDisabledDrill: true
@@ -74,8 +77,6 @@ const App = () => {
     setWorkTasks
   } as ExecutionerStateProps
 
-  // console.log('changeState: ', changeState)
-  // const justWork = changeState
   const getScores = async () => {
     try {
       const allScores = await axios.get('/api/bot/score')
@@ -87,7 +88,6 @@ const App = () => {
   }
 
   const botNameIsValid = async () => {
-    console.log('botNameIsValid()')
     let validationReturn: boolean | AxiosResponse<any, any>
 
     if (bot.botName === '') {
@@ -115,69 +115,14 @@ const App = () => {
       } catch (error) {
         console.error(error)
       }
-
     }
   }
-
-  // const executioner = (array: string[], bot: any, scoreUpdate: string | Function, count: number) => {
-  //   let executionCount = count
-
-  //   function hasKey<O>(obj: O, key: PropertyKey): key is keyof O {
-  //     return key in obj
-  //   }
-
-  //   const command = array[0]
-  //   if (hasKey(bot, command)) {
-  //     console.log(this as DestroyerType)
-
-  //     // const botFunction = bot[this?.command]
-  //     const botFunction = bot.command
-  //     console.log('command: ', command)
-  //     if (command && typeof botFunction === 'function') {
-  //       // const test = Object.values(botFunction(bot.name, bot.type))
-  //       console.log('inside command function')
-
-  //       setWorkTasks({ ...workTasks, ...{ nextTask: array.length, currentTask: botFunction().description, taskIsComplete: false } })
-
-  //       speakerHandler(botFunction(bot.name, bot.type).eta, '')
-  //         .then(() => {
-  //           let nextArray = array.slice(1)
-  //           setWorkTasks({ ...workTasks, ...{ nextTask: nextArray.length } })
-  //           setCounters({ ...counters, ...{ progressInterval: counters.progressInterval + 1 } })
-  //           executionCount += 1
-  //           executioner(nextArray, bot, scoreUpdate, count)
-  //         })
-  //     } else {
-
-  //       if (executionCount >= 16) {
-  //         setWorkTasks({ ...workTasks, ...{ taskIsComplete: true } })
-  //         speakerHandler(0, `${bot.name} completed the task set! Standing by!`)
-  //       }
-
-  //       if (typeof scoreUpdate === 'function') {
-  //         scoreUpdate()
-  //       }
-
-  //       speakerHandler(3, '')
-  //         .then(() => {
-  //           setWorkTasks({ ...workTasks, ...{ currentTask: `${bot.name} completed all tasks!` } })
-  //         })
-  //         .then(() => {
-  //           if (executionCount <= 15) {
-  //             speakerHandler(0, 'All Done! And ready for second breakfast, Elevensies and more! Yeah, totally stole that word from Pippin!')
-  //               .then(() => executionCount = 16)
-  //           }
-  //         })
-  //     }
-  //   }
-  // }
 
   const botStartup = () => {
     console.log('botStartup()')
     createdBots.push(new Destroyer(bot.botName, bot.botType))
 
     const newestBot = createdBots[createdBots.length - 1]
-    console.log('createdBots: ', createdBots)
     getScores()
     executioner(Task.insideTasks, newestBot, score, 15, executionState)
 
@@ -199,26 +144,19 @@ const App = () => {
 
   const createBot = async (e) => {
     console.log('createBot')
-
     e.preventDefault()
-
-
-    console.log('createBot`s e.target: ', e.target.value)
     getScores()
 
     const botNameValidation = await botNameIsValid()
 
     if (botNameValidation) {
-      console.log('botNameValidation: true')
       setWorkTasks({ ...workTasks, ...{ workTasks: 5 } })
-      setbot({ ...bot, ...{ botName: bot.botName, semiPermaName: bot.botName || 'Unnamed Bot' } })
+      setbot({ ...bot, ...{ botName: bot.botName, semiPermaName: bot.botName || 'Bot' } })
 
       const { submitClick } = counters
-      console.log('bot before switch: ', bot)
       switch (bot.botName) {
         case '':
         case 'Bot':
-          console.log('bot inside switch case 1: ', bot)
           createValidation(submitClick, '')
           setCounters({ ...counters, ...{ submitClick: submitClick + 1 } })
           break
@@ -260,7 +198,7 @@ const App = () => {
     }
   }
 
-  const doChores = (e: { preventDefault: () => void }) => {
+  const doChores = (e: any ) => {
     e.preventDefault()
 
     setIsDisabled({
@@ -324,18 +262,12 @@ const App = () => {
           clearTimeout(dontBother)
         }
       })
-
-
     speakerHandler(77, '')
       .then(() => setIsDisabled({ isDisabledBurglar: false, isDisabledChore: false, isDisabledDrill: false }))
-
-
-
   }
 
-  function drillPractice(e: { preventDefault: () => void }) {
+  function drillPractice(e: any) {
     e.preventDefault()
-
 
     femaleDefault.and(`${bot.semiPermaName || 'Bot'} activated and ready!}`)
 
@@ -397,7 +329,7 @@ const App = () => {
     }
   }
 
-  const burglarDefense = (e: { preventDefault: () => void }) => {
+  const burglarDefense = (e: any) => {
     e.preventDefault()
 
     setIsDisabled({ isDisabledBurglar: true, isDisabledChore: true, isDisabledDrill: true })
@@ -415,7 +347,6 @@ const App = () => {
 
     speakerHandler(16, '')
       .then(() => setWinner(undefined))
-
   }
 
   const bonusSass = () => {
@@ -427,27 +358,20 @@ const App = () => {
 
   const handleInputChange = (event: { target: any }) => {
     const { target } = event
-    let value: string
-    // console.log('target.type: ', target.type)
     switch (target.type) {
       case 'text':
-        // console.log('target.value for text: ', target.value)
         setbot({ ...bot, ...{ botName: target.value } })
         break
       case 'select-one':
-        // console.log('target.value for select-one: ', target.value)
-        // console.log('target.name for select-one: ', target.name)
         setbot({ ...bot, ...{ botType: target.value } })
         break
       case 'click':
-        // console.log('target type is CLICK')
         break
 
       default:
         break
     }
     const name = target.name
-    // console.log(`Ending name:${target.name} && value:${target.value}`)
     setChangeState({ [name]: target.value })
   }
 
@@ -460,7 +384,6 @@ const App = () => {
         handleInputChange={handleInputChange}
         changeState={changeState}
       />
-
       <ButtonPanel
         formSubmit={createBot}
         botName={bot.botName}
@@ -473,7 +396,6 @@ const App = () => {
         burglarDefense={burglarDefense}
         isDisabledBurglar={isDisabled.isDisabledBurglar}
       />
-
       <InfoPanel
         currentTask={workTasks.currentTask}
         semiPermaName={bot.semiPermaName}
@@ -483,7 +405,6 @@ const App = () => {
         score={score} // taken from database
         bonusSass={bonusSass}
       />
-
     </>
   )
 }
