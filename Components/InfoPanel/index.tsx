@@ -1,18 +1,9 @@
 import React from 'react'
-
-
 import Banner from './Banner'
 import ScoreBanner from './ScoreBanner'
 import TaskBanner from './TaskBanner'
 
 import 'dotenv/config'
-// import simpleCrypto from '../../Utils/encrypt'
-
-// console.log(process.env)
-
-// const SimpleCrypto = require('simple-crypto-js').default
-// const simpleCrypto = new SimpleCrypto(process.env.secretKey)
-
 
 export default function InfoPanel(props: any) {
   const highScore =
@@ -22,16 +13,8 @@ export default function InfoPanel(props: any) {
         ? props.progressInterval
         : props.score.workDone
 
-  // const decipheredName = simpleCrypto.decrypt(process.env.secretKey)
-  // console.log('name to DECIPHER: ', props.score)
-  // console.log('typeof name to DECIPHER: ', typeof props.score)
-
   const typeOfScoreResponse = typeof props.score === 'string'
-  // console.log('typeOfScoreResponse: ', typeOfScoreResponse)
-  const highScoreName = typeOfScoreResponse ? `No-Bot-y` :
-  /*simpleCrypto.decrypt(props.score.name)*/ props.score.name
-  // props.score.name
-  // console.log('props: ', props)
+  const highScoreName = typeOfScoreResponse ? `No-Bot-y` : props.score.name
 
   const burglarStatus =
     props.winner !== undefined
@@ -41,7 +24,6 @@ export default function InfoPanel(props: any) {
       : `No intruders have come!`
 
   return (
-    <>
       <div>
         <Banner title="Status" value={props.currentTask} />
         <TaskBanner
@@ -60,9 +42,7 @@ export default function InfoPanel(props: any) {
           onClick={props.bonusSass}
         >
           Bonus Sass
-        </button>
-
-      </div>
-    </>
+      </button>
+    </div>
   )
 }

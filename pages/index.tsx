@@ -7,7 +7,7 @@ import { Task, Pattern } from '../Utils/patterns'
 import { speakerHandler, createValidation, choreSequence, femaleDefault, femaleDefensive, ExecutionerStateProps, executioner } from '../Utils/helpers'
 
 //Classes
-import Destroyer, { DestroyerType } from '../Utils/bots'
+import Destroyer from '../Utils/bots'
 import Burglar from '../Utils/burglar'
 
 //Components
@@ -37,6 +37,11 @@ export type CounterProp = {
   progressInterval: number
 }
 
+type DisabledStateProp = {
+  isDisabledChore: boolean
+  isDisabledDrill: boolean
+  isDisabledBurglar: boolean
+}
 const App = () => {
 
   const [bot, setbot] = useState<BotInfo>({
@@ -51,7 +56,7 @@ const App = () => {
     choreList: '',
     taskIsComplete: true
   })
-  const [isDisabled, setIsDisabled] = useState({
+  const [isDisabled, setIsDisabled] = useState<DisabledStateProp>({
     isDisabledChore: true,
     isDisabledBurglar: true,
     isDisabledDrill: true
@@ -72,8 +77,6 @@ const App = () => {
     setWorkTasks
   } as ExecutionerStateProps
 
-  // console.log('changeState: ', changeState)
-  // const justWork = changeState
   const getScores = async () => {
     try {
       const allScores = await axios.get('/api/bot/score')
@@ -195,7 +198,7 @@ const App = () => {
     }
   }
 
-  const doChores = (e: { preventDefault: () => void }) => {
+  const doChores = (e: any ) => {
     e.preventDefault()
 
     setIsDisabled({
@@ -263,7 +266,7 @@ const App = () => {
       .then(() => setIsDisabled({ isDisabledBurglar: false, isDisabledChore: false, isDisabledDrill: false }))
   }
 
-  function drillPractice(e: { preventDefault: () => void }) {
+  function drillPractice(e: any) {
     e.preventDefault()
 
     femaleDefault.and(`${bot.semiPermaName || 'Bot'} activated and ready!}`)
@@ -326,7 +329,7 @@ const App = () => {
     }
   }
 
-  const burglarDefense = (e: { preventDefault: () => void }) => {
+  const burglarDefense = (e: any) => {
     e.preventDefault()
 
     setIsDisabled({ isDisabledBurglar: true, isDisabledChore: true, isDisabledDrill: true })

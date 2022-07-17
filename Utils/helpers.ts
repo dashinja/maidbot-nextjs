@@ -1,6 +1,5 @@
 import { CONSTANTS } from './constants'
 import React from 'react'
-import { DestroyerType } from './bots'
 import { CounterProp, WorkTaskProp } from '../pages'
 
 type WhichVoiceOptions = {
@@ -10,12 +9,20 @@ type WhichVoiceOptions = {
   lang?: string,
 }
 
+export type ExecutionerStateProps = {
+  workTasks: WorkTaskProp,
+  setWorkTasks: React.Dispatch<React.SetStateAction<WorkTaskProp>>,
+  counters: CounterProp,
+  setCounters: React.Dispatch<React.SetStateAction<CounterProp>>
+}
+
 const defaultVoiceOptions: WhichVoiceOptions = {
   lang: 'en',
   pitch: 1,
   rate: 1,
   voice: 0
 }
+
 async function speak(text: string, whichVoice: WhichVoiceOptions = defaultVoiceOptions) {
   const msg = new SpeechSynthesisUtterance()
   const voices = speechSynthesis.getVoices()
@@ -61,13 +68,6 @@ export const speakerHandler = async (waitTime: number, ttsString: string, whichV
   })
 }
 
-export type ExecutionerStateProps = {
-  workTasks: WorkTaskProp,
-  setWorkTasks: React.Dispatch<React.SetStateAction<WorkTaskProp>>,
-  counters: CounterProp,
-  setCounters: React.Dispatch<React.SetStateAction<CounterProp>>
-}
-
 export const executioner = (array: string[], bot: any, scoreUpdate: string | Function, count: number, state: ExecutionerStateProps) => {
   let executionCount = count
 
@@ -77,13 +77,9 @@ export const executioner = (array: string[], bot: any, scoreUpdate: string | Fun
 
   const command = array[0]
   if (hasKey(bot, command)) {
-    console.log(this as DestroyerType)
-
-    // const botFunction = bot[this?.command]
     const botFunction = bot.command
     console.log('command: ', command)
     if (command && typeof botFunction === 'function') {
-      // const test = Object.values(botFunction(bot.name, bot.type))
       console.log('inside command function')
 
       state.setWorkTasks({ ...state.workTasks, ...{ nextTask: array.length, currentTask: botFunction().description, taskIsComplete: false } })
