@@ -39,13 +39,9 @@ export type CounterProp = {
 
 const App = () => {
 
-<<<<<<< Updated upstream
   // speakerHandler(0, "Testing, Testing")
 
   const [bot, setbot] = useState<BotInfo>({
-=======
-  const [bot, setbot] = useState<botInfo>({
->>>>>>> Stashed changes
     botName: '',
     botType: 'Bibedal',
     semiPermaName: 'Bot'
@@ -71,7 +67,6 @@ const App = () => {
   })
   const [changeState, setChangeState] = useState<{ [key: string]: string }>()
 
-<<<<<<< Updated upstream
   const executionState = {
     counters,
     setCounters,
@@ -81,8 +76,6 @@ const App = () => {
 
   // console.log('changeState: ', changeState)
   // const justWork = changeState
-=======
->>>>>>> Stashed changes
   const getScores = async () => {
     try {
       const allScores = await axios.get('/api/bot/score')
@@ -124,7 +117,6 @@ const App = () => {
     }
   }
 
-<<<<<<< Updated upstream
   // const executioner = (array: string[], bot: any, scoreUpdate: string | Function, count: number) => {
   //   let executionCount = count
 
@@ -177,54 +169,6 @@ const App = () => {
   //     }
   //   }
   // }
-=======
-  const executioner = (array: string[], bot: any, scoreUpdate: string | Function, count: number) => {
-    let executionCount = count
-
-    function hasKey<O>(obj: O, key: PropertyKey): key is keyof O {
-      return key in obj
-    }
-
-    const command = array[0]
-
-    if (hasKey(bot, command)) {
-      const botFunction = bot.command
-      if (command && typeof botFunction === 'function') {
-        setWorkTasks({ ...workTasks, ...{ nextTask: array.length, currentTask: botFunction().description, taskIsComplete: false } })
-
-        speakerHandler(botFunction(bot.name, bot.type).eta, '')
-          .then(() => {
-            let nextArray = array.slice(1)
-            setWorkTasks({ ...workTasks, ...{ nextTask: nextArray.length } })
-            setCounters({ ...counters, ...{ progressInterval: counters.progressInterval + 1 } })
-            executionCount += 1
-            executioner(nextArray, bot, scoreUpdate, count)
-          })
-      } else {
-
-        if (executionCount >= 16) {
-          setWorkTasks({ ...workTasks, ...{ taskIsComplete: true } })
-          speakerHandler(0, `${bot.name} completed the task set! Standing by!`)
-        }
-
-        if (typeof scoreUpdate === 'function') {
-          scoreUpdate()
-        }
-
-        speakerHandler(3, '')
-          .then(() => {
-            setWorkTasks({ ...workTasks, ...{ currentTask: `${bot.name} completed all tasks!` } })
-          })
-          .then(() => {
-            if (executionCount <= 15) {
-              speakerHandler(0, 'All Done! And ready for second breakfast, Elevensies and more! Yeah, totally stole that word from Pippin!')
-                .then(() => executionCount = 16)
-            }
-          })
-      }
-    }
-  }
->>>>>>> Stashed changes
 
   const botStartup = () => {
     console.log('botStartup()')
@@ -283,12 +227,8 @@ const App = () => {
   const selectChores = (first: string[], second: string[], bot: any, count: number) => {
     const randChoice = () => Math.random()
     const executeFirstChoreSet = () => {
-<<<<<<< Updated upstream
       executioner(first, bot, getScores, count, executionState)
 
-=======
-      executioner(first, bot, getScores, count)
->>>>>>> Stashed changes
       setWorkTasks({ ...workTasks, ...{ choreList: 'Indoor Chores' } })
     }
     const executeSecondChoreSet = () => {
