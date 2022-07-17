@@ -39,8 +39,6 @@ export type CounterProp = {
 
 const App = () => {
 
-  // speakerHandler(0, "Testing, Testing")
-
   const [bot, setbot] = useState<BotInfo>({
     botName: '',
     botType: 'Bibedal',
@@ -117,59 +115,6 @@ const App = () => {
     }
   }
 
-  // const executioner = (array: string[], bot: any, scoreUpdate: string | Function, count: number) => {
-  //   let executionCount = count
-
-  //   function hasKey<O>(obj: O, key: PropertyKey): key is keyof O {
-  //     return key in obj
-  //   }
-
-  //   const command = array[0]
-  //   if (hasKey(bot, command)) {
-  //     console.log(this as DestroyerType)
-
-  //     // const botFunction = bot[this?.command]
-  //     const botFunction = bot.command
-  //     console.log('command: ', command)
-  //     if (command && typeof botFunction === 'function') {
-  //       // const test = Object.values(botFunction(bot.name, bot.type))
-  //       console.log('inside command function')
-
-  //       setWorkTasks({ ...workTasks, ...{ nextTask: array.length, currentTask: botFunction().description, taskIsComplete: false } })
-
-  //       speakerHandler(botFunction(bot.name, bot.type).eta, '')
-  //         .then(() => {
-  //           let nextArray = array.slice(1)
-  //           setWorkTasks({ ...workTasks, ...{ nextTask: nextArray.length } })
-  //           setCounters({ ...counters, ...{ progressInterval: counters.progressInterval + 1 } })
-  //           executionCount += 1
-  //           executioner(nextArray, bot, scoreUpdate, count)
-  //         })
-  //     } else {
-
-  //       if (executionCount >= 16) {
-  //         setWorkTasks({ ...workTasks, ...{ taskIsComplete: true } })
-  //         speakerHandler(0, `${bot.name} completed the task set! Standing by!`)
-  //       }
-
-  //       if (typeof scoreUpdate === 'function') {
-  //         scoreUpdate()
-  //       }
-
-  //       speakerHandler(3, '')
-  //         .then(() => {
-  //           setWorkTasks({ ...workTasks, ...{ currentTask: `${bot.name} completed all tasks!` } })
-  //         })
-  //         .then(() => {
-  //           if (executionCount <= 15) {
-  //             speakerHandler(0, 'All Done! And ready for second breakfast, Elevensies and more! Yeah, totally stole that word from Pippin!')
-  //               .then(() => executionCount = 16)
-  //           }
-  //         })
-  //     }
-  //   }
-  // }
-
   const botStartup = () => {
     console.log('botStartup()')
     createdBots.push(new Destroyer(bot.botName, bot.botType))
@@ -203,7 +148,7 @@ const App = () => {
 
     if (botNameValidation) {
       setWorkTasks({ ...workTasks, ...{ workTasks: 5 } })
-      setbot({ ...bot, ...{ botName: bot.botName, semiPermaName: bot.botName || 'Unnamed Bot' } })
+      setbot({ ...bot, ...{ botName: bot.botName, semiPermaName: bot.botName || 'Bot' } })
 
       const { submitClick } = counters
       switch (bot.botName) {
@@ -410,27 +355,20 @@ const App = () => {
 
   const handleInputChange = (event: { target: any }) => {
     const { target } = event
-    let value: string
-    // console.log('target.type: ', target.type)
     switch (target.type) {
       case 'text':
-        // console.log('target.value for text: ', target.value)
         setbot({ ...bot, ...{ botName: target.value } })
         break
       case 'select-one':
-        // console.log('target.value for select-one: ', target.value)
-        // console.log('target.name for select-one: ', target.name)
         setbot({ ...bot, ...{ botType: target.value } })
         break
       case 'click':
-        // console.log('target type is CLICK')
         break
 
       default:
         break
     }
     const name = target.name
-    // console.log(`Ending name:${target.name} && value:${target.value}`)
     setChangeState({ [name]: target.value })
   }
 
