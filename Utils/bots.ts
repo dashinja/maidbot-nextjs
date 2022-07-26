@@ -26,7 +26,7 @@ type DestroyerStatMethodType = {
 
 export type DestroyerType = {
   name: string
-  type: string
+  botType: string
   health: number
   attack: number
   defense: number
