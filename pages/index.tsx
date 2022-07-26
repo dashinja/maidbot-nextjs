@@ -42,6 +42,12 @@ type DisabledStateProp = {
   isDisabledDrill: boolean
   isDisabledBurglar: boolean
 }
+
+export type Score = Function | string | {
+    botType: string
+    workDone: number
+    name: string
+  }
 const App = () => {
 
   const [bot, setbot] = useState<BotInfo>({
@@ -61,7 +67,7 @@ const App = () => {
     isDisabledBurglar: true,
     isDisabledDrill: true
   })
-  const [score, setScore] = useState('high score')
+  const [score, setScore] = useState<Score>('high score')
   const [winner, setWinner] = useState()
   const [counters, setCounters] = useState<CounterProp>({
     choreClick: 0,
@@ -80,7 +86,7 @@ const App = () => {
   const getScores = async () => {
     try {
       const allScores = await axios.get('/api/bot/score')
-      console.log('GET: api/bot/name: ', await allScores.data)
+      console.log('GET: api/bot/score: ', await allScores.data)
       setScore(allScores.data)
     } catch (error) {
       console.error(error)
@@ -198,7 +204,7 @@ const App = () => {
     }
   }
 
-  const doChores = (e: any ) => {
+  const doChores = (e: any) => {
     e.preventDefault()
 
     setIsDisabled({

@@ -1,6 +1,6 @@
 import { CONSTANTS } from './constants'
 import React from 'react'
-import { CounterProp, WorkTaskProp } from '../pages'
+import { CounterProp, Score, WorkTaskProp } from '../pages'
 
 type WhichVoiceOptions = {
   voice?: number,
@@ -68,7 +68,7 @@ export const speakerHandler = async (waitTime: number, ttsString: string, whichV
   })
 }
 
-export const executioner = (array: string[], bot: any, scoreUpdate: string | Function, count: number, state: ExecutionerStateProps) => {
+export const executioner = (array: string[], bot: any, scoreUpdate: Score, count: number, state: ExecutionerStateProps) => {
   let executionCount = count
 
   function hasKey<O>(obj: O, key: PropertyKey): key is keyof O {
