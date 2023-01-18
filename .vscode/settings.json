@@ -18,5 +18,6 @@
     "activityBar.background": "#292D39",
     "titleBar.activeBackground": "#3A4050",
     "titleBar.activeForeground": "#FAFAFB"
-  }
+  },
+  "cSpell.language": "en"
 }

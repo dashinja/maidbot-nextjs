@@ -113,6 +113,8 @@ const App = () => {
           validationReturn = false
           return false
         } else {
+          console.log('result.data TELL ME: ', result.data)
+
           validationReturn = result
           console.log('validationReturn: ', validationReturn)
           return true
@@ -130,6 +132,7 @@ const App = () => {
 
     const newestBot = createdBots[createdBots.length - 1]
     getScores()
+    console.log('botStartup - post getScores score: ', score)
     executioner(Task.insideTasks, newestBot, score, 15, executionState)
 
     const creationData = {
@@ -154,9 +157,11 @@ const App = () => {
     getScores()
 
     const botNameValidation = await botNameIsValid()
+    console.log('BEFORE botNameValidation IF statement - bot in bot creation with valid bot name !!!!!!!!: ', bot)
 
     if (botNameValidation) {
       setWorkTasks({ ...workTasks, ...{ workTasks: 5 } })
+      console.log('bot in bot creation with valid bot name !!!!!!!!: ', bot)
       setbot({ ...bot, ...{ botName: bot.botName, semiPermaName: bot.botName || 'Bot' } })
 
       const { submitClick } = counters
@@ -175,7 +180,6 @@ const App = () => {
     }
 
     speakerHandler(2, '')
-      .then(() => setbot({ ...bot, ...{ botType: 'Bipedal', botName: '' } }))
   }
 
   const selectChores = (first: string[], second: string[], bot: any, count: number) => {
@@ -196,7 +200,9 @@ const App = () => {
   }
 
   const saveWorkState = async () => {
+    console.log('saveWorkState() - bot: ', bot)
     let data = { workDone: workTasks.workDone, botName: bot.botName }
+    console.log('saveWorkState - data to send: ', data)
     try {
       return await axios.post('/api/bot/score', data)
     } catch (err) {
@@ -274,7 +280,7 @@ const App = () => {
 
   function drillPractice(e: any) {
     e.preventDefault()
-
+    console.log('drillPractice')
     femaleDefault.and(`${bot.semiPermaName || 'Bot'} activated and ready!}`)
 
     const randChoice = Math.floor(Math.random() * Pattern.length)

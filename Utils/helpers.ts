@@ -71,7 +71,7 @@ export const speakerHandler = async (waitTime: number, ttsString: string, whichV
 export const executioner = (array: string[], bot: any, scoreUpdate: Score, count: number, state: ExecutionerStateProps) => {
   let executionCount = count
 
-  function hasKey<O>(obj: O, key: PropertyKey): key is keyof O {
+  function hasKey<O extends object>(obj: O, key: PropertyKey): key is keyof O {
     return key in obj
   }
 
