@@ -6,9 +6,16 @@ type createFormProps = {
   botType: string,
   botName: string
   changeState: { [key: string]: string}
-  
 }
-export default function CreateForm(props: createFormProps ) {
+
+//TODO: Remove botName?
+export default function CreateForm({
+  onClick,
+  handleInputChange,
+  botType,
+  botName,
+  changeState
+}: createFormProps ) {
   return (
     <>
       <div>
@@ -16,7 +23,7 @@ export default function CreateForm(props: createFormProps ) {
         <h3>Give your bot a name and choose it&apos;s type</h3>
         <h4>How much work can YOUR bot do? </h4>
 
-        <form onSubmit={props.onClick}>
+        <form onSubmit={onClick}>
           <fieldset>
             <legend>Create a Bot </legend>
             < label htmlFor='botName'>Name: </label>
@@ -24,8 +31,8 @@ export default function CreateForm(props: createFormProps ) {
                 name="botName"
                 id='botName'
                 type="text"
-                onChange={props.handleInputChange}
-                value={props.changeState && props.changeState.key}
+                onChange={handleInputChange}
+                value={changeState && changeState.key}
                 placeholder="Enter Bot Name Here"
                 className={''}
               />
@@ -35,9 +42,9 @@ export default function CreateForm(props: createFormProps ) {
             < select
               name="botType"
               id="botType"
-              onChange={props.handleInputChange}
+              onChange={handleInputChange}
               className={''}
-              value={props.changeState?.key || props.botType}
+              value={changeState?.key || botType}
             >
               <option value="Unipedal" > Unipedal </option>
               < option value="Bipedal" > Bipedal </option>

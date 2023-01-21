@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
-import { executioner, ExecutionerProps, ExecutionerStateProps, speakerHandler } from './helpers'
+import { createValidation, executioner, ExecutionerProps, ExecutionerStateProps, speakerHandler } from './helpers'
 import {taskLists} from './patterns'
 
 type DestroyerChoreMethodType = {
@@ -309,5 +309,72 @@ export const botStartup = ({
   speakerHandler((36575 / 1000), '')
     .then(() => executionState.setIsDisabled({ isDisabledChore: false, isDisabledDrill: false, isDisabledBurglar: true }))
     .then(() => executionState.setCounters({ ...executionState.counters, ...{ submitClick: 0 } }))
+}
+
+type CreateBotProps = BotStartupProps & ExecutionerStateProps & {
+  e: React.MouseEventHandler<HTMLFormElement>
+  // setScore,
+  // currentBot,
+  // workTasks,
+  // setWorkTasks,
+  setBot: React.Dispatch<React.SetStateAction<BotInfo>>
+  // counters,
+  // setCounters,
+  // prevBots,
+  // currentScore,
+  // executionState
+}
+
+export const createBot = async ({
+  e,
+  setScore,
+  currentBot,
+  workTasks,
+  setWorkTasks,
+  setBot,
+  counters,
+  setCounters,
+  prevBots,
+  currentScore,
+  executionState
+}: CreateBotProps) => {
+
+  console.log('createBot')
+
+  //TODO: Is e.preventDefault() necessary here?
+  // e.preventDefault()
+
+  getScores(setScore)
+
+  const botNameValidation = await botNameIsValid(currentBot)
+  console.log('BEFORE botNameValidation IF statement - bot in bot creation with valid bot name !!!!!!!!: ', currentBot)
+
+  if (botNameValidation) {
+    setWorkTasks({ ...workTasks, ...{ workTasks: 5 } })
+    console.log('bot in bot creation with valid bot name !!!!!!!!: ', currentBot)
+    setBot({ ...currentBot, ...{ botName: currentBot.botName, semiPermaName: currentBot.botName || 'Bot' } })
+
+    const { submitClick } = counters
+    switch (currentBot.botName) {
+      case '':
+      case 'Bot':
+        createValidation(submitClick, '')
+        setCounters({ ...counters, ...{ submitClick: submitClick + 1 } })
+        break
+
+      default:
+        createValidation(submitClick, currentBot.semiPermaName)
+        botStartup({
+          prevBots, 
+          currentBot, 
+          currentScore, 
+          executionState,
+          setScore
+        })
+        break
+    }
+  }
+
+  speakerHandler(2, '')
 }
 

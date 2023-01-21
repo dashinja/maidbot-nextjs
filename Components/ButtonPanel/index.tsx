@@ -14,25 +14,37 @@ type ButtonPapelProps = {
   burglarDefense: (e: any) => void
 }
 
-export default function ButtonPanel(props: ButtonPapelProps) {
+//TODO: Remove unused props?
+export default function ButtonPanel({
+  formSubmit,
+  botName,
+  botType,
+  handleInputChange,
+  isDisabledChore,
+  isDisabledDrill,
+  isDisabledBurglar,
+  doChores,
+  drillPractice,
+  burglarDefense,
+}: ButtonPapelProps) {
   return (
     <>
       <ActionButton
         text="Do Chore Regimen"
-        onClick={props.doChores}
-        disabled={props.isDisabledChore}
+        onClick={doChores}
+        disabled={isDisabledChore}
       />
 
       <ActionButton
         text="Home Defense Drill Practice"
-        onClick={props.drillPractice}
-        disabled={props.isDisabledDrill}
+        onClick={drillPractice}
+        disabled={isDisabledDrill}
       />
 
       <ActionButton
         text="Burglar Attack"
-        onClick={props.burglarDefense}
-        disabled={props.isDisabledBurglar}
+        onClick={burglarDefense}
+        disabled={isDisabledBurglar}
       />
     </>
   )

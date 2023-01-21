@@ -7,7 +7,7 @@ import { taskLists, Pattern } from '../Utils/patterns'
 import { speakerHandler, createValidation, choreSequence, femaleDefault, femaleDefensive, ExecutionerStateProps, executioner, ExecutionerProps } from '../Utils/helpers'
 
 //Classes
-import Destroyer, { BotInfo, botNameIsValid, botStartup, CounterProp, DisabledStateProp, getScores, Score, WorkTaskProp } from '../Utils/bots'
+import Destroyer, { BotInfo, botNameIsValid, botStartup, CounterProp, createBot, DisabledStateProp, getScores, Score, WorkTaskProp } from '../Utils/bots'
 import Burglar from '../Utils/burglar'
 
 //Components
@@ -19,7 +19,7 @@ let createdBots: any[] = []
 
 const App = () => {
 
-  const [currentBot, setbot] = useState<BotInfo>({
+  const [currentBot, setBot] = useState<BotInfo>({
     botName: '',
     botType: 'Bibedal',
     semiPermaName: 'Bot'
@@ -52,7 +52,7 @@ const App = () => {
     setWorkTasks
   } as ExecutionerStateProps
 
-  const getExecutionPropValues = ({
+const getExecutionPropValues = ({
     taskList: taskList,
     currentBot,
     currentScore,
@@ -66,42 +66,42 @@ const App = () => {
     executionState
   } as ExecutionerProps)
 
-  const createBot = async (e) => {
-    console.log('createBot')
-    e.preventDefault()
-    getScores(setScore)
+  // const createBot = async (e) => {
+  //   console.log('createBot')
+  //   e.preventDefault()
+  //   getScores(setScore)
 
-    const botNameValidation = await botNameIsValid(currentBot)
-    console.log('BEFORE botNameValidation IF statement - bot in bot creation with valid bot name !!!!!!!!: ', currentBot)
+  //   const botNameValidation = await botNameIsValid(currentBot)
+  //   console.log('BEFORE botNameValidation IF statement - bot in bot creation with valid bot name !!!!!!!!: ', currentBot)
 
-    if (botNameValidation) {
-      setWorkTasks({ ...workTasks, ...{ workTasks: 5 } })
-      console.log('bot in bot creation with valid bot name !!!!!!!!: ', currentBot)
-      setbot({ ...currentBot, ...{ botName: currentBot.botName, semiPermaName: currentBot.botName || 'Bot' } })
+  //   if (botNameValidation) {
+  //     setWorkTasks({ ...workTasks, ...{ workTasks: 5 } })
+  //     console.log('bot in bot creation with valid bot name !!!!!!!!: ', currentBot)
+  //     setBot({ ...currentBot, ...{ botName: currentBot.botName, semiPermaName: currentBot.botName || 'Bot' } })
 
-      const { submitClick } = counters
-      switch (currentBot.botName) {
-        case '':
-        case 'Bot':
-          createValidation(submitClick, '')
-          setCounters({ ...counters, ...{ submitClick: submitClick + 1 } })
-          break
+  //     const { submitClick } = counters
+  //     switch (currentBot.botName) {
+  //       case '':
+  //       case 'Bot':
+  //         createValidation(submitClick, '')
+  //         setCounters({ ...counters, ...{ submitClick: submitClick + 1 } })
+  //         break
 
-        default:
-          createValidation(submitClick, currentBot.semiPermaName)
-          botStartup({
-            prevBots: createdBots, 
-            currentBot, 
-            currentScore: score, 
-            executionState: defaultExecutionState,
-            setScore
-          })
-          break
-      }
-    }
+  //       default:
+  //         createValidation(submitClick, currentBot.semiPermaName)
+  //         botStartup({
+  //           prevBots: createdBots, 
+  //           currentBot, 
+  //           currentScore: score, 
+  //           executionState: defaultExecutionState,
+  //           setScore
+  //         })
+  //         break
+  //     }
+  //   }
 
-    speakerHandler(2, '')
-  }
+  //   speakerHandler(2, '')
+  // }
 
   const selectChores = (first: string[], second: string[], bot: any, count: number) => {
     const randChoice = () => Math.random()
@@ -111,6 +111,7 @@ const App = () => {
         currentBot: bot,
         currentScore: getScores,
         count,
+        executionState: defaultExecutionState
       }))
 
       setWorkTasks({ ...workTasks, ...{ choreList: 'Indoor Chores' } })
@@ -309,10 +310,10 @@ const App = () => {
     const { target } = event
     switch (target.type) {
       case 'text':
-        setbot({ ...currentBot, ...{ botName: target.value } })
+        setBot({ ...currentBot, ...{ botName: target.value } })
         break
       case 'select-one':
-        setbot({ ...currentBot, ...{ botType: target.value } })
+        setBot({ ...currentBot, ...{ botType: target.value } })
         break
       case 'click':
         break
@@ -327,7 +328,8 @@ const App = () => {
   return (
     <>
       <CreateForm
-        onClick={createBot}
+      //TODO: Relook at this onClick typing
+        onClick={createBot as unknown as React.MouseEventHandler<HTMLFormElement>}
         botName={currentBot.botName}
         botType={currentBot.botType}
         handleInputChange={handleInputChange}
