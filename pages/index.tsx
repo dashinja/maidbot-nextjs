@@ -37,7 +37,7 @@ const App = () => {
     isDisabledDrill: true
   })
   const [score, setScore] = useState<Score>('high score')
-  const [winner, setWinner] = useState()
+  const [winner, setWinner] = useState<Destroyer['name']>()
   const [counters, setCounters] = useState<CounterProp>({
     choreClick: 0,
     submitClick: 0,
@@ -59,37 +59,12 @@ const App = () => {
     count,
     executionState = defaultExecutionState
   }: ExecutionerProps) => ({
-    taskList: taskList, //createdBots,
+    taskList: taskList,
     currentBot,
     currentScore,
     count,
     executionState
   } as ExecutionerProps)
-
-  // const botStartup = () => {
-  //   console.log('botStartup()')
-  //   createdBots.push(new Destroyer(bot.botName, bot.botType))
-
-  //   const newestBot = createdBots[createdBots.length - 1]
-  //   getScores(setScore)
-  //   console.log('botStartup - post getScores score: ', score)
-  //   executioner(Task.insideTasks, newestBot, score, 15, executionState)
-
-  //   const creationData = {
-  //     name: bot.botName,
-  //     botType: bot.botType,
-  //     workDone: workTasks.workDone,
-  //     attack: newestBot.attackValue(bot.botName).attack,
-  //     defense: newestBot.defenseValue(bot.botName).defense,
-  //     speed: newestBot.speedValue(bot.botName).speed
-  //   }
-
-  //   axios.post('/api/bot', creationData).catch(err => console.error(err))
-
-  //   speakerHandler((36575 / 1000), '')
-  //     .then(() => setIsDisabled({ isDisabledChore: false, isDisabledDrill: false, isDisabledBurglar: true }))
-  //     .then(() => setCounters({ ...counters, ...{ submitClick: 0 } }))
-  // }
 
   const createBot = async (e) => {
     console.log('createBot')
@@ -137,7 +112,6 @@ const App = () => {
         currentScore: getScores,
         count,
       }))
-      // executioner(first, bot, getScores, count, executionState)
 
       setWorkTasks({ ...workTasks, ...{ choreList: 'Indoor Chores' } })
     }
@@ -148,7 +122,7 @@ const App = () => {
         currentScore: getScores,
         count,
       }))
-      // executioner(second, bot, getScores, count, defaultExecutionState)
+
       setWorkTasks({ ...workTasks, ...{ choreList: 'Outdoor Chores' } })
     }
 
@@ -275,7 +249,6 @@ const App = () => {
       currentScore: getScores,
       count: 16,
     }))
-    // executioner(choice, createdBots[createdBots.length - 1], getScores, 16, defaultExecutionState)
 
     setWorkTasks({ ...workTasks, ...{ workDone: workTasks.workDone + 5 } })
     setIsDisabled({ isDisabledBurglar: true, isDisabledChore: true, isDisabledDrill: true })
@@ -376,9 +349,9 @@ const App = () => {
         currentTask={workTasks.currentTask}
         semiPermaName={currentBot.semiPermaName}
         nextTask={workTasks.nextTask}
-        progressInterval={counters.progressInterval} //shows "work done"
+        progressInterval={counters.progressInterval}
         winner={winner}
-        score={score} // taken from database
+        score={score}
         bonusSass={bonusSass}
       />
     </>

@@ -187,11 +187,13 @@ export default class Destroyer {
   }
 }
 
-export type Score = Function | string | {
+export type ScoreObject = {
   botType: string
   workDone: number
   name: string
 }
+
+export type Score = Function | string | ScoreObject
 
 export const getScores = async (setScore: React.Dispatch<React.SetStateAction<Score>>) => {
   try {
