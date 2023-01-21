@@ -66,43 +66,6 @@ const getExecutionPropValues = ({
     executionState
   } as ExecutionerProps)
 
-  // const createBot = async (e) => {
-  //   console.log('createBot')
-  //   e.preventDefault()
-  //   getScores(setScore)
-
-  //   const botNameValidation = await botNameIsValid(currentBot)
-  //   console.log('BEFORE botNameValidation IF statement - bot in bot creation with valid bot name !!!!!!!!: ', currentBot)
-
-  //   if (botNameValidation) {
-  //     setWorkTasks({ ...workTasks, ...{ workTasks: 5 } })
-  //     console.log('bot in bot creation with valid bot name !!!!!!!!: ', currentBot)
-  //     setBot({ ...currentBot, ...{ botName: currentBot.botName, semiPermaName: currentBot.botName || 'Bot' } })
-
-  //     const { submitClick } = counters
-  //     switch (currentBot.botName) {
-  //       case '':
-  //       case 'Bot':
-  //         createValidation(submitClick, '')
-  //         setCounters({ ...counters, ...{ submitClick: submitClick + 1 } })
-  //         break
-
-  //       default:
-  //         createValidation(submitClick, currentBot.semiPermaName)
-  //         botStartup({
-  //           prevBots: createdBots, 
-  //           currentBot, 
-  //           currentScore: score, 
-  //           executionState: defaultExecutionState,
-  //           setScore
-  //         })
-  //         break
-  //     }
-  //   }
-
-  //   speakerHandler(2, '')
-  // }
-
   const selectChores = (first: string[], second: string[], bot: any, count: number) => {
     const randChoice = () => Math.random()
     const executeFirstChoreSet = () => {
