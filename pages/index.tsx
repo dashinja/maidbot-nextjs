@@ -7,7 +7,7 @@ import { taskLists, Pattern } from '../Utils/patterns'
 import { speakerHandler, createValidation, choreSequence, femaleDefault, femaleDefensive, ExecutionerStateProps, executioner, ExecutionerProps } from '../Utils/helpers'
 
 //Classes
-import Destroyer, { BotInfo, botNameIsValid, botStartup, CounterProp, createBot, DisabledStateProp, getScores, Score, selectChores, WorkTaskProp } from '../Utils/bots'
+import Destroyer, { BotInfo, botNameIsValid, botStartup, CounterProp, createBot, DisabledStateProp, getScores, saveWorkState, Score, selectChores, WorkTaskProp } from '../Utils/bots'
 import Burglar from '../Utils/burglar'
 
 //Components
@@ -66,17 +66,6 @@ const getExecutionPropValues = ({
     executionState
   } as ExecutionerProps)
 
-  const saveWorkState = async () => {
-    console.log('saveWorkState() - bot: ', currentBot)
-    let data = { workDone: workTasks.workDone, botName: currentBot.botName }
-    console.log('saveWorkState - data to send: ', data)
-    try {
-      return await axios.post('/api/bot/score', data)
-    } catch (err) {
-      return console.error(err)
-    }
-  }
-
   const doChores = (e: any) => {
     e.preventDefault()
 
@@ -114,7 +103,10 @@ const getExecutionPropValues = ({
       executionState: defaultExecutionState
     })
 
-    saveWorkState()
+    saveWorkState({
+      currentBot,
+      workTasks
+    })
 
     const workingOnIt = setTimeout(() => {
       if (workTasks.taskIsComplete === false) {
@@ -198,7 +190,10 @@ const getExecutionPropValues = ({
     speakerHandler(14, '')
       .then(() => setIsDisabled({ isDisabledBurglar: false, isDisabledChore: false, isDisabledDrill: false }))
 
-    saveWorkState()
+    saveWorkState({
+      currentBot,
+      workTasks
+    })
   }
 
   const saveBurglarState = async () => {

@@ -434,3 +434,22 @@ export const selectChores = ({
     ? executeFirstChoreSet()
     : executeSecondChoreSet()
 }
+
+type SaveWorkStateProps = {
+  currentBot: BotInfo
+  workTasks: ExecutionerStateProps['workTasks']
+}
+
+export const saveWorkState = async ({
+  currentBot,
+  workTasks
+}: SaveWorkStateProps) => {
+  console.log('saveWorkState() - bot: ', currentBot)
+  let data = { workDone: workTasks.workDone, botName: currentBot.botName }
+  console.log('saveWorkState - data to send: ', data)
+  try {
+    return await axios.post('/api/bot/score', data)
+  } catch (err) {
+    return console.error(err)
+  }
+}
