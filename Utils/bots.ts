@@ -378,3 +378,59 @@ export const createBot = async ({
   speakerHandler(2, '')
 }
 
+export const getExecutionPropValues = ({
+  taskList,
+  currentBot,
+  currentScore,
+  count,
+  executionState
+}: ExecutionerProps) => ({
+  taskList,
+  currentBot,
+  currentScore,
+  count,
+  executionState
+} as ExecutionerProps)
+
+type SelectChoresProps  = Pick<ExecutionerProps, 'executionState'> & {
+  first: string[], 
+  second: string[], 
+  bot: any, 
+  count: number
+}
+
+export const selectChores = ({
+  first,
+  second,
+  bot,
+  count,
+  executionState
+}: SelectChoresProps) => {
+  const randChoice = () => Math.random()
+  const executeFirstChoreSet = () => {
+    executioner(getExecutionPropValues({
+      taskList: first,
+      currentBot: bot,
+      currentScore: getScores,
+      count,
+      executionState
+    }))
+
+    executionState.setWorkTasks({ ...executionState.workTasks, ...{ choreList: 'Indoor Chores' } })
+  }
+  const executeSecondChoreSet = () => {
+    executioner(getExecutionPropValues({
+      taskList: second,
+      currentBot: bot,
+      currentScore: getScores,
+      count,
+      executionState
+    }))
+
+    executionState.setWorkTasks({ ...executionState.workTasks, ...{ choreList: 'Outdoor Chores' } })
+  }
+
+  randChoice() > 0.3
+    ? executeFirstChoreSet()
+    : executeSecondChoreSet()
+}

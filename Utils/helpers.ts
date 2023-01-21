@@ -26,7 +26,7 @@ export type ExecutionerProps = {
    * Count needs a BETTER name and clearer meaning
    */
   count: number, 
-  executionState?: ExecutionerStateProps,
+  executionState: ExecutionerStateProps,
 }
 
 const defaultVoiceOptions: WhichVoiceOptions = {

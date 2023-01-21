@@ -7,7 +7,7 @@ import { taskLists, Pattern } from '../Utils/patterns'
 import { speakerHandler, createValidation, choreSequence, femaleDefault, femaleDefensive, ExecutionerStateProps, executioner, ExecutionerProps } from '../Utils/helpers'
 
 //Classes
-import Destroyer, { BotInfo, botNameIsValid, botStartup, CounterProp, createBot, DisabledStateProp, getScores, Score, WorkTaskProp } from '../Utils/bots'
+import Destroyer, { BotInfo, botNameIsValid, botStartup, CounterProp, createBot, DisabledStateProp, getScores, Score, selectChores, WorkTaskProp } from '../Utils/bots'
 import Burglar from '../Utils/burglar'
 
 //Components
@@ -53,47 +53,48 @@ const App = () => {
   } as ExecutionerStateProps
 
 const getExecutionPropValues = ({
-    taskList: taskList,
+    taskList,
     currentBot,
     currentScore,
     count,
     executionState = defaultExecutionState
   }: ExecutionerProps) => ({
-    taskList: taskList,
+    taskList,
     currentBot,
     currentScore,
     count,
     executionState
   } as ExecutionerProps)
 
-  const selectChores = (first: string[], second: string[], bot: any, count: number) => {
-    const randChoice = () => Math.random()
-    const executeFirstChoreSet = () => {
-      executioner(getExecutionPropValues({
-        taskList: first,
-        currentBot: bot,
-        currentScore: getScores,
-        count,
-        executionState: defaultExecutionState
-      }))
+  // const selectChores = (first: string[], second: string[], bot: any, count: number) => {
+  //   const randChoice = () => Math.random()
+  //   const executeFirstChoreSet = () => {
+  //     executioner(getExecutionPropValues({
+  //       taskList: first,
+  //       currentBot: bot,
+  //       currentScore: getScores,
+  //       count,
+  //       executionState: defaultExecutionState
+  //     }))
 
-      setWorkTasks({ ...workTasks, ...{ choreList: 'Indoor Chores' } })
-    }
-    const executeSecondChoreSet = () => {
-      executioner(getExecutionPropValues({
-        taskList: second,
-        currentBot: bot,
-        currentScore: getScores,
-        count,
-      }))
+  //     setWorkTasks({ ...workTasks, ...{ choreList: 'Indoor Chores' } })
+  //   }
+  //   const executeSecondChoreSet = () => {
+  //     executioner(getExecutionPropValues({
+  //       taskList: second,
+  //       currentBot: bot,
+  //       currentScore: getScores,
+  //       count,
+  //       executionState: defaultExecutionState
+  //     }))
 
-      setWorkTasks({ ...workTasks, ...{ choreList: 'Outdoor Chores' } })
-    }
+  //     setWorkTasks({ ...workTasks, ...{ choreList: 'Outdoor Chores' } })
+  //   }
 
-    randChoice() > 0.3
-      ? executeFirstChoreSet()
-      : executeSecondChoreSet()
-  }
+  //   randChoice() > 0.3
+  //     ? executeFirstChoreSet()
+  //     : executeSecondChoreSet()
+  // }
 
   const saveWorkState = async () => {
     console.log('saveWorkState() - bot: ', currentBot)
@@ -135,7 +136,14 @@ const getExecutionPropValues = ({
         break
     }
 
-    selectChores(taskLists.insideTasks, taskLists.outsideTasks, createdBots[createdBots.length - 1], 16)
+    selectChores({
+      first: taskLists.insideTasks, 
+      second: taskLists.outsideTasks, 
+      bot: createdBots[createdBots.length - 1], 
+      count: 16,
+      executionState: defaultExecutionState
+    })
+    // selectChores(taskLists.insideTasks, taskLists.outsideTasks, createdBots[createdBots.length - 1], 16)
 
     saveWorkState()
 
@@ -212,6 +220,7 @@ const getExecutionPropValues = ({
       currentBot: createdBots[createdBots.length - 1],
       currentScore: getScores,
       count: 16,
+      executionState: defaultExecutionState
     }))
 
     setWorkTasks({ ...workTasks, ...{ workDone: workTasks.workDone + 5 } })
