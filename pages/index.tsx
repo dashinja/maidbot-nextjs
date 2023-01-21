@@ -1,21 +1,10 @@
 import React, { useState } from 'react'
-import axios, { AxiosResponse } from 'axios'
 
-//Helpers and Constants
-import { CONSTANTS } from '../Utils/constants'
-import { taskLists, Pattern } from '../Utils/patterns'
-import { speakerHandler, createValidation, choreSequence, femaleDefault, femaleDefensive, ExecutionerStateProps, executioner, ExecutionerProps } from '../Utils/helpers'
+import Destroyer, { bonusSass, BotInfo, burglarDefense, CounterProp, createBot, DisabledStateProp, doChores, drillPractice, Score, WorkTaskProp } from '../Utils/bots'
 
-//Classes
-import Destroyer, { bonusSass, BotInfo, botNameIsValid, botStartup, burglarDefense, CounterProp, createBot, DisabledStateProp, doChores, drillPractice, getScores, saveWorkState, Score, selectChores, WorkTaskProp } from '../Utils/bots'
-import Burglar from '../Utils/burglar'
-
-//Components
 import InfoPanel from '../Components/InfoPanel/index'
 import ButtonPanel from '../Components/ButtonPanel/index'
 import CreateForm from '../Components/CreateForm/index'
-
-let createdBots: any[] = []
 
 const App = () => {
 
@@ -24,35 +13,28 @@ const App = () => {
     botType: 'Bibedal',
     semiPermaName: 'Bot'
   })
-  const [workTasks, setWorkTasks] = useState<WorkTaskProp>({
+  const [workTasks, _setWorkTasks] = useState<WorkTaskProp>({
     workDone: 0,
     currentTask: 'Awaiting Bot Creation',
     nextTask: 0,
     choreList: '',
     taskIsComplete: true
   })
-  const [isDisabled, setIsDisabled] = useState<DisabledStateProp>({
+  const [isDisabled, _setIsDisabled] = useState<DisabledStateProp>({
     isDisabledChore: true,
     isDisabledBurglar: true,
     isDisabledDrill: true
   })
-  const [score, setScore] = useState<Score>('high score')
-  const [winner, setWinner] = useState<Destroyer['name']>()
-  const [counters, setCounters] = useState<CounterProp>({
+  const [score, _setScore] = useState<Score>('high score')
+  const [winner, _setWinner] = useState<Destroyer['name']>()
+  const [counters, _setCounters] = useState<CounterProp>({
     choreClick: 0,
     submitClick: 0,
     progressInterval: 0
   })
   const [changeState, setChangeState] = useState<{ [key: string]: string }>()
 
-  const defaultExecutionState = {
-    counters,
-    setCounters,
-    workTasks,
-    setWorkTasks
-  } as ExecutionerStateProps
-
-
+  //TODO Where does this really go?
 
   const handleInputChange = (event: { target: any }) => {
     const { target } = event

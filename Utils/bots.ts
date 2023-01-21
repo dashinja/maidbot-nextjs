@@ -327,6 +327,7 @@ type CreateBotProps = BotStartupProps & {
   // executionState
 }
 
+//TODO: Where is this actually called?
 export const createBot = async ({
   e,
   setScore,
