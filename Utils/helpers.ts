@@ -1,6 +1,7 @@
 import { CONSTANTS } from './constants'
 import React from 'react'
-import { CounterProp, Score, WorkTaskProp } from '../pages'
+import {BotStartupProps, CounterProp, DisabledStateProp, Score, WorkTaskProp} from '../Utils/bots'
+import { Task } from './patterns'
 
 type WhichVoiceOptions = {
   voice?: number,
@@ -14,6 +15,18 @@ export type ExecutionerStateProps = {
   setWorkTasks: React.Dispatch<React.SetStateAction<WorkTaskProp>>,
   counters: CounterProp,
   setCounters: React.Dispatch<React.SetStateAction<CounterProp>>
+  setIsDisabled: React.Dispatch<React.SetStateAction<DisabledStateProp>>
+}
+
+export type ExecutionerProps = {  
+  taskList: string[],
+  currentBot: any, 
+  currentScore: Score, 
+  /**
+   * Count needs a BETTER name and clearer meaning
+   */
+  count: number, 
+  executionState?: ExecutionerStateProps,
 }
 
 const defaultVoiceOptions: WhichVoiceOptions = {
@@ -68,44 +81,50 @@ export const speakerHandler = async (waitTime: number, ttsString: string, whichV
   })
 }
 
-export const executioner = (array: string[], bot: any, scoreUpdate: Score, count: number, state: ExecutionerStateProps) => {
+export const executioner = ({
+  taskList,
+  currentBot,  
+  currentScore,  
+  count,  
+  executionState, 
+}: ExecutionerProps) => {
   let executionCount = count
 
   function hasKey<O extends object>(obj: O, key: PropertyKey): key is keyof O {
     return key in obj
   }
 
-  const command = array[0]
-  if (hasKey(bot, command)) {
-    const botFunction = bot.command
+  const command = taskList[0]
+  if (hasKey(currentBot, command)) {
+    const botFunction = currentBot.command
     console.log('command: ', command)
     if (command && typeof botFunction === 'function') {
       console.log('inside command function')
 
-      state.setWorkTasks({ ...state.workTasks, ...{ nextTask: array.length, currentTask: botFunction().description, taskIsComplete: false } })
+      executionState.setWorkTasks({ ...executionState.workTasks, ...{ nextTask: taskList.length, currentTask: botFunction().description, taskIsComplete: false } })
 
-      speakerHandler(botFunction(bot.name, bot.type).eta, '')
+      speakerHandler(botFunction(currentBot.name, currentBot.type).eta, '')
         .then(() => {
-          let nextArray = array.slice(1)
-          state.setWorkTasks({ ...state.workTasks, ...{ nextTask: nextArray.length } })
-          state.setCounters({ ...state.counters, ...{ progressInterval: state.counters.progressInterval + 1 } })
+          let nextArray = taskList.slice(1)
+          executionState.setWorkTasks({ ...executionState.workTasks, ...{ nextTask: nextArray.length } })
+          executionState.setCounters({ ...executionState.counters, ...{ progressInterval: executionState.counters.progressInterval + 1 } })
           executionCount += 1
-          executioner(nextArray, bot, scoreUpdate, count, state)
+          executioner({taskList: nextArray, currentBot: currentBot, currentScore: currentScore, count, executionState: executionState})
         })
     } else {
 
       if (executionCount >= 16) {
-        state.setWorkTasks({ ...state.workTasks, ...{ taskIsComplete: true } })
-        speakerHandler(0, `${bot.name} completed the task set! Standing by!`)
+        executionState.setWorkTasks({ ...executionState.workTasks, ...{ taskIsComplete: true } })
+        speakerHandler(0, `${currentBot.name} completed the task set! Standing by!`)
       }
 
-      if (typeof scoreUpdate === 'function') {
-        scoreUpdate()
+      if (typeof currentScore === 'function') {
+        currentScore()
       }
 
       speakerHandler(3, '')
         .then(() => {
-          state.setWorkTasks({ ...state.workTasks, ...{ currentTask: `${bot.name} completed all tasks!` } })
+          executionState.setWorkTasks({ ...executionState.workTasks, ...{ currentTask: `${currentBot.name} completed all tasks!` } })
         })
         .then(() => {
           if (executionCount <= 15) {

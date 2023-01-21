@@ -3,11 +3,11 @@ import axios, { AxiosResponse } from 'axios'
 
 //Helpers and Constants
 import { CONSTANTS } from '../Utils/constants'
-import { Task, Pattern } from '../Utils/patterns'
-import { speakerHandler, createValidation, choreSequence, femaleDefault, femaleDefensive, ExecutionerStateProps, executioner } from '../Utils/helpers'
+import { taskLists, Pattern } from '../Utils/patterns'
+import { speakerHandler, createValidation, choreSequence, femaleDefault, femaleDefensive, ExecutionerStateProps, executioner, ExecutionerProps } from '../Utils/helpers'
 
 //Classes
-import Destroyer from '../Utils/bots'
+import Destroyer, { BotInfo, botNameIsValid, botStartup, CounterProp, DisabledStateProp, getScores, Score, WorkTaskProp } from '../Utils/bots'
 import Burglar from '../Utils/burglar'
 
 //Components
@@ -17,40 +17,9 @@ import CreateForm from '../Components/CreateForm/index'
 
 let createdBots: any[] = []
 
-type BotInfo = {
-  botName: string,
-  botType: string,
-  semiPermaName: string
-}
-
-export type WorkTaskProp = {
-  workDone: number,
-  currentTask: string,
-  nextTask: number,
-  choreList: string,
-  taskIsComplete: boolean
-}
-
-export type CounterProp = {
-  choreClick: number,
-  submitClick: number,
-  progressInterval: number
-}
-
-type DisabledStateProp = {
-  isDisabledChore: boolean
-  isDisabledDrill: boolean
-  isDisabledBurglar: boolean
-}
-
-export type Score = Function | string | {
-    botType: string
-    workDone: number
-    name: string
-  }
 const App = () => {
 
-  const [bot, setbot] = useState<BotInfo>({
+  const [currentBot, setbot] = useState<BotInfo>({
     botName: '',
     botType: 'Bibedal',
     semiPermaName: 'Bot'
@@ -76,96 +45,67 @@ const App = () => {
   })
   const [changeState, setChangeState] = useState<{ [key: string]: string }>()
 
-  const executionState = {
+  const defaultExecutionState = {
     counters,
     setCounters,
     workTasks,
     setWorkTasks
   } as ExecutionerStateProps
 
-  const getScores = async () => {
-    try {
-      const allScores = await axios.get('/api/bot/score')
-      console.log('GET: api/bot/score: ', await allScores.data)
-      setScore(allScores.data)
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  const getExecutionPropValues = ({
+    taskList: taskList,
+    currentBot,
+    currentScore,
+    count,
+    executionState = defaultExecutionState
+  }: ExecutionerProps) => ({
+    taskList: taskList, //createdBots,
+    currentBot,
+    currentScore,
+    count,
+    executionState
+  } as ExecutionerProps)
 
-  const botNameIsValid = async () => {
-    let validationReturn: boolean | AxiosResponse<any, any>
+  // const botStartup = () => {
+  //   console.log('botStartup()')
+  //   createdBots.push(new Destroyer(bot.botName, bot.botType))
 
-    if (bot.botName === '') {
-      return true
-    } else {
-      const { botName } = bot
-      const data = {
-        name: botName
-      }
+  //   const newestBot = createdBots[createdBots.length - 1]
+  //   getScores(setScore)
+  //   console.log('botStartup - post getScores score: ', score)
+  //   executioner(Task.insideTasks, newestBot, score, 15, executionState)
 
-      try {
-        console.log("POST: api/bot/name")
-        const result = await axios.post('api/bot/name', data)
+  //   const creationData = {
+  //     name: bot.botName,
+  //     botType: bot.botType,
+  //     workDone: workTasks.workDone,
+  //     attack: newestBot.attackValue(bot.botName).attack,
+  //     defense: newestBot.defenseValue(bot.botName).defense,
+  //     speed: newestBot.speedValue(bot.botName).speed
+  //   }
 
-        if (!result.data) {
-          speakerHandler(0, 'Bot Name Already Taken! You MUST Choose Another')
-          validationReturn = false
-          return false
-        } else {
-          console.log('result.data TELL ME: ', result.data)
+  //   axios.post('/api/bot', creationData).catch(err => console.error(err))
 
-          validationReturn = result
-          console.log('validationReturn: ', validationReturn)
-          return true
-        }
-
-      } catch (error) {
-        console.error(error)
-      }
-    }
-  }
-
-  const botStartup = () => {
-    console.log('botStartup()')
-    createdBots.push(new Destroyer(bot.botName, bot.botType))
-
-    const newestBot = createdBots[createdBots.length - 1]
-    getScores()
-    console.log('botStartup - post getScores score: ', score)
-    executioner(Task.insideTasks, newestBot, score, 15, executionState)
-
-    const creationData = {
-      name: bot.botName,
-      botType: bot.botType,
-      workDone: workTasks.workDone,
-      attack: newestBot.attackValue(bot.botName).attack,
-      defense: newestBot.defenseValue(bot.botName).defense,
-      speed: newestBot.speedValue(bot.botName).speed
-    }
-
-    axios.post('/api/bot', creationData).catch(err => console.error(err))
-
-    speakerHandler((36575 / 1000), '')
-      .then(() => setIsDisabled({ isDisabledChore: false, isDisabledDrill: false, isDisabledBurglar: true }))
-      .then(() => setCounters({ ...counters, ...{ submitClick: 0 } }))
-  }
+  //   speakerHandler((36575 / 1000), '')
+  //     .then(() => setIsDisabled({ isDisabledChore: false, isDisabledDrill: false, isDisabledBurglar: true }))
+  //     .then(() => setCounters({ ...counters, ...{ submitClick: 0 } }))
+  // }
 
   const createBot = async (e) => {
     console.log('createBot')
     e.preventDefault()
-    getScores()
+    getScores(setScore)
 
-    const botNameValidation = await botNameIsValid()
-    console.log('BEFORE botNameValidation IF statement - bot in bot creation with valid bot name !!!!!!!!: ', bot)
+    const botNameValidation = await botNameIsValid(currentBot)
+    console.log('BEFORE botNameValidation IF statement - bot in bot creation with valid bot name !!!!!!!!: ', currentBot)
 
     if (botNameValidation) {
       setWorkTasks({ ...workTasks, ...{ workTasks: 5 } })
-      console.log('bot in bot creation with valid bot name !!!!!!!!: ', bot)
-      setbot({ ...bot, ...{ botName: bot.botName, semiPermaName: bot.botName || 'Bot' } })
+      console.log('bot in bot creation with valid bot name !!!!!!!!: ', currentBot)
+      setbot({ ...currentBot, ...{ botName: currentBot.botName, semiPermaName: currentBot.botName || 'Bot' } })
 
       const { submitClick } = counters
-      switch (bot.botName) {
+      switch (currentBot.botName) {
         case '':
         case 'Bot':
           createValidation(submitClick, '')
@@ -173,8 +113,14 @@ const App = () => {
           break
 
         default:
-          createValidation(submitClick, bot.semiPermaName)
-          botStartup()
+          createValidation(submitClick, currentBot.semiPermaName)
+          botStartup({
+            prevBots: createdBots, 
+            currentBot, 
+            currentScore: score, 
+            executionState: defaultExecutionState,
+            setScore
+          })
           break
       }
     }
@@ -185,12 +131,24 @@ const App = () => {
   const selectChores = (first: string[], second: string[], bot: any, count: number) => {
     const randChoice = () => Math.random()
     const executeFirstChoreSet = () => {
-      executioner(first, bot, getScores, count, executionState)
+      executioner(getExecutionPropValues({
+        taskList: first,
+        currentBot: bot,
+        currentScore: getScores,
+        count,
+      }))
+      // executioner(first, bot, getScores, count, executionState)
 
       setWorkTasks({ ...workTasks, ...{ choreList: 'Indoor Chores' } })
     }
     const executeSecondChoreSet = () => {
-      executioner(second, bot, getScores, count, executionState)
+      executioner(getExecutionPropValues({
+        taskList: second,
+        currentBot: bot,
+        currentScore: getScores,
+        count,
+      }))
+      // executioner(second, bot, getScores, count, defaultExecutionState)
       setWorkTasks({ ...workTasks, ...{ choreList: 'Outdoor Chores' } })
     }
 
@@ -200,8 +158,8 @@ const App = () => {
   }
 
   const saveWorkState = async () => {
-    console.log('saveWorkState() - bot: ', bot)
-    let data = { workDone: workTasks.workDone, botName: bot.botName }
+    console.log('saveWorkState() - bot: ', currentBot)
+    let data = { workDone: workTasks.workDone, botName: currentBot.botName }
     console.log('saveWorkState - data to send: ', data)
     try {
       return await axios.post('/api/bot/score', data)
@@ -239,7 +197,7 @@ const App = () => {
         break
     }
 
-    selectChores(Task.insideTasks, Task.outsideTasks, createdBots[createdBots.length - 1], 16)
+    selectChores(taskLists.insideTasks, taskLists.outsideTasks, createdBots[createdBots.length - 1], 16)
 
     saveWorkState()
 
@@ -281,7 +239,7 @@ const App = () => {
   function drillPractice(e: any) {
     e.preventDefault()
     console.log('drillPractice')
-    femaleDefault.and(`${bot.semiPermaName || 'Bot'} activated and ready!}`)
+    femaleDefault.and(`${currentBot.semiPermaName || 'Bot'} activated and ready!}`)
 
     const randChoice = Math.floor(Math.random() * Pattern.length)
     const choice = Pattern[randChoice]
@@ -311,7 +269,13 @@ const App = () => {
         break
     }
 
-    executioner(choice, createdBots[createdBots.length - 1], getScores, 16, executionState)
+    executioner(getExecutionPropValues({
+      taskList: choice,
+      currentBot: createdBots[createdBots.length - 1],
+      currentScore: getScores,
+      count: 16,
+    }))
+    // executioner(choice, createdBots[createdBots.length - 1], getScores, 16, defaultExecutionState)
 
     setWorkTasks({ ...workTasks, ...{ workDone: workTasks.workDone + 5 } })
     setIsDisabled({ isDisabledBurglar: true, isDisabledChore: true, isDisabledDrill: true })
@@ -372,10 +336,10 @@ const App = () => {
     const { target } = event
     switch (target.type) {
       case 'text':
-        setbot({ ...bot, ...{ botName: target.value } })
+        setbot({ ...currentBot, ...{ botName: target.value } })
         break
       case 'select-one':
-        setbot({ ...bot, ...{ botType: target.value } })
+        setbot({ ...currentBot, ...{ botType: target.value } })
         break
       case 'click':
         break
@@ -391,15 +355,15 @@ const App = () => {
     <>
       <CreateForm
         onClick={createBot}
-        botName={bot.botName}
-        botType={bot.botType}
+        botName={currentBot.botName}
+        botType={currentBot.botType}
         handleInputChange={handleInputChange}
         changeState={changeState}
       />
       <ButtonPanel
         formSubmit={createBot}
-        botName={bot.botName}
-        botType={bot.botType}
+        botName={currentBot.botName}
+        botType={currentBot.botType}
         handleInputChange={handleInputChange}
         doChores={doChores}
         isDisabledChore={isDisabled.isDisabledChore}
@@ -410,7 +374,7 @@ const App = () => {
       />
       <InfoPanel
         currentTask={workTasks.currentTask}
-        semiPermaName={bot.semiPermaName}
+        semiPermaName={currentBot.semiPermaName}
         nextTask={workTasks.nextTask}
         progressInterval={counters.progressInterval} //shows "work done"
         winner={winner}

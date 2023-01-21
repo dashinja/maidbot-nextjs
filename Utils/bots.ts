@@ -1,3 +1,7 @@
+import axios, { AxiosResponse } from 'axios'
+import { executioner, ExecutionerProps, ExecutionerStateProps, speakerHandler } from './helpers'
+import {taskLists} from './patterns'
+
 type DestroyerChoreMethodType = {
   description: string
   eta: number,
@@ -182,3 +186,126 @@ export default class Destroyer {
     }
   }
 }
+
+export type Score = Function | string | {
+  botType: string
+  workDone: number
+  name: string
+}
+
+export const getScores = async (setScore: React.Dispatch<React.SetStateAction<Score>>) => {
+  try {
+    const allScores = await axios.get('/api/bot/score')
+    console.log('GET: api/bot/score: ', await allScores.data)
+    setScore(allScores.data)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export type BotInfo = {
+  botName: string,
+  botType: string,
+  semiPermaName: string
+}
+
+export const botNameIsValid = async (bot: BotInfo) => {
+  let validationReturn: boolean | AxiosResponse<any, any>
+
+  if (bot.botName === '') {
+    return true
+  } else {
+    const { botName } = bot
+    const data = {
+      name: botName
+    }
+
+    try {
+      console.log("POST: api/bot/name")
+      const result = await axios.post('api/bot/name', data)
+
+      if (!result.data) {
+        speakerHandler(0, 'Bot Name Already Taken! You MUST Choose Another')
+        validationReturn = false
+        return false
+      } else {
+        console.log('result.data TELL ME: ', result.data)
+
+        validationReturn = result
+        console.log('validationReturn: ', validationReturn)
+        return true
+      }
+
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
+export type WorkTaskProp = {
+  workDone: number,
+  currentTask: string,
+  nextTask: number,
+  choreList: string,
+  taskIsComplete: boolean
+}
+
+export type CounterProp = {
+  choreClick: number,
+  submitClick: number,
+  progressInterval: number
+}
+
+export type DisabledStateProp = {
+  isDisabledChore: boolean
+  isDisabledDrill: boolean
+  isDisabledBurglar: boolean
+}
+
+export type BotStartupProps = {
+  prevBots: unknown[], 
+  currentBot: any, 
+  currentScore: Score, 
+  executionState: ExecutionerStateProps,
+  setScore: React.Dispatch<React.SetStateAction<Score>>,
+}
+
+export const botStartup = ({
+  prevBots, 
+  currentBot, 
+  currentScore, 
+  executionState,
+  setScore,
+}: BotStartupProps) => {
+  console.log('botStartup()')
+  prevBots.push(new Destroyer(currentBot.botName, currentBot.botType))
+
+  const newestBot = prevBots[prevBots.length - 1] as Destroyer
+  
+  getScores(setScore)
+  console.log('botStartup - post getScores score: ', currentScore)
+  executioner({
+    taskList: taskLists.insideTasks,
+    currentBot,
+    currentScore,
+    count: 15,
+    executionState,
+  })
+  // executioner(Task.insideTasks, newestBot, currentScore, 15, executionState)
+
+  const creationData = {
+    name: currentBot.botName,
+    botType: currentBot.botType,
+    workDone: executionState.workTasks.workDone,
+    attack: newestBot.attackValue().attack,
+    defense: newestBot.defenseValue().defense,
+    speed: newestBot.speedValue().speed
+  }
+
+  axios.post('/api/bot', creationData).catch(err => console.error(err))
+
+  speakerHandler((36575 / 1000), '')
+    .then(() => executionState.setIsDisabled({ isDisabledChore: false, isDisabledDrill: false, isDisabledBurglar: true }))
+    .then(() => executionState.setCounters({ ...executionState.counters, ...{ submitClick: 0 } }))
+}
+
