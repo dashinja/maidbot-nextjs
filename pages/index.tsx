@@ -66,36 +66,6 @@ const getExecutionPropValues = ({
     executionState
   } as ExecutionerProps)
 
-  // const selectChores = (first: string[], second: string[], bot: any, count: number) => {
-  //   const randChoice = () => Math.random()
-  //   const executeFirstChoreSet = () => {
-  //     executioner(getExecutionPropValues({
-  //       taskList: first,
-  //       currentBot: bot,
-  //       currentScore: getScores,
-  //       count,
-  //       executionState: defaultExecutionState
-  //     }))
-
-  //     setWorkTasks({ ...workTasks, ...{ choreList: 'Indoor Chores' } })
-  //   }
-  //   const executeSecondChoreSet = () => {
-  //     executioner(getExecutionPropValues({
-  //       taskList: second,
-  //       currentBot: bot,
-  //       currentScore: getScores,
-  //       count,
-  //       executionState: defaultExecutionState
-  //     }))
-
-  //     setWorkTasks({ ...workTasks, ...{ choreList: 'Outdoor Chores' } })
-  //   }
-
-  //   randChoice() > 0.3
-  //     ? executeFirstChoreSet()
-  //     : executeSecondChoreSet()
-  // }
-
   const saveWorkState = async () => {
     console.log('saveWorkState() - bot: ', currentBot)
     let data = { workDone: workTasks.workDone, botName: currentBot.botName }
@@ -143,7 +113,6 @@ const getExecutionPropValues = ({
       count: 16,
       executionState: defaultExecutionState
     })
-    // selectChores(taskLists.insideTasks, taskLists.outsideTasks, createdBots[createdBots.length - 1], 16)
 
     saveWorkState()
 
