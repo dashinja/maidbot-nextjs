@@ -7,7 +7,7 @@ import { taskLists, Pattern } from '../Utils/patterns'
 import { speakerHandler, createValidation, choreSequence, femaleDefault, femaleDefensive, ExecutionerStateProps, executioner, ExecutionerProps } from '../Utils/helpers'
 
 //Classes
-import Destroyer, { BotInfo, botNameIsValid, botStartup, CounterProp, createBot, DisabledStateProp, doChores, getScores, saveWorkState, Score, selectChores, WorkTaskProp } from '../Utils/bots'
+import Destroyer, { bonusSass, BotInfo, botNameIsValid, botStartup, burglarDefense, CounterProp, createBot, DisabledStateProp, doChores, drillPractice, getScores, saveWorkState, Score, selectChores, WorkTaskProp } from '../Utils/bots'
 import Burglar from '../Utils/burglar'
 
 //Components
@@ -52,118 +52,7 @@ const App = () => {
     setWorkTasks
   } as ExecutionerStateProps
 
-const getExecutionPropValues = ({
-    taskList,
-    currentBot,
-    currentScore,
-    count,
-    executionState = defaultExecutionState
-  }: ExecutionerProps) => ({
-    taskList,
-    currentBot,
-    currentScore,
-    count,
-    executionState
-  } as ExecutionerProps)
 
-  function drillPractice(e: any) {
-    e.preventDefault()
-    console.log('drillPractice')
-    femaleDefault.and(`${currentBot.semiPermaName || 'Bot'} activated and ready!}`)
-
-    const randChoice = Math.floor(Math.random() * Pattern.length)
-    const choice = Pattern[randChoice]
-
-    switch (randChoice) {
-      case 0:
-        femaleDefault.and(CONSTANTS.SPEECH.DRILL_PRACTICE.ALPHA)
-        setWorkTasks({ ...workTasks, ...{ choreList: 'Alpha Pattern' } })
-        break
-
-      case 1:
-        femaleDefault.and(CONSTANTS.SPEECH.DRILL_PRACTICE.BETA)
-        setWorkTasks({ ...workTasks, ...{ choreList: 'Beta Pattern' } })
-        break
-
-      case 2:
-        femaleDefault.and(CONSTANTS.SPEECH.DRILL_PRACTICE.DELTA)
-        setWorkTasks({ ...workTasks, ...{ choreList: 'Delta Pattern' } })
-        break
-
-      case 3:
-        femaleDefault.and(CONSTANTS.SPEECH.DRILL_PRACTICE.OMEGA)
-        setWorkTasks({ ...workTasks, ...{ choreList: 'Omega Pattern' } })
-        break
-
-      default:
-        break
-    }
-
-    executioner(getExecutionPropValues({
-      taskList: choice,
-      currentBot: createdBots[createdBots.length - 1],
-      currentScore: getScores,
-      count: 16,
-      executionState: defaultExecutionState
-    }))
-
-    setWorkTasks({ ...workTasks, ...{ workDone: workTasks.workDone + 5 } })
-    setIsDisabled({ isDisabledBurglar: true, isDisabledChore: true, isDisabledDrill: true })
-
-    speakerHandler(14, '')
-      .then(() => setIsDisabled({ isDisabledBurglar: false, isDisabledChore: false, isDisabledDrill: false }))
-
-    saveWorkState({
-      currentBot,
-      workTasks
-    })
-  }
-
-  const saveBurglarState = async () => {
-    let data = {
-      workDone: workTasks.workDone,
-      botName: createdBots[createdBots.length - 1].name
-    }
-
-    try {
-      await axios.post('/api/bot/score', data)
-      axios.get('/api/bot/score')
-        .then(allScores => {
-          setWorkTasks({ ...workTasks, ...{ workDone: counters.progressInterval } })
-          setScore(allScores.data)
-        })
-        .catch(err => console.error(err))
-    } catch (err_1) {
-      return console.error(err_1)
-    }
-  }
-
-  const burglarDefense = (e: any) => {
-    e.preventDefault()
-
-    setIsDisabled({ isDisabledBurglar: true, isDisabledChore: true, isDisabledDrill: true })
-    setCounters({ ...counters, ...{ progressInterval: counters.progressInterval + 5 } })
-
-    femaleDefensive.speak(CONSTANTS.SPEECH.DEFENSE.ALERT)
-    const intruder = new Burglar()
-    intruder.attackValue(createdBots[createdBots.length - 1])
-
-    speakerHandler(5.75, '')
-      .then(() => {
-        setIsDisabled({ isDisabledBurglar: false, isDisabledChore: false, isDisabledDrill: false })
-        saveBurglarState()
-      })
-
-    speakerHandler(16, '')
-      .then(() => setWinner(undefined))
-  }
-
-  const bonusSass = () => {
-    const bonus = CONSTANTS.SPEECH.BONUS.SASS
-    const choice = Math.ceil(Math.random() * bonus.length - 1)
-    const bonusChoice = bonus[choice]
-    femaleDefault.and(bonusChoice)
-  }
 
   const handleInputChange = (event: { target: any }) => {
     const { target } = event

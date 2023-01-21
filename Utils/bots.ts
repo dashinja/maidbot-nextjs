@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from 'axios'
+import Burglar from './burglar'
 import { CONSTANTS } from './constants'
-import { choreSequence, createValidation, executioner, ExecutionerProps, ExecutionerStateProps, femaleDefault, speakerHandler } from './helpers'
-import {taskLists} from './patterns'
+import { choreSequence, createValidation, executioner, ExecutionerProps, ExecutionerStateProps, femaleDefault, femaleDefensive, speakerHandler } from './helpers'
+import {Pattern, taskLists} from './patterns'
 
 type DestroyerChoreMethodType = {
   description: string
@@ -539,4 +540,135 @@ export const doChores = ({
     })
   speakerHandler(77, '')
     .then(() => executionState.setIsDisabled({ isDisabledBurglar: false, isDisabledChore: false, isDisabledDrill: false }))
+}
+
+type DrillPracticeProps = BotStartupProps & {
+  e: any
+}
+
+export function drillPractice({
+  e,
+  prevBots,
+  currentBot,
+  executionState
+}: DrillPracticeProps) {
+  e.preventDefault()
+  console.log('drillPractice')
+  femaleDefault.and(`${currentBot.semiPermaName || 'Bot'} activated and ready!}`)
+
+  const randChoice = Math.floor(Math.random() * Pattern.length)
+  const choice = Pattern[randChoice]
+
+  switch (randChoice) {
+    case 0:
+      femaleDefault.and(CONSTANTS.SPEECH.DRILL_PRACTICE.ALPHA)
+      executionState.setWorkTasks({ ...executionState.workTasks, ...{ choreList: 'Alpha Pattern' } })
+      break
+
+    case 1:
+      femaleDefault.and(CONSTANTS.SPEECH.DRILL_PRACTICE.BETA)
+      executionState.setWorkTasks({ ...executionState.workTasks, ...{ choreList: 'Beta Pattern' } })
+      break
+
+    case 2:
+      femaleDefault.and(CONSTANTS.SPEECH.DRILL_PRACTICE.DELTA)
+      executionState.setWorkTasks({ ...executionState.workTasks, ...{ choreList: 'Delta Pattern' } })
+      break
+
+    case 3:
+      femaleDefault.and(CONSTANTS.SPEECH.DRILL_PRACTICE.OMEGA)
+      executionState.setWorkTasks({ ...executionState.workTasks, ...{ choreList: 'Omega Pattern' } })
+      break
+
+    default:
+      break
+  }
+
+  executioner(getExecutionPropValues({
+    taskList: choice,
+    currentBot: prevBots[prevBots.length - 1],
+    currentScore: getScores,
+    count: 16,
+    executionState
+  }))
+
+  executionState.setWorkTasks({ ...executionState.workTasks, ...{ workDone: executionState.workTasks.workDone + 5 } })
+  executionState.setIsDisabled({ isDisabledBurglar: true, isDisabledChore: true, isDisabledDrill: true })
+
+  speakerHandler(14, '')
+    .then(() => executionState.setIsDisabled({ isDisabledBurglar: false, isDisabledChore: false, isDisabledDrill: false }))
+
+  saveWorkState({
+    currentBot,
+    workTasks: executionState.workTasks
+  })
+}
+
+type SaveBurglarStateProps = BotStartupProps
+
+export const saveBurglarState = async ({
+  prevBots,
+  executionState,
+  setScore
+}: SaveBurglarStateProps) => {
+  let data = {
+    workDone: executionState.workTasks.workDone,
+    botName: (prevBots[prevBots.length - 1] as DestroyerType).name 
+  }
+
+  try {
+    await axios.post('/api/bot/score', data)
+    axios.get('/api/bot/score')
+      .then(allScores => {
+        executionState.setWorkTasks({ ...executionState.workTasks, ...{ workDone: executionState.counters.progressInterval } })
+        setScore(allScores.data)
+      })
+      .catch(err => console.error(err))
+  } catch (err_1) {
+    return console.error(err_1)
+  }
+}
+
+type BurglarDefenseProps = BotStartupProps & {e: any, setWinner: React.Dispatch<React.SetStateAction<string>>
+}
+
+export const burglarDefense = ({
+  e,
+  prevBots,
+  currentBot,
+  currentScore,
+  executionState,
+  setScore,
+  setWinner
+}: BurglarDefenseProps) => {
+  e.preventDefault()
+
+  executionState.setIsDisabled({ isDisabledBurglar: true, isDisabledChore: true, isDisabledDrill: true })
+  executionState.setCounters({ ...executionState.counters, ...{ progressInterval: executionState.counters.progressInterval + 5 } })
+
+  femaleDefensive.speak(CONSTANTS.SPEECH.DEFENSE.ALERT)
+  const intruder = new Burglar()
+  intruder.attackValue(prevBots[prevBots.length - 1] as DestroyerType)
+
+  speakerHandler(5.75, '')
+    .then(() => {
+      executionState.setIsDisabled({ isDisabledBurglar: false, isDisabledChore: false, isDisabledDrill: false })
+      saveBurglarState({
+        prevBots,
+        currentBot,
+        currentScore,
+        executionState,
+        setScore
+      })
+    })
+
+  speakerHandler(16, '')
+    .then(() => setWinner(undefined))
+}
+
+export const bonusSass = () => {
+  const bonus = CONSTANTS.SPEECH.BONUS.SASS
+  const choice = Math.ceil(Math.random() * bonus.length - 1)
+  const bonusChoice = bonus[choice]
+  femaleDefault.and(bonusChoice)
 }
