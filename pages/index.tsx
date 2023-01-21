@@ -7,7 +7,7 @@ import { taskLists, Pattern } from '../Utils/patterns'
 import { speakerHandler, createValidation, choreSequence, femaleDefault, femaleDefensive, ExecutionerStateProps, executioner, ExecutionerProps } from '../Utils/helpers'
 
 //Classes
-import Destroyer, { BotInfo, botNameIsValid, botStartup, CounterProp, createBot, DisabledStateProp, getScores, saveWorkState, Score, selectChores, WorkTaskProp } from '../Utils/bots'
+import Destroyer, { BotInfo, botNameIsValid, botStartup, CounterProp, createBot, DisabledStateProp, doChores, getScores, saveWorkState, Score, selectChores, WorkTaskProp } from '../Utils/bots'
 import Burglar from '../Utils/burglar'
 
 //Components
@@ -65,83 +65,6 @@ const getExecutionPropValues = ({
     count,
     executionState
   } as ExecutionerProps)
-
-  const doChores = (e: any) => {
-    e.preventDefault()
-
-    setIsDisabled({
-      isDisabledBurglar: true,
-      isDisabledDrill: true,
-      isDisabledChore: true,
-    })
-
-    setWorkTasks({ ...workTasks, ...{ taskIsComplete: false } })
-    setCounters({ ...counters, ...{ choreClick: counters.choreClick + 1 } })
-
-    switch (counters.choreClick) {
-      case 0:
-        choreSequence(16)
-        break
-
-      case 1:
-        choreSequence(17)
-        break
-
-      case 2:
-        choreSequence(18)
-        break
-
-      default:
-        break
-    }
-
-    selectChores({
-      first: taskLists.insideTasks, 
-      second: taskLists.outsideTasks, 
-      bot: createdBots[createdBots.length - 1], 
-      count: 16,
-      executionState: defaultExecutionState
-    })
-
-    saveWorkState({
-      currentBot,
-      workTasks
-    })
-
-    const workingOnIt = setTimeout(() => {
-      if (workTasks.taskIsComplete === false) {
-        femaleDefault.and(CONSTANTS.SPEECH.CHORES.LOOK)
-      } else {
-        clearTimeout(workingOnIt)
-      }
-    }, 50 * 1000)
-
-    const dontBother = setTimeout(() => {
-      if (workTasks.taskIsComplete === false) {
-        femaleDefault.and(CONSTANTS.SPEECH.CHORES.BOTHER)
-      } else {
-        clearTimeout(dontBother)
-      }
-    }, 60 * 1000)
-
-    speakerHandler((38575 / 1000), '')
-      .then(() => {
-        if (workTasks.taskIsComplete === false) {
-          speakerHandler(0, CONSTANTS.SPEECH.CHORES.LONG)
-        } else {
-          setIsDisabled({
-            isDisabledBurglar: false,
-            isDisabledDrill: false,
-            isDisabledChore: false,
-          })
-
-          clearTimeout(workingOnIt)
-          clearTimeout(dontBother)
-        }
-      })
-    speakerHandler(77, '')
-      .then(() => setIsDisabled({ isDisabledBurglar: false, isDisabledChore: false, isDisabledDrill: false }))
-  }
 
   function drillPractice(e: any) {
     e.preventDefault()

@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
-import { createValidation, executioner, ExecutionerProps, ExecutionerStateProps, speakerHandler } from './helpers'
+import { CONSTANTS } from './constants'
+import { choreSequence, createValidation, executioner, ExecutionerProps, ExecutionerStateProps, femaleDefault, speakerHandler } from './helpers'
 import {taskLists} from './patterns'
 
 type DestroyerChoreMethodType = {
@@ -311,7 +312,7 @@ export const botStartup = ({
     .then(() => executionState.setCounters({ ...executionState.counters, ...{ submitClick: 0 } }))
 }
 
-type CreateBotProps = BotStartupProps & ExecutionerStateProps & {
+type CreateBotProps = BotStartupProps & {
   e: React.MouseEventHandler<HTMLFormElement>
   // setScore,
   // currentBot,
@@ -329,11 +330,11 @@ export const createBot = async ({
   e,
   setScore,
   currentBot,
-  workTasks,
-  setWorkTasks,
+  // workTasks,
+  // setWorkTasks,
   setBot,
-  counters,
-  setCounters,
+  // counters,
+  // setCounters,
   prevBots,
   currentScore,
   executionState
@@ -350,16 +351,16 @@ export const createBot = async ({
   console.log('BEFORE botNameValidation IF statement - bot in bot creation with valid bot name !!!!!!!!: ', currentBot)
 
   if (botNameValidation) {
-    setWorkTasks({ ...workTasks, ...{ workTasks: 5 } })
+    executionState.setWorkTasks({ ...executionState.workTasks, ...{ workTasks: 5 } })
     console.log('bot in bot creation with valid bot name !!!!!!!!: ', currentBot)
     setBot({ ...currentBot, ...{ botName: currentBot.botName, semiPermaName: currentBot.botName || 'Bot' } })
 
-    const { submitClick } = counters
+    const { submitClick } = executionState.counters
     switch (currentBot.botName) {
       case '':
       case 'Bot':
         createValidation(submitClick, '')
-        setCounters({ ...counters, ...{ submitClick: submitClick + 1 } })
+        executionState.setCounters({ ...executionState.counters, ...{ submitClick: submitClick + 1 } })
         break
 
       default:
@@ -452,4 +453,90 @@ export const saveWorkState = async ({
   } catch (err) {
     return console.error(err)
   }
+}
+
+type DoChoresProps = BotStartupProps & {
+  e: any
+}
+
+export const doChores = ({
+  e,
+  executionState,
+  prevBots,
+  currentBot,
+}: DoChoresProps) => {
+  e.preventDefault()
+
+  executionState.setIsDisabled({
+    isDisabledBurglar: true,
+    isDisabledDrill: true,
+    isDisabledChore: true,
+  })
+
+  executionState.setWorkTasks({ ...executionState.workTasks, ...{ taskIsComplete: false } })
+  executionState.setCounters({ ...executionState.counters, ...{ choreClick: executionState.counters.choreClick + 1 } })
+
+  switch (executionState.counters.choreClick) {
+    case 0:
+      choreSequence(16)
+      break
+
+    case 1:
+      choreSequence(17)
+      break
+
+    case 2:
+      choreSequence(18)
+      break
+
+    default:
+      break
+  }
+
+  selectChores({
+    first: taskLists.insideTasks, 
+    second: taskLists.outsideTasks, 
+    bot: prevBots[prevBots.length - 1], 
+    count: 16,
+    executionState
+  })
+  
+  saveWorkState({
+    currentBot,
+    workTasks: executionState.workTasks
+  })
+
+  const workingOnIt = setTimeout(() => {
+    if (executionState.workTasks.taskIsComplete === false) {
+      femaleDefault.and(CONSTANTS.SPEECH.CHORES.LOOK)
+    } else {
+      clearTimeout(workingOnIt)
+    }
+  }, 50 * 1000)
+
+  const dontBother = setTimeout(() => {
+    if (executionState.workTasks.taskIsComplete === false) {
+      femaleDefault.and(CONSTANTS.SPEECH.CHORES.BOTHER)
+    } else {
+      clearTimeout(dontBother)
+    }
+  }, 60 * 1000)
+
+  speakerHandler((38575 / 1000), '')
+    .then(() => {
+      if (executionState.workTasks.taskIsComplete === false) {
+        speakerHandler(0, CONSTANTS.SPEECH.CHORES.LONG)
+      } else {
+        executionState.setIsDisabled({
+          isDisabledBurglar: false,
+          isDisabledDrill: false,
+          isDisabledChore: false,
+        })
+
+        clearTimeout(workingOnIt)
+        clearTimeout(dontBother)
+      }
+    })
+  speakerHandler(77, '')
+    .then(() => executionState.setIsDisabled({ isDisabledBurglar: false, isDisabledChore: false, isDisabledDrill: false }))
 }
