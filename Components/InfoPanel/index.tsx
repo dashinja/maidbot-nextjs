@@ -5,33 +5,77 @@ import TaskBanner from './TaskBanner'
 
 import 'dotenv/config'
 import { enabledButtonClasses } from '../ActionButton'
+import Destroyer, { Score, ScoreObject } from '../../Utils/bots'
 
-export default function InfoPanel(props: any) {
+type InfoPanelProps = {
+  currentTask: string
+  semiPermaName: string
+  nextTask: number
+  /**
+   * Shows "work Done"
+   */
+  progressInterval: number
+  winner: Destroyer['name']
+  /**
+   * GET from database
+   */
+  score: Score
+  bonusSass: () => void
+}
+
+export default function InfoPanel({
+  currentTask,
+  semiPermaName,
+  nextTask,
+  progressInterval,
+  winner,
+  score,
+  bonusSass,
+}: InfoPanelProps) {
+
+  const isScoreAnObject = Object.hasOwn(score as ScoreObject, 'workDone')
+
+  const defineUnknownHighScoreWorkDone = () => {
+    if (isScoreAnObject) {
+      score = score as ScoreObject
+      return score.workDone
+    }
+  }
+  const defineUnknownHighScoreName = () => {
+    if (isScoreAnObject) {
+      score = score as ScoreObject
+      return score.name
+    }
+  }
+
   const highScore =
-    props.score === 'N/A'
+    // score === 'N/A'
+    typeof score === 'string'
       ? 'any'
-      : props.score.workDone === 0
-        ? props.progressInterval
-        : props.score.workDone
+      : isScoreAnObject 
+      // score.workDone === 0
+        ? progressInterval
+        : defineUnknownHighScoreWorkDone()
 
-  const typeOfScoreResponse = typeof props.score === 'string'
-  const highScoreName = typeOfScoreResponse ? `No-Bot-y` : props.score.name
+
+  const typeOfScoreResponse = typeof score === 'string'
+  const highScoreName = typeOfScoreResponse ? `No-Bot-y` : defineUnknownHighScoreName()
 
   const burglarStatus =
-    props.winner !== undefined
-      ? props.winner === 'Burglar'
+    winner !== undefined
+      ? winner === 'Burglar'
         ? `Burglar is looting your owner's home over your lifeless circuits!`
         : `Burglar is defeated and has run away!`
       : `No intruders have come!`
 
   return (
       <div>
-        <Banner title="Status" value={props.currentTask} />
+        <Banner title="Status" value={currentTask} />
         <TaskBanner
-          title={`Tasks Remaining for ${props.semiPermaName}`}
-          value={props.nextTask}
+          title={`Tasks Remaining for ${semiPermaName}`}
+          value={nextTask}
         />
-        <Banner title="Work Done" value={props.progressInterval} />
+        <Banner title="Work Done" value={progressInterval} />
         <Banner title="Burglar Status" value={burglarStatus} />
         <ScoreBanner
           title="High Score"
@@ -40,7 +84,7 @@ export default function InfoPanel(props: any) {
         />
         <button
           type="submit"
-          onClick={props.bonusSass}
+          onClick={bonusSass}
           className={enabledButtonClasses + ' bg-purple-600'}
         >
           Bonus Sass

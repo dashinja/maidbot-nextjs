@@ -1,6 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient } from '.prisma/client'
 import simpleCrypto from '../../../Utils/encrypt'
+import { Prisma } from '@prisma/client'
+import axios, { AxiosRequestConfig } from 'axios'
+import SimpleCrypto from 'simple-crypto-js'
 
 const prisma = new PrismaClient()
 const { bots } = prisma
@@ -14,7 +17,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       select: {
         name: true,
         botType: true,
-        workDone: true
+        workDone: true,
+        updatedAt: true
       }
     })
       .catch((err: Error) => console.error(err))
@@ -28,14 +32,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.end()
     }
   } else if (req.method === 'POST') {
-    const newValue = { workDone: req.body.workDone + 5 }
+    const newValue = {workDone: req.body.workDone + 5} as Prisma.botsUpdateInput
+
+const myRequest: AxiosRequestConfig = {
+  headers: { Accept: 'application/json'},
+  proxy: undefined,
+  url: 'http://localhost:3000/api/bot/last',
+  method: 'get',
+}
+
+    const savedBotData = await axios(myRequest)
+    const botData = savedBotData.data
+    const botName = botData[0].name
+
     const result = await bots.update({
       data: newValue,
       where: {
-        name: simpleCrypto.encrypt(req.body.botName),
+        name: botName,
       }
     })
-      .catch(err => console.error(err))
+      .catch(err => {
+        console.error(err)
+      })
 
     console.log('result of score POST', result)
     res.send(result)

@@ -46,7 +46,12 @@ const omegaPattern = [
   'stats',
 ]
 
-export const Task = {
+export type Task = {
+  insideTasks?: string[],
+  outsideTasks?: string[]
+}
+
+export const taskLists = {
   insideTasks,
   outsideTasks,
 }

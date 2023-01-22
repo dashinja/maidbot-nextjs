@@ -2,14 +2,21 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient } from '.prisma/client'
 import simpleCrypto from '../../Utils/encrypt'
 
+type DateType = {
+  returnDate: () => Date
+}
+
 const prisma = new PrismaClient()
 const { bots } = prisma
 
-const dateNow: () => Date = () => { return new Date() as unknown as Date }
+const dateNow: DateType['returnDate'] = () => { return new Date() as unknown as Date }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     if (!req.body.name || !req.body.botType) {
+      console.log('req.body.name: ', req.body.name)
+      console.log('req.body.botType: ', req.body.botType)
+
       res.send(console.error('Bot name already taken, please choose another!'))
       return
     } else {
