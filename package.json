@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "tw": "npx tailwindcss -i ./styles/globals.css -o ./dist/output.css --watch",
-    "dev": "concurrently \"npm run tw\" \"npm run dev:next\" \"sudo service mysql start\"",
+    "dev": "concurrently \"sudo service mysql start\" \"npm run tw\" \"npm run dev:next\" ",
     "dev:next": "next dev",
     "build": "next build",
     "start": "next start",
@@ -12,7 +12,6 @@
     "studio": "pnpx prisma studio"
   },
   "dependencies": {
-    "@prisma/client": "^4.8.1",
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
     "next": "12.2.2",
@@ -22,14 +21,19 @@
   },
   "devDependencies": {
     "@google-cloud/text-to-speech": "^4.0.0",
+    "@prisma/client": "^4.9.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
     "@types/node": "^18.0.4",
     "@types/react": "^18.0.15",
     "autoprefixer": "^10.4.7",
     "concurrently": "^7.6.0",
     "eslint": "8.19.0",
     "eslint-config-next": "12.2.2",
+    "jest": "^29.3.1",
+    "jest-environment-jsdom": "^29.3.1",
     "postcss": "^8.4.14",
-    "prisma": "^4.0.0",
+    "prisma": "^4.9.0",
     "tailwindcss": "^3.2.4",
     "typescript": ">=4.7.4"
   }

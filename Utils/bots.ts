@@ -295,7 +295,6 @@ export const botStartup = ({
 
   const newestBot = prevBots[prevBots.length - 1] as Destroyer
   
-  // getScores(setScore)
   console.log('botStartup - post getScores score: ', currentScore)
   executioner({
     taskList: taskLists.insideTasks,
@@ -304,7 +303,6 @@ export const botStartup = ({
     count: 15,
     executionState,
   })
-  // executioner(Task.insideTasks, newestBot, currentScore, 15, executionState)
 
   const creationData = {
     name: currentBot.botName,
@@ -342,8 +340,6 @@ export const createBot = async ({
 
   //TODO: Is e.preventDefault() necessary here?
   props.e.preventDefault()
-
-  // getScores(setCurrentScore)
 
   const botNameValidation = await botNameIsValid(currentBot)
   console.log('BEFORE botNameValidation IF statement - bot in bot creation with valid bot name !!!!!!!!: ', currentBot)
