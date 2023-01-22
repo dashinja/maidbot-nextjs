@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import Destroyer, { bonusSass, BotInfo, burglarDefense, CounterProp, createBot, DisabledStateProp, doChores, drillPractice, Score, WorkTaskProp } from '../Utils/bots'
+import Destroyer, { bonusSass, BotInfo, burglarDefense, CounterProp, createBot, CreateBotProps, DisabledStateProp, doChores, drillPractice, getPrevBots, getScores, Score, WorkTaskProp } from '../Utils/bots'
 
 import InfoPanel from '../Components/InfoPanel/index'
 import ButtonPanel from '../Components/ButtonPanel/index'
@@ -13,28 +13,49 @@ const App = () => {
     botType: 'Bibedal',
     semiPermaName: 'Bot'
   })
-  const [workTasks, _setWorkTasks] = useState<WorkTaskProp>({
+  const [workTasks, setWorkTasks] = useState<WorkTaskProp>({
     workDone: 0,
     currentTask: 'Awaiting Bot Creation',
     nextTask: 0,
     choreList: '',
     taskIsComplete: true
   })
-  const [isDisabled, _setIsDisabled] = useState<DisabledStateProp>({
+  const [isDisabled, setIsDisabled] = useState<DisabledStateProp>({
     isDisabledChore: true,
     isDisabledBurglar: true,
     isDisabledDrill: true
   })
-  const [score, _setScore] = useState<Score>('high score')
-  const [winner, _setWinner] = useState<Destroyer['name']>()
-  const [counters, _setCounters] = useState<CounterProp>({
+  const [currentScore, setCurrentScore] = useState<Score>('high score')
+  const [winner, setWinner] = useState<Destroyer['name']>()
+  const [counters, setCounters] = useState<CounterProp>({
     choreClick: 0,
     submitClick: 0,
     progressInterval: 0
   })
   const [changeState, setChangeState] = useState<{ [key: string]: string }>()
+  const [prevBots, setPrevBots] = useState<unknown[]>()
 
-  //TODO Where does this really go?
+  const executionState = {
+    workTasks,
+    setWorkTasks,
+    counters,
+    setCounters,
+    setIsDisabled,
+  }
+
+  useEffect(() => {
+    const initializeDate = async () => {
+      await Promise.all([
+        await getPrevBots(setPrevBots),
+        await getScores(setCurrentScore)
+      ])
+
+      console.log('currentScore: ', currentScore)
+      console.log('prevBots: ', prevBots)
+    }
+
+    initializeDate()
+  }, [])
 
   const handleInputChange = (event: { target: any }) => {
     const { target } = event
@@ -55,11 +76,28 @@ const App = () => {
     setChangeState({ [name]: target.value })
   }
 
+  const botStateCollection = {
+    setCurrentScore,
+    currentBot,
+    setBot,
+    prevBots,
+    currentScore,
+    executionState,
+  } as CreateBotProps
+
   return (
     <>
       <CreateForm
-      //TODO: Relook at this onClick typing
-        onClick={createBot as unknown as React.MouseEventHandler<HTMLFormElement>}
+        //TODO: Relook at this onClick typing
+        onClick={(e) => createBot({
+          setCurrentScore,
+          currentBot,
+          setBot,
+          prevBots,
+          currentScore,
+          executionState,
+          e
+        }) as unknown as React.MouseEventHandler<HTMLFormElement>}
         botName={currentBot.botName}
         botType={currentBot.botType}
         handleInputChange={handleInputChange}
@@ -76,6 +114,8 @@ const App = () => {
         isDisabledDrill={isDisabled.isDisabledDrill}
         burglarDefense={burglarDefense}
         isDisabledBurglar={isDisabled.isDisabledBurglar}
+        botState={botStateCollection}
+        setWinner={setWinner}
       />
       <InfoPanel
         currentTask={workTasks.currentTask}
@@ -83,7 +123,7 @@ const App = () => {
         nextTask={workTasks.nextTask}
         progressInterval={counters.progressInterval}
         winner={winner}
-        score={score}
+        score={currentScore}
         bonusSass={bonusSass}
       />
     </>

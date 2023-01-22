@@ -17,7 +17,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       select: {
         name: true,
         botType: true,
-        workDone: true
+        workDone: true,
+        updatedAt: true
       }
     })
       .catch((err: Error) => console.error(err))

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "tw": "npx tailwindcss -i ./styles/globals.css -o ./dist/output.css --watch",
-    "dev": "concurrently \"npm run tw\" \"npm run dev:next\"",
+    "dev": "concurrently \"npm run tw\" \"npm run dev:next\" \"sudo service mysql start\"",
     "dev:next": "next dev",
     "build": "next build",
     "start": "next start",

@@ -271,7 +271,16 @@ export type BotStartupProps = {
   currentBot: any, 
   currentScore: Score, 
   executionState: ExecutionerStateProps,
-  setScore: React.Dispatch<React.SetStateAction<Score>>,
+  setCurrentScore: React.Dispatch<React.SetStateAction<Score>>,
+}
+
+export const getPrevBots = async (setPrevBots: React.Dispatch<React.SetStateAction<unknown>>) => {
+  try {
+    const prevBots = await axios.get('/api/bot')
+    setPrevBots(prevBots.data)
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 export const botStartup = ({
@@ -279,14 +288,14 @@ export const botStartup = ({
   currentBot, 
   currentScore, 
   executionState,
-  setScore,
+  setCurrentScore,
 }: BotStartupProps) => {
   console.log('botStartup()')
   prevBots.push(new Destroyer(currentBot.botName, currentBot.botType))
 
   const newestBot = prevBots[prevBots.length - 1] as Destroyer
   
-  getScores(setScore)
+  // getScores(setScore)
   console.log('botStartup - post getScores score: ', currentScore)
   executioner({
     taskList: taskLists.insideTasks,
@@ -313,41 +322,28 @@ export const botStartup = ({
     .then(() => executionState.setCounters({ ...executionState.counters, ...{ submitClick: 0 } }))
 }
 
-type CreateBotProps = BotStartupProps & {
-  e: React.MouseEventHandler<HTMLFormElement>
-  // setScore,
-  // currentBot,
-  // workTasks,
-  // setWorkTasks,
+export type CreateBotProps = BotStartupProps & {
+  e: any,
   setBot: React.Dispatch<React.SetStateAction<BotInfo>>
-  // counters,
-  // setCounters,
-  // prevBots,
-  // currentScore,
-  // executionState
 }
 
 //TODO: Where is this actually called?
 export const createBot = async ({
-  e,
-  setScore,
+  setCurrentScore,
   currentBot,
-  // workTasks,
-  // setWorkTasks,
   setBot,
-  // counters,
-  // setCounters,
   prevBots,
   currentScore,
-  executionState
+  executionState,
+  ...props
 }: CreateBotProps) => {
 
   console.log('createBot')
 
   //TODO: Is e.preventDefault() necessary here?
-  // e.preventDefault()
+  props.e.preventDefault()
 
-  getScores(setScore)
+  // getScores(setCurrentScore)
 
   const botNameValidation = await botNameIsValid(currentBot)
   console.log('BEFORE botNameValidation IF statement - bot in bot creation with valid bot name !!!!!!!!: ', currentBot)
@@ -372,7 +368,7 @@ export const createBot = async ({
           currentBot, 
           currentScore, 
           executionState,
-          setScore
+          setCurrentScore
         })
         break
     }
@@ -457,15 +453,15 @@ export const saveWorkState = async ({
   }
 }
 
-type DoChoresProps = BotStartupProps & {
+export type DoChoresProps = Omit<BotStartupProps, 'currentScore' | 'setCurrentScore'> & {
   e: any
 }
 
 export const doChores = ({
   e,
-  executionState,
   prevBots,
   currentBot,
+  executionState,
 }: DoChoresProps) => {
   e.preventDefault()
 
@@ -543,7 +539,7 @@ export const doChores = ({
     .then(() => executionState.setIsDisabled({ isDisabledBurglar: false, isDisabledChore: false, isDisabledDrill: false }))
 }
 
-type DrillPracticeProps = BotStartupProps & {
+export type DrillPracticeProps = Omit<BotStartupProps, 'setCurrentScore'> & {
   e: any
 }
 
@@ -551,7 +547,8 @@ export function drillPractice({
   e,
   prevBots,
   currentBot,
-  executionState
+  executionState,
+  currentScore,
 }: DrillPracticeProps) {
   e.preventDefault()
   console.log('drillPractice')
@@ -588,7 +585,7 @@ export function drillPractice({
   executioner(getExecutionPropValues({
     taskList: choice,
     currentBot: prevBots[prevBots.length - 1],
-    currentScore: getScores,
+    currentScore: currentScore,
     count: 16,
     executionState
   }))
@@ -610,7 +607,7 @@ type SaveBurglarStateProps = BotStartupProps
 export const saveBurglarState = async ({
   prevBots,
   executionState,
-  setScore
+  setCurrentScore
 }: SaveBurglarStateProps) => {
   let data = {
     workDone: executionState.workTasks.workDone,
@@ -622,7 +619,7 @@ export const saveBurglarState = async ({
     axios.get('/api/bot/score')
       .then(allScores => {
         executionState.setWorkTasks({ ...executionState.workTasks, ...{ workDone: executionState.counters.progressInterval } })
-        setScore(allScores.data)
+        setCurrentScore(allScores.data)
       })
       .catch(err => console.error(err))
   } catch (err_1) {
@@ -630,7 +627,7 @@ export const saveBurglarState = async ({
   }
 }
 
-type BurglarDefenseProps = BotStartupProps & {e: any, setWinner: React.Dispatch<React.SetStateAction<string>>
+export type BurglarDefenseProps = BotStartupProps & {e: any, setWinner: React.Dispatch<React.SetStateAction<string>>
 }
 
 export const burglarDefense = ({
@@ -639,7 +636,7 @@ export const burglarDefense = ({
   currentBot,
   currentScore,
   executionState,
-  setScore,
+  setCurrentScore,
   setWinner
 }: BurglarDefenseProps) => {
   e.preventDefault()
@@ -659,7 +656,7 @@ export const burglarDefense = ({
         currentBot,
         currentScore,
         executionState,
-        setScore
+        setCurrentScore: setCurrentScore
       })
     })
 
