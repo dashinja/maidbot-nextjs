@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
 import Destroyer, { bonusSass, BotInfo, burglarDefense, CounterProp, createBot, CreateBotProps, DisabledStateProp, doChores, drillPractice, getPrevBots, getScores, Score, WorkTaskProp } from '../Utils/bots'
-
 import InfoPanel from '../Components/InfoPanel/index'
 import ButtonPanel from '../Components/ButtonPanel/index'
 import CreateForm from '../Components/CreateForm/index'
@@ -49,9 +47,6 @@ const App = () => {
         await getPrevBots(setPrevBots),
         await getScores(setCurrentScore)
       ])
-
-      console.log('currentScore: ', currentScore)
-      console.log('prevBots: ', prevBots)
     }
 
     initializeDate()
@@ -104,10 +99,6 @@ const App = () => {
         changeState={changeState}
       />
       <ButtonPanel
-        formSubmit={createBot}
-        botName={currentBot.botName}
-        botType={currentBot.botType}
-        handleInputChange={handleInputChange}
         doChores={doChores}
         isDisabledChore={isDisabled.isDisabledChore}
         drillPractice={drillPractice}

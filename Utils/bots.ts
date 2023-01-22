@@ -201,7 +201,7 @@ export const getScores = async (setScore: React.Dispatch<React.SetStateAction<Sc
   try {
     const allScores = await axios.get('/api/bot/score')
     console.log('GET: api/bot/score: ', await allScores.data)
-    setScore(allScores.data)
+    setScore(allScores.data as Score)
   } catch (error) {
     console.error(error)
   }
@@ -391,26 +391,32 @@ export const getExecutionPropValues = ({
   executionState
 } as ExecutionerProps)
 
-type SelectChoresProps  = Pick<ExecutionerProps, 'executionState'> & {
+type SelectChoresProps  = Pick<ExecutionerProps, 'executionState' | 'currentScore'> & {
   first: string[], 
   second: string[], 
   bot: any, 
-  count: number
+  count: number,
+  setCurrentScore: BotStartupProps['setCurrentScore'],
 }
 
-export const selectChores = ({
+export const selectChores = async ({
   first,
   second,
   bot,
   count,
-  executionState
+  executionState,
+  setCurrentScore,
+  currentScore
 }: SelectChoresProps) => {
+  const getData = async () => await getScores(setCurrentScore)
+  getData()
+
   const randChoice = () => Math.random()
   const executeFirstChoreSet = () => {
     executioner(getExecutionPropValues({
       taskList: first,
       currentBot: bot,
-      currentScore: getScores,
+      currentScore,
       count,
       executionState
     }))
@@ -453,7 +459,7 @@ export const saveWorkState = async ({
   }
 }
 
-export type DoChoresProps = Omit<BotStartupProps, 'currentScore' | 'setCurrentScore'> & {
+export type DoChoresProps = BotStartupProps & {
   e: any
 }
 
@@ -462,6 +468,8 @@ export const doChores = ({
   prevBots,
   currentBot,
   executionState,
+  setCurrentScore,
+  currentScore
 }: DoChoresProps) => {
   e.preventDefault()
 
@@ -496,7 +504,9 @@ export const doChores = ({
     second: taskLists.outsideTasks, 
     bot: prevBots[prevBots.length - 1], 
     count: 16,
-    executionState
+    executionState,
+    setCurrentScore,
+    currentScore
   })
   
   saveWorkState({

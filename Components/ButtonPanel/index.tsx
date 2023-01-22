@@ -1,12 +1,8 @@
-import React, { ChangeEventHandler } from 'react'
+import React from 'react'
 import { BurglarDefenseProps, CreateBotProps, DoChoresProps, DrillPracticeProps } from '../../Utils/bots'
 import ActionButton from '../ActionButton'
 
 type ButtonPapelProps = {
-  formSubmit: (e: any) => Promise<void>
-  botName: string
-  botType: string
-  handleInputChange: ChangeEventHandler<HTMLInputElement | HTMLSelectElement>
   isDisabledChore: boolean
   isDisabledDrill: boolean
   isDisabledBurglar: boolean
@@ -20,10 +16,6 @@ type ButtonPapelProps = {
 
 //TODO: Remove unused props?
 export default function ButtonPanel({
-  formSubmit,
-  botName,
-  botType,
-  handleInputChange,
   isDisabledChore,
   isDisabledDrill,
   isDisabledBurglar,
@@ -34,7 +26,7 @@ export default function ButtonPanel({
   setWinner
 }: ButtonPapelProps) {
   
-  const {currentBot, currentScore, executionState, prevBots, setBot, setCurrentScore} = botState
+  const {currentBot, currentScore, executionState, prevBots, setCurrentScore} = botState
 
   return (
     <>
@@ -45,6 +37,8 @@ export default function ButtonPanel({
           currentBot,
           executionState,
           prevBots,
+          currentScore,
+          setCurrentScore
         })}
         disabled={isDisabledChore}
       />
