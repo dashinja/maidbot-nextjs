@@ -32,20 +32,20 @@ export function CreateForm({
   return (
     <>
       <div className="flex flex-col place-items-center text-text-normal">
-        <h1 className="my-4 text-3xl">
+        <h1 className="my-5 text-3xl font-bold">
           Maid - Bot Home Defense
           Systems{' '}
         </h1>
-        <h3 className="my-4 text-xl">
+        <h3 className="my-5 text-xl font-bold">
           Give your bot a name and
           choose it&apos;s type
         </h3>
-        <h4 className="my-4 text-lg">
+        <h4 className="my-5 text-md font-bold">
           How much work can YOUR bot do?{' '}
         </h4>
 
         <form onSubmit={onClick}>
-          <fieldset className="border border-1 px-2 py-2 text-xs">
+          <fieldset className="border border-0.5 px-2 pb-2 -mt-1 text-md">
             <legend className="">
               Create a Bot{' '}
             </legend>
@@ -65,7 +65,7 @@ export function CreateForm({
               }
               placeholder="Enter Bot Name Here"
               className={
-                'bg-transparent'
+                'bg-background font-semibold border border-b-1.5 border-t-0 border-l-0 border-r-0 border-input-box-bottom pb-1'
               }
             />
 
@@ -75,7 +75,7 @@ export function CreateForm({
                 currentBot,
                 setBot,
               }}
-              className="bg-background"
+              className="bg-background font-semibold border border-b-1.5 border-t-0 border-l-0 border-r-0 border-input-box-bottom pb-1"
             />
 
             <PrimaryButton

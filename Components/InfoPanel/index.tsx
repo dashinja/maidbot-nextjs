@@ -9,6 +9,7 @@ import Destroyer, {
   Score,
   ScoreObject,
 } from '../../Utils/bots'
+import PrimaryButton from '../PrimaryButton.tsx'
 
 type InfoPanelProps = {
   currentTask: string
@@ -79,39 +80,36 @@ export default function InfoPanel({
       : `No intruders have come!`
 
   return (
-    <div className="flex flex-col place-content-center">
+    <div className="flex flex-col place-items-center text-text-normal">
       <Banner
         title="Status"
         value={currentTask}
+        className='text-md mb-7 mt-2'
       />
       <TaskBanner
         title={`Tasks Remaining for ${semiPermaName}`}
         value={nextTask}
+        className='text-md mb-7'
       />
       <Banner
         title="Work Done"
         value={progressInterval}
+        className='text-md mb-7'
       />
       <Banner
         title="Burglar Status"
         value={burglarStatus}
+        className='text-md mb-7'
       />
       <ScoreBanner
         title="High Score"
         value={highScore}
-        name={highScoreName}
-        className=""
+        name={semiPermaName}
+        className='text-md'
       />
-      <button
-        type="submit"
-        onClick={bonusSass}
-        className={
-          enabledButtonClasses +
-          ' bg-purple-600'
-        }
-      >
-        Bonus Sass
-      </button>
+
+      <PrimaryButton name={'sass-button'} onClick={bonusSass} className= {enabledButtonClasses + 'text' + ''} >Bonus Sass</PrimaryButton>
+      
     </div>
   )
 }

@@ -7,38 +7,47 @@ type ActionButtonProps = {
 }
 
 export const enabledButtonClasses = [
-  'bg-red-500',
-  'px-2',
+  'px-6',
+  'py-2',
   'rounded-sm',
-  'mr-1',
+  'mr-0.5',
+  'text-text-normal',
+  'text-lg',
+  'bg-red-one',
 ].join(' ')
 
-const disabledButtonClasses = [
-  'bg-blue-800',
-  'px-2',
+export const disabledButtonClasses = [
+  'bg-button-disabled',
+  'px-6',
+  'py-2',
   'rounded-sm',
-  'mr-1',
-  'text-white',
+  'mr-0.5',
+  'text-lg',
+  'text-button-disabled-text',
 ].join(' ')
 
 function ActionButton(
-  props: ActionButtonProps
+  {
+    disabled,
+    onClick,
+    text,
+    ...props
+  }: ActionButtonProps
 ) {
-  //TODO: Revisit or delete
-  // const standby = "p-2 pl-5 pr-5 bg-blue-500 text-gray-100 text-lg rounded-lg focus:border-4 border-blue-300"
 
   return (
     <button
       className={
-        props.disabled
+        disabled
           ? disabledButtonClasses
           : enabledButtonClasses
       }
       type="button"
-      onClick={props.onClick}
-      disabled={props.disabled}
+      onClick={onClick}
+      disabled={disabled}
+      {...props}
     >
-      {props.text}
+      {text}
     </button>
   )
 }

@@ -4,7 +4,7 @@ export default function ScoreBanner(
   props: any
 ) {
   return (
-    <div>
+    <div className='mb-2'>
       <p>
         {props.title}:{' '}
         <span

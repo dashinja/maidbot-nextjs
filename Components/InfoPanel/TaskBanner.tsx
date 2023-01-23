@@ -4,7 +4,7 @@ export default function Banner(
   props: any
 ) {
   return (
-    <div>
+    <div className={props.className}>
       <p>
         {props.title}:{' '}
         <span>{props.value}</span>

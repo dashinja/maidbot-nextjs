@@ -20,10 +20,12 @@ module.exports = {
       "submit-button-text": "#1e1d1d",
       "button-disabled": "#3e3e79",
       "text-button-disabled":"#2e3269",
+      "input-box-bottom": "#2e2e5a",
 
       /**
-       * 
+       * Enabled States
        */
+      "red-one": "#ef4444",
     }
   },
   plugins: [],
