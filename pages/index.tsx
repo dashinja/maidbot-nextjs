@@ -82,7 +82,7 @@ const App = () => {
   } as CreateBotProps
 
   return (
-    <>
+    <div className='flex flex-col place-items-center max-w-fill'>
       <CreateForm
         //TODO: Relook at this onClick typing
         onClick={(e) => createBot({
@@ -94,10 +94,12 @@ const App = () => {
           executionState,
           e
         }) as unknown as React.MouseEventHandler<HTMLFormElement>}
-        botName={currentBot.botName}
+        // botName={currentBot.botName}
         botType={currentBot.botType}
         handleInputChange={handleInputChange}
         changeState={changeState}
+        currentBot={botStateCollection.currentBot}
+        setBot={setBot}
       />
       <ButtonPanel
         doChores={doChores}
@@ -118,7 +120,7 @@ const App = () => {
         score={currentScore}
         bonusSass={bonusSass}
       />
-    </>
+    </div>
   )
 }
 
