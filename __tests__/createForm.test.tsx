@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
-import CreateForm, { CreateFormProps } from '../Components/CreateForm'
+import CreateForm from '../Components/CreateForm'
+import { CreateFormProps } from '../Components/CreateForm/CreateForm'
 import { ChangeStateProp } from '../pages/api/bot'
 import { BotInfo } from '../Utils/bots'
 describe('Create Form Component', () => {

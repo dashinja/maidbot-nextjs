@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient } from '.prisma/client'
-import simpleCrypto from '../../../Utils/encrypt'
+// import simpleCrypto from '../../../Utils/encrypt'
 
 const prisma = new PrismaClient()
 const { bots } = prisma

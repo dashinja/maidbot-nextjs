@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
-import { CreateFormProps } from '../Components/CreateForm'
+import { CreateFormProps } from '../Components/CreateForm/CreateForm'
 import Burglar from './burglar'
 import { CONSTANTS } from './constants'
 import { choreSequence, createValidation, executioner, ExecutionerProps, ExecutionerStateProps, femaleDefault, femaleDefensive, speakerHandler } from './helpers'
