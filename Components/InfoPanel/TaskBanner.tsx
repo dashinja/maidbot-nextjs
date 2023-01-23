@@ -1,10 +1,13 @@
 import React from 'react'
 
-export default function Banner(props: any) {
+export default function Banner(
+  props: any
+) {
   return (
     <div>
       <p>
-        {props.title}: <span>{props.value}</span>
+        {props.title}:{' '}
+        <span>{props.value}</span>
       </p>
     </div>
   )

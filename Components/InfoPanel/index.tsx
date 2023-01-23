@@ -5,7 +5,10 @@ import TaskBanner from './TaskBanner'
 
 import 'dotenv/config'
 import { enabledButtonClasses } from '../ActionButton'
-import Destroyer, { Score, ScoreObject } from '../../Utils/bots'
+import Destroyer, {
+  Score,
+  ScoreObject,
+} from '../../Utils/bots'
 
 type InfoPanelProps = {
   currentTask: string
@@ -32,34 +35,41 @@ export default function InfoPanel({
   score,
   bonusSass,
 }: InfoPanelProps) {
+  const isScoreAnObject = Object.hasOwn(
+    score as ScoreObject,
+    'workDone'
+  )
 
-  const isScoreAnObject = Object.hasOwn(score as ScoreObject, 'workDone')
-
-  const defineUnknownHighScoreWorkDone = () => {
-    if (isScoreAnObject) {
-      score = score as ScoreObject
-      return score.workDone
+  const defineUnknownHighScoreWorkDone =
+    () => {
+      if (isScoreAnObject) {
+        score = score as ScoreObject
+        return score.workDone
+      }
     }
-  }
-  const defineUnknownHighScoreName = () => {
-    if (isScoreAnObject) {
-      score = score as ScoreObject
-      return score.name
+  const defineUnknownHighScoreName =
+    () => {
+      if (isScoreAnObject) {
+        score = score as ScoreObject
+        return score.name
+      }
     }
-  }
 
   const highScore =
     // score === 'N/A'
     typeof score === 'string'
       ? 'any'
-      : isScoreAnObject 
-      // score.workDone === 0
-        ? progressInterval
-        : defineUnknownHighScoreWorkDone()
+      : isScoreAnObject
+      ? // score.workDone === 0
+        progressInterval
+      : defineUnknownHighScoreWorkDone()
 
-
-  const typeOfScoreResponse = typeof score === 'string'
-  const highScoreName = typeOfScoreResponse ? `No-Bot-y` : defineUnknownHighScoreName()
+  const typeOfScoreResponse =
+    typeof score === 'string'
+  const highScoreName =
+    typeOfScoreResponse
+      ? `No-Bot-y`
+      : defineUnknownHighScoreName()
 
   const burglarStatus =
     winner !== undefined
@@ -69,26 +79,38 @@ export default function InfoPanel({
       : `No intruders have come!`
 
   return (
-      <div className='flex flex-col place-content-center'>
-        <Banner title="Status" value={currentTask} />
-        <TaskBanner
-          title={`Tasks Remaining for ${semiPermaName}`}
-          value={nextTask}
-        />
-        <Banner title="Work Done" value={progressInterval} />
-        <Banner title="Burglar Status" value={burglarStatus} />
-        <ScoreBanner
-          title="High Score"
-          value={highScore}
-          name={highScoreName}
-          className=''
-        />
-        <button
-          type="submit"
-          onClick={bonusSass}
-          className={enabledButtonClasses + ' bg-purple-600'}
-        >
-          Bonus Sass
+    <div className="flex flex-col place-content-center">
+      <Banner
+        title="Status"
+        value={currentTask}
+      />
+      <TaskBanner
+        title={`Tasks Remaining for ${semiPermaName}`}
+        value={nextTask}
+      />
+      <Banner
+        title="Work Done"
+        value={progressInterval}
+      />
+      <Banner
+        title="Burglar Status"
+        value={burglarStatus}
+      />
+      <ScoreBanner
+        title="High Score"
+        value={highScore}
+        name={highScoreName}
+        className=""
+      />
+      <button
+        type="submit"
+        onClick={bonusSass}
+        className={
+          enabledButtonClasses +
+          ' bg-purple-600'
+        }
+      >
+        Bonus Sass
       </button>
     </div>
   )
