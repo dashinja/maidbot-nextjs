@@ -5,7 +5,7 @@ export default function ScoreBanner(props: any) {
     <div>
       <p>
         {props.title}:{' '}
-        <span>
+        <span className={props.className}>
           <em><strong>{props.name}</strong></em> with {props.value} tasks completed!
         </span>
       </p>

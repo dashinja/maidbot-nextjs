@@ -7,18 +7,23 @@ describe('Create Form Component', () => {
   const renderSut = ({
     botName = 'Test Bot',
     botType = 'Aeronautical',
-    changeState = { 'text': 'Test Bot Name' }
+    changeState = { 'text': 'Test Bot Name' },
+    semiPermaName = 'SemiPermaName Name'
   }: {
     botName?: string,
     botType?: BotInfo['botType'],
-    changeState?: ChangeStateProp
+    changeState?: ChangeStateProp,
+    semiPermaName: string
   }) => render(CreateForm({
     botName,
     botType,
-    onClick: (e) => console.log('onClick was clicked'),
-    handleInputChange: (e) => console.log('handleInputChange was clicked'),
-    changeState
-  } as unknown as CreateFormProps))
+    onClick: (e) => jest.fn(),
+    handleInputChange: jest.fn(),
+    changeState,
+    currentBot: {botName, botType, semiPermaName},
+    setBot: jest.fn(),
+
+  } as CreateFormProps))
 
   const PageTitle = () => screen.getByText(/maid \- bot home defense systems/i)
   const NameInput = () => screen.getByRole('textbox', { name: 'Name:' })

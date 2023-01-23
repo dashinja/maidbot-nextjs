@@ -69,7 +69,7 @@ export default function InfoPanel({
       : `No intruders have come!`
 
   return (
-      <div>
+      <div className='flex flex-col place-content-center'>
         <Banner title="Status" value={currentTask} />
         <TaskBanner
           title={`Tasks Remaining for ${semiPermaName}`}
@@ -81,6 +81,7 @@ export default function InfoPanel({
           title="High Score"
           value={highScore}
           name={highScoreName}
+          className=''
         />
         <button
           type="submit"

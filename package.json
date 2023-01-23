@@ -11,7 +11,14 @@
     "lint": "next lint",
     "studio": "pnpx prisma studio",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "prettier-format": "prettier --config .prettierrc 'src/**/*.[ts|tsx|js|jsx]' --write"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run prettier-format && npm lint",
+      "pre-push": ""
+    }
   },
   "dependencies": {
     "axios": "^0.27.2",
@@ -32,6 +39,8 @@
     "concurrently": "^7.6.0",
     "eslint": "8.19.0",
     "eslint-config-next": "12.2.2",
+    "eslint-config-prettier": "^8.6.0",
+    "husky": "^8.0.3",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
     "postcss": "^8.4.14",

@@ -269,7 +269,7 @@ export type DisabledStateProp = {
 
 export type BotStartupProps = {
   prevBots: unknown[], 
-  currentBot: any, 
+  currentBot: BotInfo, 
   currentScore: Score, 
   executionState: ExecutionerStateProps,
   setCurrentScore: React.Dispatch<React.SetStateAction<Score>>,

@@ -8,10 +8,16 @@ module.exports = {
     extend: {},
     colors: {
       /**
+       * Background
+       */
+      "background": "#47478a",
+      
+      /**
        * Initial Layout
        */
       "text-normal": "#d5d5d5",
       "submit-button": "#e0e0e0",
+      "submit-button-text": "#1e1d1d",
       "button-disabled": "#3e3e79",
       "text-button-disabled":"#2e3269",
 
