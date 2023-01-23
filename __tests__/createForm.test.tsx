@@ -13,7 +13,7 @@ describe('Create Form Component', () => {
     botName?: string,
     botType?: BotInfo['botType'],
     changeState?: ChangeStateProp,
-    semiPermaName: string
+    semiPermaName?: string
   }) => render(CreateForm({
     botName,
     botType,
