@@ -12,7 +12,7 @@
     "studio": "pnpx prisma studio",
     "test": "jest",
     "test:watch": "jest --watch",
-    "prettier-format": "prettier --config .prettierrc 'src/**/*.[ts|tsx|js|jsx]' --write"
+    "prettier-format": "prettier --config .prettierrc './**/*.[ts|tsx|js|jsx]' --write"
   },
   "husky": {
     "hooks": {
