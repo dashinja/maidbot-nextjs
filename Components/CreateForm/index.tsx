@@ -1,11 +1,12 @@
 import React, { ChangeEventHandler, MouseEventHandler } from 'react'
+import { ChangeStateProp } from '../../pages/api/bot'
 
-type createFormProps = {
+export type CreateFormProps = {
   onClick: MouseEventHandler<HTMLFormElement>,
   handleInputChange: ChangeEventHandler<HTMLInputElement | HTMLSelectElement>,
-  botType: string,
-  botName: string
-  changeState: { [key: string]: string}
+  botType: 'Unipedal' | 'Bipedal' | 'Quadrupedal' | 'Arachnid' | 'Radial' | 'Aeronautical',
+  // botName: string
+  changeState: ChangeStateProp
 }
 
 //TODO: Remove botName?
@@ -13,9 +14,9 @@ export default function CreateForm({
   onClick,
   handleInputChange,
   botType,
-  botName,
+  // botName,
   changeState
-}: createFormProps ) {
+}: CreateFormProps ) {
   return (
     <>
       <div>
@@ -54,7 +55,11 @@ export default function CreateForm({
               < option value="Aeronautical" > Aeronautical </option>
             </select>
 
-            < button type="submit">
+            < button 
+              name="submit-button"  
+              type="submit"
+              className='bg-grey-500'
+            >
               Submit
             </button>
           </fieldset>

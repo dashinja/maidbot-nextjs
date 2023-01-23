@@ -11,6 +11,8 @@ const { bots } = prisma
 
 const dateNow: DateType['returnDate'] = () => { return new Date() as unknown as Date }
 
+export type ChangeStateProp = { [key: string]: string }
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     if (!req.body.name || !req.body.botType) {

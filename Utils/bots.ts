@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
+import { CreateFormProps } from '../Components/CreateForm'
 import Burglar from './burglar'
 import { CONSTANTS } from './constants'
 import { choreSequence, createValidation, executioner, ExecutionerProps, ExecutionerStateProps, femaleDefault, femaleDefensive, speakerHandler } from './helpers'
@@ -209,7 +210,7 @@ export const getScores = async (setScore: React.Dispatch<React.SetStateAction<Sc
 
 export type BotInfo = {
   botName: string,
-  botType: string,
+  botType: CreateFormProps['botType'],
   semiPermaName: string
 }
 

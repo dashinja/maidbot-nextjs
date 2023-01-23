@@ -3,12 +3,13 @@ import Destroyer, { bonusSass, BotInfo, burglarDefense, CounterProp, createBot, 
 import InfoPanel from '../Components/InfoPanel/index'
 import ButtonPanel from '../Components/ButtonPanel/index'
 import CreateForm from '../Components/CreateForm/index'
+import { ChangeStateProp } from './api/bot'
 
 const App = () => {
 
   const [currentBot, setBot] = useState<BotInfo>({
     botName: '',
-    botType: 'Bibedal',
+    botType: 'Bipedal',
     semiPermaName: 'Bot'
   })
   const [workTasks, setWorkTasks] = useState<WorkTaskProp>({
@@ -30,9 +31,12 @@ const App = () => {
     submitClick: 0,
     progressInterval: 0
   })
-  const [changeState, setChangeState] = useState<{ [key: string]: string }>()
+
+
+  const [changeState, setChangeState] = useState<ChangeStateProp>()
   const [prevBots, setPrevBots] = useState<unknown[]>()
 
+  
   const executionState = {
     workTasks,
     setWorkTasks,
@@ -61,9 +65,6 @@ const App = () => {
       case 'select-one':
         setBot({ ...currentBot, ...{ botType: target.value } })
         break
-      case 'click':
-        break
-
       default:
         break
     }
