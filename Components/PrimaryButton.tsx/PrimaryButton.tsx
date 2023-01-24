@@ -5,6 +5,9 @@ export const PrimaryButton = ({
   ...props
 }) => {
 
+  /**
+   * Primary Button Classes
+   */
   const primaryButtonClasses = "text-submit-button-text bg-submit-button"
   return (
     <button
