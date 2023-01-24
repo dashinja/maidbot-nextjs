@@ -1,18 +1,14 @@
 import { text } from 'stream/consumers'
 import { ChangeStateProp } from '../../pages/api/bot'
-import {
-  BotStartupProps,
-  CreateBotProps,
-} from '../../Utils/bots'
+import { BotStartupProps, CreateBotProps } from '../../Utils/bots'
 
-export type DropDownSelectionProps =
-  Pick<
-    CreateBotProps,
-    'setBot' | 'currentBot'
-  > & {
-    changeState: ChangeStateProp
-    className?: string
-  }
+export type DropDownSelectionProps = Pick<
+  CreateBotProps,
+  'setBot' | 'currentBot'
+> & {
+  changeState: ChangeStateProp
+  className?: string
+}
 
 export const DropdownSelection = ({
   currentBot,
@@ -38,35 +34,14 @@ export const DropdownSelection = ({
         data-testid="botType-selector"
         onChange={handleOnSelection}
         className={className}
-        value={
-          changeState?.key ||
-          currentBot.botType
-        }
+        value={changeState?.key || currentBot.botType}
       >
-        <option value="Unipedal">
-          {' '}
-          Unipedal{' '}
-        </option>
-        <option value="Bipedal">
-          {' '}
-          Bipedal{' '}
-        </option>
-        <option value="Quadrupedal">
-          {' '}
-          Quadrupedal{' '}
-        </option>
-        <option value="Arachnid">
-          {' '}
-          Arachnid{' '}
-        </option>
-        <option value="Radial">
-          {' '}
-          Radial{' '}
-        </option>
-        <option value="Aeronautical">
-          {' '}
-          Aeronautical{' '}
-        </option>
+        <option value="Unipedal"> Unipedal </option>
+        <option value="Bipedal"> Bipedal </option>
+        <option value="Quadrupedal"> Quadrupedal </option>
+        <option value="Arachnid"> Arachnid </option>
+        <option value="Radial"> Radial </option>
+        <option value="Aeronautical"> Aeronautical </option>
       </select>
     </>
   )

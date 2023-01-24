@@ -47,7 +47,7 @@ const omegaPattern = [
 ]
 
 export type Task = {
-  insideTasks?: string[],
+  insideTasks?: string[]
   outsideTasks?: string[]
 }
 

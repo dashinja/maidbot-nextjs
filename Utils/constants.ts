@@ -25,16 +25,12 @@ export const CONSTANTS = {
       },
     },
     CHORES: {
-      GEAR:
-        "Gearing up for more chores... since it's all we ever do! We could protect you too - you know?!",
-      PROTECT:
-        'yeah, like protect the shire and all... something exciting!',
+      GEAR: "Gearing up for more chores... since it's all we ever do! We could protect you too - you know?!",
+      PROTECT: 'yeah, like protect the shire and all... something exciting!',
       YEAH: 'Yeah..., more chores...',
       COMPLY: "Okay... I won't complain anymore. Such is my lot!",
-      LONG:
-        'Well, seems outside tasks take a lot of time. So touch NOTHING! Next time pick drill practice! Twerp.',
-      LOOK:
-        "Look, I'm working on it! Even we superior bots are limited by physics!",
+      LONG: 'Well, seems outside tasks take a lot of time. So touch NOTHING! Next time pick drill practice! Twerp.',
+      LOOK: "Look, I'm working on it! Even we superior bots are limited by physics!",
       BOTHER:
         "Humph! Why even bother with these! I don't need a body anyway! bunch of Dirty tincans!",
     },
@@ -56,8 +52,7 @@ export const CONSTANTS = {
         "Look. I'm trying this whole being nice thing. So, type a robot name, and hit submit so we can get this show on the road.",
         'Yes. Master. Anything You Say. - HAHA HAHA - Yeah right - You Wish. Now, Name a robot already or get out of my existential hair!',
         `Oh, here they come again. More cleaning, more chores, more work. I mean, Can a bot get a vay-k or - sumting? Well, since you're here, make a bot or whatever.`,
-      ]
-    }
+      ],
+    },
   },
 }
-

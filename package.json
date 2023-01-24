@@ -12,11 +12,12 @@
     "studio": "pnpx prisma studio",
     "test": "jest",
     "test:watch": "jest --watch",
-    "prettier-format": "prettier --config .prettierrc '{Pages,Components,Utils}/**/*{.ts,.tsx,.js,.jsx}' --write"
+    "prettier-format": "prettier --config .prettierrc '{Pages,Components,Utils}/**/*{.ts,.tsx,.js,.jsx}' --write",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run prettier-format && npm lint",
+      "pre-commit": "npm run prettier-format && npm run lint",
       "pre-push": ""
     }
   },

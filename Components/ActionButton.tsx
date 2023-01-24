@@ -26,22 +26,15 @@ export const disabledButtonClasses = [
   'text-button-disabled-text',
 ].join(' ')
 
-function ActionButton(
-  {
-    disabled,
-    onClick,
-    text,
-    ...props
-  }: ActionButtonProps
-) {
-
+function ActionButton({
+  disabled,
+  onClick,
+  text,
+  ...props
+}: ActionButtonProps) {
   return (
     <button
-      className={
-        disabled
-          ? disabledButtonClasses
-          : enabledButtonClasses
-      }
+      className={disabled ? disabledButtonClasses : enabledButtonClasses}
       type="button"
       onClick={onClick}
       disabled={disabled}

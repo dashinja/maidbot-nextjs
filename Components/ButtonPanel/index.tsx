@@ -15,9 +15,7 @@ type ButtonPapelProps = {
   drillPractice: (practice: DrillPracticeProps) => void
   burglarDefense: (defense: BurglarDefenseProps) => void
   botState: CreateBotProps
-  setWinner: React.Dispatch<
-    React.SetStateAction<string>
-  >
+  setWinner: React.Dispatch<React.SetStateAction<string>>
 }
 
 export default function ButtonPanel({
@@ -39,7 +37,7 @@ export default function ButtonPanel({
   } = botState
 
   return (
-    <div className='flex mt-0.5'>
+    <div className="flex mt-0.5">
       <ActionButton
         text="Do Chore Regimen"
         onClick={(e) =>
