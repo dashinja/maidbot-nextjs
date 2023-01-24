@@ -9,12 +9,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "eslint": "eslint --fix",
     "studio": "pnpx prisma studio",
     "test": "jest",
     "test:watch": "jest --watch",
     "prettier-format": "prettier --config .prettierrc '{Pages,Components,Utils}/**/*{.ts,.tsx,.js,.jsx}' --write",
-    "prepare": "husky install",
-    "lint-staged": {}
+    "pre-commit-checks": "concurrently \"npm run prettier-format\" \"npm run lint\" ",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {

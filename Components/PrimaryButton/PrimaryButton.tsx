@@ -5,16 +5,16 @@ export const PrimaryButton = ({
   ...props
 }) => {
   /**
-                                   *     Primary Button Classes
+   *     Primary Button Classes
    */
-                 const primaryButtonClasses = 'text-submit-button-text bg-submit-button'
+  const primaryButtonClasses = 'text-submit-button-text bg-submit-button'
   return (
     <button
       name={name}
-                    className={
+      className={
         'ml-4 py-2 px-5 rounded-md border border-1 font-semibold' +
         ' ' +
-className +
+        className +
         ' ' +
         primaryButtonClasses
       }
