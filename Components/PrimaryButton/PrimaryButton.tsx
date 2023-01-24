@@ -7,7 +7,8 @@ export const PrimaryButton = ({
   /**
    *     Primary Button Classes
    */
-  const primaryButtonClasses = 'text-submit-button-text bg-submit-button'
+  const primaryButtonClasses =
+    'text-submit-button-text bg-submit-button super-classy yessir'
   return (
     <button
       name={name}
