@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
-    "./Components/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {},
@@ -10,8 +10,8 @@ module.exports = {
       /**
        * Background
        */
-      "background": "#47478a",
-      
+      background: "#47478a",
+
       /**
        * Initial Layout
        */
@@ -19,14 +19,14 @@ module.exports = {
       "submit-button": "#e0e0e0",
       "submit-button-text": "#1e1d1d",
       "button-disabled": "#3e3e79",
-      "text-button-disabled":"#2e3269",
+      "text-button-disabled": "#2e3269",
       "input-box-bottom": "#2e2e5a",
 
       /**
        * Enabled States
        */
       "red-one": "#ef4444",
-    }
+    },
   },
   plugins: [],
-}
+};

@@ -15,9 +15,8 @@
     "terminal.ansiRed": "#FB543F",
     "terminal.ansiWhite": "#A89984",
     "terminal.ansiYellow": "#FAC03B",
-    "activityBar.background": "#292D39",
-    "titleBar.activeBackground": "#3A4050",
-    "titleBar.activeForeground": "#FAFAFB"
-  },
-  "cSpell.language": "en"
+    "activityBar.background": "#472325",
+    "titleBar.activeBackground": "#633134",
+    "titleBar.activeForeground": "#FCF9F9"
+  }
 }
