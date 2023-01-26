@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient } from '.prisma/client'
-import { Prisma } from '@prisma/client'
 import axios, { AxiosRequestConfig } from 'axios'
 
 const prisma = new PrismaClient()
