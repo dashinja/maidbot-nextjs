@@ -1,5 +1,6 @@
+import { CreateFormProps } from '@/components/CreateForm/CreateForm'
 import axios, { AxiosResponse } from 'axios'
-import { CreateFormProps } from '../Components/CreateForm/CreateForm'
+import { SetStateAction } from 'react'
 import Burglar from './burglar'
 import { CONSTANTS } from './constants'
 import {
@@ -287,7 +288,7 @@ export type BotStartupProps = {
 }
 
 export const getPrevBots = async (
-  setPrevBots: React.Dispatch<React.SetStateAction<unknown>>
+  setPrevBots: React.Dispatch<React.SetStateAction<unknown[]>>
 ) => {
   try {
     const prevBots = await axios.get('/api/bot')
@@ -731,7 +732,7 @@ export const saveBurglarState = async ({
 
 export type BurglarDefenseProps = BotStartupProps & {
   e: any
-  setWinner: React.Dispatch<React.SetStateAction<string>>
+  setWinner: React.Dispatch<SetStateAction<string | undefined>>
 }
 
 export const burglarDefense = ({

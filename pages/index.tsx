@@ -1,8 +1,9 @@
+import ButtonPanel from '@/components/ButtonPanel'
+import CreateForm from '@/components/CreateForm'
+import InfoPanel from '@/components/InfoPanel'
 import React, { useEffect, useState } from 'react'
-import Destroyer, { bonusSass, BotInfo, burglarDefense, CounterProp, createBot, CreateBotProps, DisabledStateProp, doChores, drillPractice, getPrevBots, getScores, Score, WorkTaskProp } from '../Utils/bots'
-import InfoPanel from '../Components/InfoPanel/index'
-import ButtonPanel from '../Components/ButtonPanel/index'
-import CreateForm from '../Components/CreateForm/index'
+import Destroyer, { BotInfo, WorkTaskProp, DisabledStateProp, Score, CounterProp, getPrevBots, getScores, CreateBotProps, createBot, doChores, drillPractice, burglarDefense, bonusSass } from 'utilities/bots'
+
 import { ChangeStateProp } from './api/bot'
 
 const App = () => {
@@ -25,7 +26,7 @@ const App = () => {
     isDisabledDrill: true
   })
   const [currentScore, setCurrentScore] = useState<Score>('high score')
-  const [winner, setWinner] = useState<Destroyer['name']>()
+  const [winner, setWinner] = useState<Destroyer['name'] | undefined>(undefined)
   const [counters, setCounters] = useState<CounterProp>({
     choreClick: 0,
     submitClick: 0,
@@ -33,8 +34,8 @@ const App = () => {
   })
 
 
-  const [changeState, setChangeState] = useState<ChangeStateProp>()
-  const [prevBots, setPrevBots] = useState<unknown[]>()
+  const [changeState, setChangeState] = useState<ChangeStateProp>({'text': ''})
+  const [prevBots, setPrevBots] = useState<unknown[]>([])
 
   
   const executionState = {

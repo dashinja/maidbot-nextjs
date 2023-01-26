@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "tw": "npx tailwindcss -i ./styles/globals.css -o ./dist/output.css --watch",
+    "tw": "npx tailwindcss -i ./styles/global.css -o ./dist/output.css --watch",
     "dev": "concurrently \"sudo service mysql start\" \"npm run tw\" \"npm run dev:next\"",
     "dev:next": "next dev",
     "build": "next build",
@@ -21,16 +21,20 @@
     }
   },
   "dependencies": {
+    "@testing-library/dom": "^8.20.0",
+    "@typescript-eslint/parser": "^5.0.0",
     "axios": "^1.2.4",
     "dotenv": "^16.0.3",
     "next": "latest",
     "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.1.0",
+    "simple-crypto-js": "^3.0.1"
   },
   "devDependencies": {
     "@google-cloud/text-to-speech": "^4.1.0",
     "@jest/globals": "^29.4.0",
     "@prisma/client": "^4.9.0",
+    "@testing-library/dom": "7.21.4",
     "@testing-library/jest-dom": "5.16.4",
     "@testing-library/react": "13.2.0",
     "@testing-library/user-event": "14.2.0",
@@ -39,6 +43,7 @@
     "@types/react": "18.0.9",
     "@types/testing-library__jest-dom": "5.14.5",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.0.0",
     "autoprefixer": "^10.4.13",
     "concurrently": "^7.6.0",
     "eslint": "8.32.0",
@@ -55,8 +60,6 @@
     "prettier": "2.8.3",
     "prisma": "^4.9.0",
     "tailwindcss": "^3.2.4",
-    "ts-jest": "^29.0.5",
-    "ts-node": "^10.9.1",
     "typescript": "4.6.4"
   }
 }

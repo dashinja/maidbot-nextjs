@@ -1,6 +1,5 @@
-import { text } from 'stream/consumers'
+import { CreateBotProps } from 'utilities/bots'
 import { ChangeStateProp } from '../../pages/api/bot'
-import { BotStartupProps, CreateBotProps } from '../../Utils/bots'
 
 export type DropDownSelectionProps = Pick<
   CreateBotProps,
@@ -16,7 +15,7 @@ export const DropdownSelection = ({
   changeState,
   className = '',
 }: DropDownSelectionProps) => {
-  const handleOnSelection = (e) => {
+  const handleOnSelection = (e: any) => {
     const { target } = e
     setBot({
       ...currentBot,

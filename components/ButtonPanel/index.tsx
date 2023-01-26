@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-  BurglarDefenseProps,
-  CreateBotProps,
-  DoChoresProps,
-  DrillPracticeProps,
-} from '../../Utils/bots'
+import { DoChoresProps, DrillPracticeProps, BurglarDefenseProps, CreateBotProps } from 'utilities/bots'
 import ActionButton from '../ActionButton'
 
 type ButtonPapelProps = {
@@ -15,7 +10,7 @@ type ButtonPapelProps = {
   drillPractice: (practice: DrillPracticeProps) => void
   burglarDefense: (defense: BurglarDefenseProps) => void
   botState: CreateBotProps
-  setWinner: React.Dispatch<React.SetStateAction<string>>
+  setWinner: React.Dispatch<React.SetStateAction<string | undefined>>
 }
 
 export default function ButtonPanel({

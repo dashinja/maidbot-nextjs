@@ -2,8 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { PrismaClient } from '.prisma/client'
 import { Prisma } from '@prisma/client'
 import axios, { AxiosRequestConfig } from 'axios'
-// import simpleCrypto from '../../../Utils/encrypt'
-// import SimpleCrypto from 'simple-crypto-js'
 
 const prisma = new PrismaClient()
 const { bots } = prisma

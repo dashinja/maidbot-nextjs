@@ -5,8 +5,8 @@ import TaskBanner from './TaskBanner'
 
 import 'dotenv/config'
 import { enabledButtonClasses } from '../ActionButton'
-import Destroyer, { Score, ScoreObject } from '../../Utils/bots'
-import PrimaryButton from '../PrimaryButton.tsx'
+import Destroyer, { Score, ScoreObject } from 'utilities/bots'
+import PrimaryButton from '../PrimaryButton'
 
 type InfoPanelProps = {
   currentTask: string
@@ -16,7 +16,7 @@ type InfoPanelProps = {
    * Shows "work Done"
    */
   progressInterval: number
-  winner: Destroyer['name']
+  winner: Destroyer['name'] | undefined
   /**
    * GET from database
    */
