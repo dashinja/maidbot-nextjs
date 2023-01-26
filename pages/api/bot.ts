@@ -1,28 +1,32 @@
-import { NextApiRequest, NextApiResponse } from 'next'
-import { PrismaClient } from '.prisma/client'
-import simpleCrypto from '../../Utils/encrypt'
+import { NextApiRequest, NextApiResponse } from "next";
+import { PrismaClient } from ".prisma/client";
+import simpleCrypto from "utilities/encrypt";
 
 type DateType = {
-  returnDate: () => Date
-}
+  returnDate: () => Date;
+};
 
-const prisma = new PrismaClient()
-const { bots } = prisma
+const prisma = new PrismaClient();
+const { bots } = prisma;
 
-const dateNow: DateType['returnDate'] = () => { return new Date() as unknown as Date }
+const dateNow: DateType["returnDate"] = () => {
+  return new Date() as unknown as Date;
+};
 
-export type ChangeStateProp = { [key: string]: string }
+export type ChangeStateProp = { [key: string]: string };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  if (req.method === "POST") {
     if (!req.body.name || !req.body.botType) {
-      console.log('req.body.name: ', req.body.name)
-      console.log('req.body.botType: ', req.body.botType)
+      console.log("req.body.name: ", req.body.name);
+      console.log("req.body.botType: ", req.body.botType);
 
-      res.send(console.error('Bot name already taken, please choose another!'))
-      return
+      res.send(console.error("Bot name already taken, please choose another!"));
+      return;
     } else {
-
       const dataObject = {
         name: simpleCrypto.encrypt(req.body.name),
         botType: req.body.botType,
@@ -31,18 +35,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         defense: req.body.defense,
         speed: req.body.speed,
         createdAt: dateNow(),
-        updatedAt: dateNow()
-      }
+        updatedAt: dateNow(),
+      };
 
       const result = await bots.create({
         data: dataObject,
-      })
-      res.send(result)
+      });
+      res.send(result);
     }
   }
 
-  if (req.method === 'GET') {
-    const result = await bots.findMany()
-    res.send(result)
+  if (req.method === "GET") {
+    const result = await bots.findMany();
+    res.send(result);
   }
 }

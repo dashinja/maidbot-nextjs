@@ -6,11 +6,11 @@ const nextConfig = {
     if (!isServer) {
       config.resolve.fallback = {
         fs: false,
-        path: false
-      }
+        path: false,
+      };
     }
-    return config
-  }
-}
+    return config;
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
