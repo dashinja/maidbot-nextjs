@@ -1,0 +1,3 @@
+{
+  "{Pages,Components,Utils}/**/*.(ts|tsx|js|jsx)": ["npm run prettier-format", "npm run eslint"]
+}

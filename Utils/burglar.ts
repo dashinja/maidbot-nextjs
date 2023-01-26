@@ -30,7 +30,7 @@ export default class Burglar {
   victoryResult(victim: VictimType, voiceAgent: any) {
     setTimeout(() => {
       voiceAgent.speak(
-        `${this.name} is defeated and has run away! ${victim.name} wins!`,
+        `${this.name} is defeated and has run away! ${victim.name} wins!`
       )
     }, 6000)
     return victim.name
@@ -45,8 +45,7 @@ export default class Burglar {
   defeatResult() {
     setTimeout(() => {
       voice.speak(
-        `Welp - the ${this.name
-        } won! Now your master's house will get looted. Like, do you even turing? - What a Piece of Junk!`,
+        `Welp - the ${this.name} won! Now your master's house will get looted. Like, do you even turing? - What a Piece of Junk!`
       )
     }, 6000)
     return this.name

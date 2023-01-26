@@ -11,35 +11,13 @@ type ButtonPapelProps = {
   isDisabledChore: boolean
   isDisabledDrill: boolean
   isDisabledBurglar: boolean
-  doChores: ({
-    e,
-    executionState,
-    prevBots,
-    currentBot,
-  }: DoChoresProps) => void
-  drillPractice: ({
-    e,
-    prevBots,
-    currentBot,
-    executionState,
-    currentScore,
-  }: DrillPracticeProps) => void
-  burglarDefense: ({
-    e,
-    prevBots,
-    currentBot,
-    currentScore,
-    executionState,
-    setCurrentScore,
-    setWinner,
-  }: BurglarDefenseProps) => void
+  doChores: (chores: DoChoresProps) => void
+  drillPractice: (practice: DrillPracticeProps) => void
+  burglarDefense: (defense: BurglarDefenseProps) => void
   botState: CreateBotProps
-  setWinner: React.Dispatch<
-    React.SetStateAction<string>
-  >
+  setWinner: React.Dispatch<React.SetStateAction<string>>
 }
 
-//TODO: Remove unused props?
 export default function ButtonPanel({
   isDisabledChore,
   isDisabledDrill,
@@ -59,7 +37,7 @@ export default function ButtonPanel({
   } = botState
 
   return (
-    <>
+    <div className="flex mt-0.5">
       <ActionButton
         text="Do Chore Regimen"
         onClick={(e) =>
@@ -104,6 +82,6 @@ export default function ButtonPanel({
         }
         disabled={isDisabledBurglar}
       />
-    </>
+    </div>
   )
 }

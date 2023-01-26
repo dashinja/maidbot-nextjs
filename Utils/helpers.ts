@@ -1,42 +1,51 @@
 import { CONSTANTS } from './constants'
 import React from 'react'
-import {BotStartupProps, CounterProp, DisabledStateProp, Score, WorkTaskProp} from '../Utils/bots'
+import {
+  BotStartupProps,
+  CounterProp,
+  DisabledStateProp,
+  Score,
+  WorkTaskProp,
+} from '../Utils/bots'
 import { Task } from './patterns'
 
 type WhichVoiceOptions = {
-  voice?: number,
-  pitch?: number,
-  rate?: number,
-  lang?: string,
+  voice?: number
+  pitch?: number
+  rate?: number
+  lang?: string
 }
 
 export type ExecutionerStateProps = {
-  workTasks: WorkTaskProp,
-  setWorkTasks: React.Dispatch<React.SetStateAction<WorkTaskProp>>,
-  counters: CounterProp,
+  workTasks: WorkTaskProp
+  setWorkTasks: React.Dispatch<React.SetStateAction<WorkTaskProp>>
+  counters: CounterProp
   setCounters: React.Dispatch<React.SetStateAction<CounterProp>>
   setIsDisabled: React.Dispatch<React.SetStateAction<DisabledStateProp>>
 }
 
-export type ExecutionerProps = {  
-  taskList: string[],
-  currentBot: any, 
-  currentScore: Score, 
+export type ExecutionerProps = {
+  taskList: string[]
+  currentBot: any
+  currentScore: Score
   /**
    * Count needs a BETTER name and clearer meaning
    */
-  count: number, 
-  executionState: ExecutionerStateProps,
+  count: number
+  executionState: ExecutionerStateProps
 }
 
 const defaultVoiceOptions: WhichVoiceOptions = {
   lang: 'en',
   pitch: 1,
   rate: 1,
-  voice: 0
+  voice: 0,
 }
 
-async function speak(text: string, whichVoice: WhichVoiceOptions = defaultVoiceOptions) {
+async function speak(
+  text: string,
+  whichVoice: WhichVoiceOptions = defaultVoiceOptions
+) {
   const msg = new SpeechSynthesisUtterance()
   const voices = speechSynthesis.getVoices()
   const voice = voices[whichVoice.voice]
@@ -51,18 +60,34 @@ async function speak(text: string, whichVoice: WhichVoiceOptions = defaultVoiceO
 export const voice = { speak }
 
 // Default Robot Commentary Setup
-const femaleDefaultVoice: WhichVoiceOptions = { lang: 'en', pitch: 2, rate: 1.7, voice: 3 }
+const femaleDefaultVoice: WhichVoiceOptions = {
+  lang: 'en',
+  pitch: 2,
+  rate: 1.7,
+  voice: 3,
+}
 export const femaleDefault = {
-  and: async function (text: string, options: WhichVoiceOptions = femaleDefaultVoice) {
+  and: async function (
+    text: string,
+    options: WhichVoiceOptions = femaleDefaultVoice
+  ) {
     console.log('femaleDefault voice')
     voice.speak(text, options)
   },
 }
 
 // // Home Defense Variation of Voice
-const femaleDefensiveVoice: WhichVoiceOptions = { lang: 'en', pitch: 1.5, rate: 1.5, voice: 3 }
+const femaleDefensiveVoice: WhichVoiceOptions = {
+  lang: 'en',
+  pitch: 1.5,
+  rate: 1.5,
+  voice: 3,
+}
 export const femaleDefensive = {
-  speak: async function (text: any, options: WhichVoiceOptions = femaleDefensiveVoice) {
+  speak: async function (
+    text: any,
+    options: WhichVoiceOptions = femaleDefensiveVoice
+  ) {
     console.log('femaleDefensive voice')
     voice.speak(text, options)
   },
@@ -70,23 +95,29 @@ export const femaleDefensive = {
 
 export const Voices = {
   femaleDefault,
-  femaleDefensive
+  femaleDefensive,
 }
 
-export const speakerHandler = async (waitTime: number, ttsString: string, whichVoice: WhichVoiceOptions = femaleDefaultVoice) => {
+export const speakerHandler = async (
+  waitTime: number,
+  ttsString: string,
+  whichVoice: WhichVoiceOptions = femaleDefaultVoice
+) => {
   return new Promise((res, rej) => {
-    res(setTimeout(() => {
-      voice.speak(ttsString, whichVoice)
-    }, waitTime * 1000))
+    res(
+      setTimeout(() => {
+        voice.speak(ttsString, whichVoice)
+      }, waitTime * 1000)
+    )
   })
 }
 
 export const executioner = ({
   taskList,
-  currentBot,  
-  currentScore,  
-  count,  
-  executionState, 
+  currentBot,
+  currentScore,
+  count,
+  executionState,
 }: ExecutionerProps) => {
   let executionCount = count
 
@@ -101,21 +132,47 @@ export const executioner = ({
     if (command && typeof botFunction === 'function') {
       console.log('inside command function')
 
-      executionState.setWorkTasks({ ...executionState.workTasks, ...{ nextTask: taskList.length, currentTask: botFunction().description, taskIsComplete: false } })
+      executionState.setWorkTasks({
+        ...executionState.workTasks,
+        ...{
+          nextTask: taskList.length,
+          currentTask: botFunction().description,
+          taskIsComplete: false,
+        },
+      })
 
-      speakerHandler(botFunction(currentBot.name, currentBot.type).eta, '')
-        .then(() => {
-          let nextArray = taskList.slice(1)
-          executionState.setWorkTasks({ ...executionState.workTasks, ...{ nextTask: nextArray.length } })
-          executionState.setCounters({ ...executionState.counters, ...{ progressInterval: executionState.counters.progressInterval + 1 } })
-          executionCount += 1
-          executioner({taskList: nextArray, currentBot: currentBot, currentScore: currentScore, count, executionState: executionState})
+      speakerHandler(
+        botFunction(currentBot.name, currentBot.type).eta,
+        ''
+      ).then(() => {
+        let nextArray = taskList.slice(1)
+        executionState.setWorkTasks({
+          ...executionState.workTasks,
+          ...{ nextTask: nextArray.length },
         })
+        executionState.setCounters({
+          ...executionState.counters,
+          ...{ progressInterval: executionState.counters.progressInterval + 1 },
+        })
+        executionCount += 1
+        executioner({
+          taskList: nextArray,
+          currentBot: currentBot,
+          currentScore: currentScore,
+          count,
+          executionState: executionState,
+        })
+      })
     } else {
-
       if (executionCount >= 16) {
-        executionState.setWorkTasks({ ...executionState.workTasks, ...{ taskIsComplete: true } })
-        speakerHandler(0, `${currentBot.name} completed the task set! Standing by!`)
+        executionState.setWorkTasks({
+          ...executionState.workTasks,
+          ...{ taskIsComplete: true },
+        })
+        speakerHandler(
+          0,
+          `${currentBot.name} completed the task set! Standing by!`
+        )
       }
 
       if (typeof currentScore === 'function') {
@@ -124,12 +181,17 @@ export const executioner = ({
 
       speakerHandler(3, '')
         .then(() => {
-          executionState.setWorkTasks({ ...executionState.workTasks, ...{ currentTask: `${currentBot.name} completed all tasks!` } })
+          executionState.setWorkTasks({
+            ...executionState.workTasks,
+            ...{ currentTask: `${currentBot.name} completed all tasks!` },
+          })
         })
         .then(() => {
           if (executionCount <= 15) {
-            speakerHandler(0, 'All Done! And ready for second breakfast, Elevensies and more! Yeah, totally stole that word from Pippin!')
-              .then(() => executionCount = 16)
+            speakerHandler(
+              0,
+              'All Done! And ready for second breakfast, Elevensies and more! Yeah, totally stole that word from Pippin!'
+            ).then(() => (executionCount = 16))
           }
         })
     }
@@ -146,7 +208,6 @@ export async function createValidation(stage: number, state: string) {
   }
 
   if (botNameState === '') {
-
     switch (noNameCount) {
       case 0:
         noNameCount += 1
@@ -186,23 +247,22 @@ export async function createValidation(stage: number, state: string) {
         await speakerHandler(0, CONSTANTS.SPEECH.CREATE.ALT[0])
         await speakerHandler(1, `${botNameState} you call it?`)
         await speakerHandler(1, CONSTANTS.SPEECH.CREATE.ALT[1])
-        await speakerHandler(1, CONSTANTS.SPEECH.CREATE.ALT[2])
-          .then(() => noNameCount += 10)
+        await speakerHandler(1, CONSTANTS.SPEECH.CREATE.ALT[2]).then(
+          () => (noNameCount += 10)
+        )
         await speakerHandler(4, CONSTANTS.SPEECH.CREATE.ALT[3])
         await speakerHandler(0, CONSTANTS.SPEECH.CREATE.ALT[4])
         await speakerHandler(3, CONSTANTS.SPEECH.CREATE.ALT[5])
-
       } catch (error) {
         console.error(error)
       }
     } else if (noNameCount < 1) {
       const uniquteText = `Well well then. ${botNameState}, ahah? - I see... - How unique of you`
 
-      await speakerHandler(0, uniquteText)
-        .then(() => {
-          noNameCount += 10
-          speakerHandler(7, CONSTANTS.SPEECH.CREATE.NORMAL[0])
-        })
+      await speakerHandler(0, uniquteText).then(() => {
+        noNameCount += 10
+        speakerHandler(7, CONSTANTS.SPEECH.CREATE.NORMAL[0])
+      })
       await speakerHandler(10.5, CONSTANTS.SPEECH.CREATE.NORMAL[1])
       await speakerHandler(9.5, CONSTANTS.SPEECH.CREATE.NORMAL[2])
       await speakerHandler(6, CONSTANTS.SPEECH.CREATE.NORMAL[3])
@@ -214,13 +274,17 @@ export function choreSequence(stage: number) {
   let noNameCount = stage
 
   if (noNameCount >= 14 && noNameCount <= 16) {
-    speakerHandler(0, CONSTANTS.SPEECH.CHORES.GEAR)
-      .then(() => { speakerHandler(8, CONSTANTS.SPEECH.CHORES.PROTECT); return (noNameCount += 1) })
+    speakerHandler(0, CONSTANTS.SPEECH.CHORES.GEAR).then(() => {
+      speakerHandler(8, CONSTANTS.SPEECH.CHORES.PROTECT)
+      return (noNameCount += 1)
+    })
   } else if (noNameCount >= 17 && noNameCount < 18) {
-    speakerHandler(0, CONSTANTS.SPEECH.CHORES.YEAH)
-      .then(() => noNameCount += 1)
+    speakerHandler(0, CONSTANTS.SPEECH.CHORES.YEAH).then(
+      () => (noNameCount += 1)
+    )
   } else if (noNameCount === 18) {
-    speakerHandler(0, CONSTANTS.SPEECH.CHORES.COMPLY)
-      .then(() => noNameCount = 19)
+    speakerHandler(0, CONSTANTS.SPEECH.CHORES.COMPLY).then(
+      () => (noNameCount = 19)
+    )
   }
 }

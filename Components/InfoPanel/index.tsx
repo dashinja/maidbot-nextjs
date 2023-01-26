@@ -5,10 +5,8 @@ import TaskBanner from './TaskBanner'
 
 import 'dotenv/config'
 import { enabledButtonClasses } from '../ActionButton'
-import Destroyer, {
-  Score,
-  ScoreObject,
-} from '../../Utils/bots'
+import Destroyer, { Score, ScoreObject } from '../../Utils/bots'
+import PrimaryButton from '../PrimaryButton.tsx'
 
 type InfoPanelProps = {
   currentTask: string
@@ -35,25 +33,20 @@ export default function InfoPanel({
   score,
   bonusSass,
 }: InfoPanelProps) {
-  const isScoreAnObject = Object.hasOwn(
-    score as ScoreObject,
-    'workDone'
-  )
+  const isScoreAnObject = Object.hasOwn(score as ScoreObject, 'workDone')
 
-  const defineUnknownHighScoreWorkDone =
-    () => {
-      if (isScoreAnObject) {
-        score = score as ScoreObject
-        return score.workDone
-      }
+  const defineUnknownHighScoreWorkDone = () => {
+    if (isScoreAnObject) {
+      score = score as ScoreObject
+      return score.workDone
     }
-  const defineUnknownHighScoreName =
-    () => {
-      if (isScoreAnObject) {
-        score = score as ScoreObject
-        return score.name
-      }
+  }
+  const defineUnknownHighScoreName = () => {
+    if (isScoreAnObject) {
+      score = score as ScoreObject
+      return score.name
     }
+  }
 
   const highScore =
     // score === 'N/A'
@@ -64,12 +57,10 @@ export default function InfoPanel({
         progressInterval
       : defineUnknownHighScoreWorkDone()
 
-  const typeOfScoreResponse =
-    typeof score === 'string'
-  const highScoreName =
-    typeOfScoreResponse
-      ? `No-Bot-y`
-      : defineUnknownHighScoreName()
+  const typeOfScoreResponse = typeof score === 'string'
+  const highScoreName = typeOfScoreResponse
+    ? `No-Bot-y`
+    : defineUnknownHighScoreName()
 
   const burglarStatus =
     winner !== undefined
@@ -79,39 +70,41 @@ export default function InfoPanel({
       : `No intruders have come!`
 
   return (
-    <div className="flex flex-col place-content-center">
+    <div className="flex flex-col place-items-center text-text-normal">
       <Banner
         title="Status"
         value={currentTask}
+        className="text-md mb-7 mt-2"
       />
       <TaskBanner
         title={`Tasks Remaining for ${semiPermaName}`}
         value={nextTask}
+        className="text-md mb-7"
       />
       <Banner
         title="Work Done"
         value={progressInterval}
+        className="text-md mb-7"
       />
       <Banner
         title="Burglar Status"
         value={burglarStatus}
+        className="text-md mb-7"
       />
       <ScoreBanner
         title="High Score"
         value={highScore}
-        name={highScoreName}
-        className=""
+        name={semiPermaName}
+        className="text-md"
       />
-      <button
-        type="submit"
+
+      <PrimaryButton
+        name={'sass-button'}
         onClick={bonusSass}
-        className={
-          enabledButtonClasses +
-          ' bg-purple-600'
-        }
+        className={enabledButtonClasses + 'text' + ''}
       >
         Bonus Sass
-      </button>
+      </PrimaryButton>
     </div>
   )
 }

@@ -1,11 +1,14 @@
 {
   "plugins": [
     "@typescript-eslint",
+    "jest-dom",
     "prettier"
   ],
   "extends": [
     "eslint:recommended",
+    "plugin:jest-dom/recommended",
     "next/core-web-vitals",
     "prettier"
-  ]
+  ],
+  "root": true
 }
