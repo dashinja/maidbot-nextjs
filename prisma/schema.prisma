@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client-js"
+  output="../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model bots {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique(map: "Bots_name_unique") @db.VarChar(255)
+  botType   String   @db.VarChar(255)
+  workDone  Int?     @default(0)
+  attack    Int?
+  defense   Int?
+  speed     Int?
+  createdAt DateTime @db.DateTime(0)
+  updatedAt DateTime @db.DateTime(0)
+}

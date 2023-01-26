@@ -1,65 +1,127 @@
-import Head from 'next/head'
-import Image from 'next/image'
+import React, { useEffect, useState } from 'react'
+import Destroyer, { bonusSass, BotInfo, burglarDefense, CounterProp, createBot, CreateBotProps, DisabledStateProp, doChores, drillPractice, getPrevBots, getScores, Score, WorkTaskProp } from '../Utils/bots'
+import InfoPanel from '../Components/InfoPanel/index'
+import ButtonPanel from '../Components/ButtonPanel/index'
+import CreateForm from '../Components/CreateForm/index'
+import { ChangeStateProp } from './api/bot'
 
-import styles from '@/pages/index.module.css'
+const App = () => {
 
-export default function Home() {
+  const [currentBot, setBot] = useState<BotInfo>({
+    botName: '',
+    botType: 'Bipedal',
+    semiPermaName: 'Bot'
+  })
+  const [workTasks, setWorkTasks] = useState<WorkTaskProp>({
+    workDone: 0,
+    currentTask: 'Awaiting Bot Creation',
+    nextTask: 0,
+    choreList: '',
+    taskIsComplete: true
+  })
+  const [isDisabled, setIsDisabled] = useState<DisabledStateProp>({
+    isDisabledChore: true,
+    isDisabledBurglar: true,
+    isDisabledDrill: true
+  })
+  const [currentScore, setCurrentScore] = useState<Score>('high score')
+  const [winner, setWinner] = useState<Destroyer['name']>()
+  const [counters, setCounters] = useState<CounterProp>({
+    choreClick: 0,
+    submitClick: 0,
+    progressInterval: 0
+  })
+
+
+  const [changeState, setChangeState] = useState<ChangeStateProp>()
+  const [prevBots, setPrevBots] = useState<unknown[]>()
+
+  
+  const executionState = {
+    workTasks,
+    setWorkTasks,
+    counters,
+    setCounters,
+    setIsDisabled,
+  }
+
+  useEffect(() => {
+    const initializeDate = async () => {
+      await Promise.all([
+        await getPrevBots(setPrevBots),
+        await getScores(setCurrentScore)
+      ])
+    }
+
+    initializeDate()
+  }, [])
+
+  const handleInputChange = (event: { target: any }) => {
+    const { target } = event
+    switch (target.type) {
+      case 'text':
+        setBot({ ...currentBot, ...{ botName: target.value } })
+        break
+      case 'select-one':
+        setBot({ ...currentBot, ...{ botType: target.value } })
+        break
+      default:
+        break
+    }
+    const name = target.name
+    setChangeState({ [name]: target.value })
+  }
+
+  const botStateCollection = {
+    setCurrentScore,
+    currentBot,
+    setBot,
+    prevBots,
+    currentScore,
+    executionState,
+  } as CreateBotProps
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a href="https://vercel.com/new" className={styles.card}>
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+    <div className='flex flex-col place-items-center max-w-fill'>
+      <CreateForm
+        //TODO: Relook at this onClick typing
+        onClick={(e) => createBot({
+          setCurrentScore,
+          currentBot,
+          setBot,
+          prevBots,
+          currentScore,
+          executionState,
+          e
+        }) as unknown as React.MouseEventHandler<HTMLFormElement>}
+        // botName={currentBot.botName}
+        botType={currentBot.botType}
+        handleInputChange={handleInputChange}
+        changeState={changeState}
+        currentBot={botStateCollection.currentBot}
+        setBot={setBot}
+      />
+      <ButtonPanel
+        doChores={doChores}
+        isDisabledChore={isDisabled.isDisabledChore}
+        drillPractice={drillPractice}
+        isDisabledDrill={isDisabled.isDisabledDrill}
+        burglarDefense={burglarDefense}
+        isDisabledBurglar={isDisabled.isDisabledBurglar}
+        botState={botStateCollection}
+        setWinner={setWinner}
+      />
+      <InfoPanel
+        currentTask={workTasks.currentTask}
+        semiPermaName={currentBot.semiPermaName}
+        nextTask={workTasks.nextTask}
+        progressInterval={counters.progressInterval}
+        winner={winner}
+        score={currentScore}
+        bonusSass={bonusSass}
+      />
     </div>
   )
 }
+
+export default App

@@ -1,7 +1,13 @@
 {
   "root": true,
-  "extends": ["next/core-web-vitals"],
-  "plugins": ["testing-library"],
+  "extends": ["next/core-web-vitals", "eslint:recommended",
+  "plugin:jest-dom/recommended", "prettier"],
+  "plugins": [
+  "testing-library", 
+  "@typescript-eslint",
+  "jest-dom",
+  "prettier"
+],
   "overrides": [
     // Only uses Testing Library lint rules in test files
     {
