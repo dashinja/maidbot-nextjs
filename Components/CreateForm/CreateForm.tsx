@@ -1,7 +1,7 @@
 import React, { ChangeEventHandler, MouseEventHandler } from 'react'
 import DropdownSelection from '../DropdownSelection'
 import { DropDownSelectionProps } from '../DropdownSelection/DropdownSelection'
-import PrimaryButton from '../PrimaryButton.tsx'
+import PrimaryButton from '../PrimaryButton'
 
 export type CreateFormProps = DropDownSelectionProps & {
   onClick: MouseEventHandler<HTMLFormElement>

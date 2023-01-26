@@ -1,10 +1,13 @@
-import { render, screen } from '@testing-library/react'
+import {describe, jest, test, expect} from '@jest/globals'
+import {screen, render} from '@testing-library/react'
+// import CreateForm from '@/components/CreateForm'
 import CreateForm from '../Components/CreateForm'
-import { CreateFormProps } from '../Components/CreateForm/CreateForm'
-import { ChangeStateProp } from '../pages/api/bot'
-import { BotInfo } from '../Utils/bots'
-describe('Create Form Component', () => {
 
+import { CreateFormProps } from '@/components/CreateForm/CreateForm'
+import { BotInfo } from '@/utilities/bots'
+import { ChangeStateProp } from '@/pages/api/bot'
+
+describe('Create Form Component', () => {
   const renderSut = ({
     botName = 'Test Bot',
     botType = 'Aeronautical',
@@ -18,7 +21,7 @@ describe('Create Form Component', () => {
   }) => render(CreateForm({
     botName,
     botType,
-    onClick: (e) => jest.fn(),
+    onClick: () => jest.fn(),
     handleInputChange: jest.fn(),
     changeState,
     currentBot: {botName, botType, semiPermaName},
@@ -26,15 +29,15 @@ describe('Create Form Component', () => {
 
   } as CreateFormProps))
 
-  const PageTitle = () => screen.getByText(/maid \- bot home defense systems/i)
+  const PageTitle = () => screen.getByText(/maid - bot home defense systems/i)
   const NameInput = () => screen.getByRole('textbox', { name: 'Name:' })
   const BotTypeSelector = () => screen.getByRole('combobox')
   const SubmitButton = () => screen.getByRole('button')
 
   test('should render', () => {
     renderSut({})
+    expect(PageTitle().tagName).toContain('H1')
 
-    expect(PageTitle()).toContainHTML('h1')
     expect(PageTitle()).toHaveTextContent('Maid - Bot Home Defense Systems')
   })
 
@@ -48,6 +51,7 @@ describe('Create Form Component', () => {
 
       renderSut({})
       expect(item.value()).toBeVisible()
+      expect(item.value()).toBeDefined()
     })
   })
 })
