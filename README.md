@@ -1,29 +1,32 @@
-# Next.js + Jest
+First:
+`npm install`
 
-This example shows how to configure Jest to work with Next.js.
+Make a prisma database (or migrate a SQL database or whatever) to prisma:
+Database name should be `smallbot`
 
-This includes Next.js' built-in support for Global CSS, CSS Modules and TypeScript.
+Make a `.env` of the DATABASE_URL.
+Example:
+```
+# Environment variables declared in this file are automatically made available to Prisma.
+# See the documentation for more detail: https://pris.ly/d/prisma-schema#accessing-environment-variables-from-the-schema
 
-## How to Use
+# Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
+# See the documentation for all the connection string options: https://pris.ly/d/connection-strings
 
-Quickly get started using [Create Next App](https://github.com/vercel/next.js/tree/canary/packages/create-next-app#readme)!
-
-In your terminal, run the following command:
-
-```bash
-npx create-next-app --example with-jest with-jest-app
+DATABASE_URL="mysql://<sqlUser>:<sqlPassword>@<host>/smallbot"
 ```
 
-```bash
-yarn create next-app --example with-jest with-jest-app
-```
+For Local Environment:
+`npm run dev`
 
-```bash
-pnpm create next-app --example with-jest with-jest-app
-```
+To Build:
+`npm run build`
 
-## Run Jest Tests
+To Test:
+`npm run test`
 
-```bash
-npm test
-```
+To prettier format everything:
+`npm run prettier-format`
+
+To run prettier only on staged items:
+`npm run pretty-quick`
