@@ -1,7 +1,5 @@
-import { describe, jest, test, expect } from "@jest/globals";
+import { describe, test, expect, vitest } from "vitest"
 import { screen, render } from "@testing-library/react";
-// import CreateForm from '@components/CreateForm'
-
 import { CreateForm, CreateFormProps } from "@components/CreateForm/CreateForm";
 import { ChangeStateProp } from "@pages/api/bot";
 import { BotInfo } from "utilities/bots";
@@ -22,11 +20,11 @@ describe("Create Form Component", () => {
       CreateForm({
         botName,
         botType,
-        onClick: () => jest.fn(),
-        handleInputChange: jest.fn(),
+        onClick: () => vitest.fn(),
+        handleInputChange: vitest.fn(),
         changeState,
         currentBot: { botName, botType, semiPermaName },
-        setBot: jest.fn(),
+        setBot: vitest.fn(),
       } as CreateFormProps)
     );
 
