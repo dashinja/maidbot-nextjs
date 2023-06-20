@@ -73,12 +73,21 @@ devDependencies:
   eslint-config-standard-with-typescript:
     specifier: ^34.0.1
     version: 34.0.1(@typescript-eslint/eslint-plugin@5.49.0)(eslint-plugin-import@2.27.5)(eslint-plugin-n@15.7.0)(eslint-plugin-promise@6.1.1)(eslint@8.32.0)(typescript@4.6.4)
+  eslint-plugin-import:
+    specifier: ^2.25.2
+    version: 2.27.5(@typescript-eslint/parser@5.49.0)(eslint-import-resolver-typescript@3.5.3)(eslint@8.32.0)
   eslint-plugin-jest-dom:
     specifier: ^4.0.3
     version: 4.0.3(eslint@8.32.0)
+  eslint-plugin-n:
+    specifier: ^15.0.0
+    version: 15.7.0(eslint@8.32.0)
   eslint-plugin-prettier:
     specifier: ^4.2.1
     version: 4.2.1(eslint-config-prettier@8.6.0)(eslint@8.32.0)(prettier@2.8.3)
+  eslint-plugin-promise:
+    specifier: ^6.0.0
+    version: 6.1.1(eslint@8.32.0)
   eslint-plugin-testing-library:
     specifier: ^5.10.0
     version: 5.10.0(eslint@8.32.0)(typescript@4.6.4)
