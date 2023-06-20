@@ -4,10 +4,12 @@
     "next/core-web-vitals",
     "eslint:recommended",
     "plugin:jest-dom/recommended",
+    "standard-with-typescript",
     "prettier"
   ],
   "plugins": ["testing-library", "@typescript-eslint", "jest-dom", "prettier"],
   "rules": {
+    "no-var": "error",
     "no-unused-vars": "warn"
   },
   "overrides": [
