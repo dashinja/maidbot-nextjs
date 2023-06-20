@@ -8,12 +8,6 @@ dependencies:
   '@testing-library/dom':
     specifier: ^8.20.0
     version: 8.20.0
-<<<<<<< HEAD
-=======
-  '@typescript-eslint/parser':
-    specifier: ^5.0.0
-    version: 5.49.0(eslint@8.32.0)(typescript@4.6.4)
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
   axios:
     specifier: ^1.2.4
     version: 1.2.4
@@ -58,12 +52,6 @@ devDependencies:
   '@types/react':
     specifier: 18.0.9
     version: 18.0.9
-<<<<<<< HEAD
-=======
-  '@typescript-eslint/eslint-plugin':
-    specifier: ^5.49.0
-    version: 5.49.0(@typescript-eslint/parser@5.49.0)(eslint@8.32.0)(typescript@4.6.4)
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
   '@vitejs/plugin-react':
     specifier: latest
     version: 4.0.1(vite@4.3.9)
@@ -82,12 +70,9 @@ devDependencies:
   eslint-config-prettier:
     specifier: ^8.6.0
     version: 8.6.0(eslint@8.32.0)
-<<<<<<< HEAD
   eslint-config-standard-with-typescript:
     specifier: ^34.0.1
     version: 34.0.1(@typescript-eslint/eslint-plugin@5.49.0)(eslint-plugin-import@2.27.5)(eslint-plugin-n@15.7.0)(eslint-plugin-promise@6.1.1)(eslint@8.32.0)(typescript@4.6.4)
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
   eslint-plugin-jest-dom:
     specifier: ^4.0.3
     version: 4.0.3(eslint@8.32.0)
@@ -792,20 +777,14 @@ packages:
         integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==,
       }
     engines: { node: '>=12.22' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /@humanwhocodes/object-schema@1.2.1:
     resolution:
       {
         integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==,
       }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /@jest/expect-utils@29.4.0:
     resolution:
@@ -1029,10 +1008,7 @@ packages:
         integrity: sha512-RkhPPp2zrqDAQA/2jNhnztcPAlv64XdhIp7a7454A5ovI7Bukxgt7MX7udwAu3zg1DcpPU0rz3VV1SeaqvY4+A==,
       }
     engines: { node: '>= 8' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /@nodelib/fs.walk@1.2.8:
     resolution:
@@ -1510,10 +1486,7 @@ packages:
     dependencies:
       '@typescript-eslint/types': 5.49.0
       '@typescript-eslint/visitor-keys': 5.49.0
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /@typescript-eslint/type-utils@5.49.0(eslint@8.32.0)(typescript@4.6.4):
     resolution:
@@ -1912,10 +1885,7 @@ packages:
         integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==,
       }
     engines: { node: '>=8' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /array.prototype.flat@1.3.1:
     resolution:
@@ -2127,10 +2097,7 @@ packages:
     engines: { node: '>=8' }
     dependencies:
       fill-range: 7.0.1
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /browserslist@4.21.4:
     resolution:
@@ -2152,7 +2119,6 @@ packages:
       }
     dev: true
 
-<<<<<<< HEAD
   /builtins@5.0.1:
     resolution:
       {
@@ -2180,26 +2146,6 @@ packages:
     engines: { node: '>=8' }
     dev: true
 
-=======
-  /busboy@1.6.0:
-    resolution:
-      {
-        integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==,
-      }
-    engines: { node: '>=10.16.0' }
-    dependencies:
-      streamsearch: 1.1.0
-    dev: false
-
-  /cac@6.7.14:
-    resolution:
-      {
-        integrity: sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==,
-      }
-    engines: { node: '>=8' }
-    dev: true
-
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
   /call-bind@1.0.2:
     resolution:
       {
@@ -2215,10 +2161,7 @@ packages:
         integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==,
       }
     engines: { node: '>=6' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /camelcase-css@2.0.1:
     resolution:
@@ -2687,10 +2630,7 @@ packages:
       {
         integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==,
       }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /define-lazy-prop@2.0.0:
     resolution:
@@ -3055,10 +2995,7 @@ packages:
         integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==,
       }
     engines: { node: '>=10' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /escodegen@1.14.3:
     resolution:
@@ -3116,7 +3053,6 @@ packages:
       eslint: 8.32.0
     dev: true
 
-<<<<<<< HEAD
   /eslint-config-standard-with-typescript@34.0.1(@typescript-eslint/eslint-plugin@5.49.0)(eslint-plugin-import@2.27.5)(eslint-plugin-n@15.7.0)(eslint-plugin-promise@6.1.1)(eslint@8.32.0)(typescript@4.6.4):
     resolution:
       {
@@ -3159,8 +3095,6 @@ packages:
       eslint-plugin-promise: 6.1.1(eslint@8.32.0)
     dev: true
 
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
   /eslint-import-resolver-node@0.3.7:
     resolution:
       {
@@ -3230,7 +3164,6 @@ packages:
       - supports-color
     dev: true
 
-<<<<<<< HEAD
   /eslint-plugin-es@4.1.0(eslint@8.32.0):
     resolution:
       {
@@ -3245,8 +3178,6 @@ packages:
       regexpp: 3.2.0
     dev: true
 
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
   /eslint-plugin-import@2.27.5(@typescript-eslint/parser@5.49.0)(eslint-import-resolver-typescript@3.5.3)(eslint@8.32.0):
     resolution:
       {
@@ -3326,7 +3257,6 @@ packages:
       semver: 6.3.0
     dev: true
 
-<<<<<<< HEAD
   /eslint-plugin-n@15.7.0(eslint@8.32.0):
     resolution:
       {
@@ -3347,8 +3277,6 @@ packages:
       semver: 7.3.8
     dev: true
 
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
   /eslint-plugin-prettier@4.2.1(eslint-config-prettier@8.6.0)(eslint@8.32.0)(prettier@2.8.3):
     resolution:
       {
@@ -3369,7 +3297,6 @@ packages:
       prettier-linter-helpers: 1.0.0
     dev: true
 
-<<<<<<< HEAD
   /eslint-plugin-promise@6.1.1(eslint@8.32.0):
     resolution:
       {
@@ -3382,8 +3309,6 @@ packages:
       eslint: 8.32.0
     dev: true
 
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
   /eslint-plugin-react-hooks@4.6.0(eslint@8.32.0):
     resolution:
       {
@@ -3461,7 +3386,6 @@ packages:
       estraverse: 5.3.0
     dev: true
 
-<<<<<<< HEAD
   /eslint-utils@2.1.0:
     resolution:
       {
@@ -3472,8 +3396,6 @@ packages:
       eslint-visitor-keys: 1.3.0
     dev: true
 
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
   /eslint-utils@3.0.0(eslint@8.32.0):
     resolution:
       {
@@ -3487,7 +3409,6 @@ packages:
       eslint-visitor-keys: 2.1.0
     dev: true
 
-<<<<<<< HEAD
   /eslint-visitor-keys@1.3.0:
     resolution:
       {
@@ -3496,18 +3417,13 @@ packages:
     engines: { node: '>=4' }
     dev: true
 
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
   /eslint-visitor-keys@2.1.0:
     resolution:
       {
         integrity: sha512-0rSmRBzXgDzIsD6mGdJgevzgezI534Cer5L/vyMX0kHzT/jiB43jRhd9YUlMGYLQy2zprNmoT8qasCGtY+QaKw==,
       }
     engines: { node: '>=10' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /eslint-visitor-keys@3.3.0:
     resolution:
@@ -3623,10 +3539,7 @@ packages:
         integrity: sha512-MMdARuVEQziNTeJD8DgMqmhwR11BRQ/cBP+pLtYdSTnf3MIO8fFeiINEbX36ZdNlfU/7A9f3gUw49B3oQsvwBA==,
       }
     engines: { node: '>=4.0' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /esutils@2.0.3:
     resolution:
@@ -3634,10 +3547,7 @@ packages:
         integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==,
       }
     engines: { node: '>=0.10.0' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /event-target-shim@5.0.1:
     resolution:
@@ -3760,10 +3670,7 @@ packages:
       }
     dependencies:
       reusify: 1.0.4
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /file-entry-cache@6.0.1:
     resolution:
@@ -4378,10 +4285,7 @@ packages:
         integrity: sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==,
       }
     engines: { node: '>= 4' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /import-fresh@3.3.0:
     resolution:
@@ -4392,10 +4296,7 @@ packages:
     dependencies:
       parent-module: 1.0.1
       resolve-from: 4.0.0
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /imurmurhash@0.1.4:
     resolution:
@@ -4403,10 +4304,7 @@ packages:
         integrity: sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA==,
       }
     engines: { node: '>=0.8.19' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /indent-string@4.0.0:
     resolution:
@@ -4540,10 +4438,7 @@ packages:
         integrity: sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ==,
       }
     engines: { node: '>=0.10.0' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /is-fullwidth-code-point@3.0.0:
     resolution:
@@ -4600,10 +4495,7 @@ packages:
         integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==,
       }
     engines: { node: '>=0.12.0' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /is-path-inside@3.0.3:
     resolution:
@@ -4611,10 +4503,7 @@ packages:
         integrity: sha512-Fd4gABb+ycGAmKou8eMftCupSir5lRxqf4aD/vd0cD2qc4HL07OjCeuHMr8Ro4CoMaeCKDB0/ECBOVWjTwUvPQ==,
       }
     engines: { node: '>=8' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /is-potential-custom-element-name@1.0.1:
     resolution:
@@ -4746,10 +4635,7 @@ packages:
       {
         integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==,
       }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /jest-diff@29.4.0:
     resolution:
@@ -5326,10 +5212,7 @@ packages:
         integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==,
       }
     engines: { node: '>= 8' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /micromatch@4.0.5:
     resolution:
@@ -5867,10 +5750,7 @@ packages:
         integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==,
       }
     engines: { node: '>=8' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /path-is-absolute@1.0.1:
     resolution:
@@ -5878,10 +5758,7 @@ packages:
         integrity: sha512-AVbw3UJ2e9bq64vSaS9Am0fje1Pa8pbGqTTsmXfaIiMpnr5DlDhfJOuLj9Sf95ZPVDAUerDfEk88MPmPe7UCQg==,
       }
     engines: { node: '>=0.10.0' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /path-key@3.1.1:
     resolution:
@@ -5889,10 +5766,7 @@ packages:
         integrity: sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==,
       }
     engines: { node: '>=8' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /path-key@4.0.0:
     resolution:
@@ -5915,10 +5789,7 @@ packages:
         integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==,
       }
     engines: { node: '>=8' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /pathe@1.1.1:
     resolution:
@@ -5946,10 +5817,7 @@ packages:
         integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==,
       }
     engines: { node: '>=8.6' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /pidtree@0.6.0:
     resolution:
@@ -6108,10 +5976,7 @@ packages:
         integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==,
       }
     engines: { node: '>= 0.8.0' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /prettier-linter-helpers@1.0.0:
     resolution:
@@ -6282,10 +6147,7 @@ packages:
         integrity: sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==,
       }
     engines: { node: '>=6' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /querystringify@2.2.0:
     resolution:
@@ -6434,10 +6296,7 @@ packages:
         integrity: sha512-pq2bWo9mVD43nbts2wGv17XLiNLya+GklZ8kaDLV2Z08gDCsGpnKn9BFMepvWuHCbyVvY7J5o5+BVvoQbmlJLg==,
       }
     engines: { node: '>=8' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /require-directory@2.1.1:
     resolution:
@@ -6477,10 +6336,7 @@ packages:
         integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==,
       }
     engines: { node: '>=4' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /resolve@1.22.1:
     resolution:
@@ -6536,10 +6392,7 @@ packages:
         integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==,
       }
     engines: { iojs: '>=1.0.0', node: '>=0.10.0' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /rfdc@1.3.0:
     resolution:
@@ -6671,10 +6524,7 @@ packages:
         integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==,
       }
     engines: { node: '>=8' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /shell-quote@1.7.4:
     resolution:
@@ -6722,10 +6572,7 @@ packages:
         integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==,
       }
     engines: { node: '>=8' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /slash@4.0.0:
     resolution:
@@ -7000,10 +6847,7 @@ packages:
         integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==,
       }
     engines: { node: '>=8' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /strip-literal@1.0.1:
     resolution:
@@ -7333,10 +7177,7 @@ packages:
         integrity: sha512-Ne+eE4r0/iWnpAxD852z3A+N0Bt5RN//NjJwRd2VFHEmrywxf5vsZlh4R6lixl6B+wz/8d+maTSAkN1FIkI3LQ==,
       }
     engines: { node: '>=10' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /type-fest@0.21.3:
     resolution:
@@ -7750,10 +7591,7 @@ packages:
         integrity: sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==,
       }
     engines: { node: '>=0.10.0' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /wrap-ansi@6.2.0:
     resolution:
@@ -7784,10 +7622,7 @@ packages:
       {
         integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==,
       }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /ws@8.13.0:
     resolution:
@@ -7926,10 +7761,7 @@ packages:
         integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==,
       }
     engines: { node: '>=10' }
-<<<<<<< HEAD
     dev: true
-=======
->>>>>>> f3324493af7bfe5f7ca908364e1956434a4c962f
 
   /yocto-queue@1.0.0:
     resolution:
