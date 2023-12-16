@@ -1,6 +1,7 @@
+import React from 'react'
 import { CreateFormProps } from '@components/CreateForm/CreateForm'
 import axios, { AxiosResponse } from 'axios'
-import React, { SetStateAction } from 'react'
+import { SetStateAction } from 'react'
 import Burglar from './burglar'
 import { CONSTANTS } from './constants'
 import {
