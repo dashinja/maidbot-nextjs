@@ -9,7 +9,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "studio": "pnpx prisma studio"
+    "studio": "pnpx prisma studio",
+    "test:watch": "jest test --"
   },
   "dependencies": {
     "@prisma/client": "^4.8.1",
