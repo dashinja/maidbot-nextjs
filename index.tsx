@@ -16,9 +16,8 @@ import Destroyer, {
   drillPractice,
   burglarDefense,
   bonusSass,
-} from '@utilities/bots'
-
-import { ChangeStateProp } from './api/bot'
+} from 'utilities/bots'
+import { ChangeStateProp } from '@pages/api/bot'
 
 const App = () => {
   const [currentBot, setBot] = useState<BotInfo>({

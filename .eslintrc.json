@@ -1,3 +1,26 @@
 {
-  "extends": "next/core-web-vitals"
+  "root": true,
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:jest-dom/recommended",
+    "prettier"
+  ],
+  "plugins": ["testing-library", "@typescript-eslint", "jest-dom", "prettier"],
+  "rules": {
+    "no-unused-vars": "warn"
+  },
+  "overrides": [
+    // Only uses Testing Library lint rules in test files
+    {
+      "files": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
+      "extends": ["plugin:testing-library/react"]
+    }
+  ],
+  "env": {
+    "jest": true
+  }
 }
