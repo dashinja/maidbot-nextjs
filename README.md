@@ -1,11 +1,12 @@
-#### Local Development
+### Local Development
 First:
 `npm install`
 
 Make a prisma database (or migrate a SQL database or whatever) to prisma:
 Database name should be `smallbot`
 
-Make a `.env` of the DATABASE_URL.
+Make a `.env` of the DATABASE_URL
+
 Example:
 
 ```
@@ -17,6 +18,8 @@ Example:
 
 DATABASE_URL="mysql://<sqlUser>:<sqlPassword>@<host>/smallbot"
 ```
+
+<br/>
 
 Once procuring a proper DATABASE_URL:
 This is a required step before running the dev script.
@@ -31,7 +34,9 @@ To Build:
 To Test:
 `pnpm run test`
 
-#### Utility Scripts
+<br />
+
+### Utility Scripts
 To prettier format everything:
 `pnpm run prettier-format`
 
