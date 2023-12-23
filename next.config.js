@@ -7,10 +7,10 @@ const nextConfig = {
       config.resolve.fallback = {
         fs: false,
         path: false,
-      };
+      }
     }
-    return config;
+    return config
   },
-};
+}
 
-module.exports = nextConfig;
+export default nextConfig

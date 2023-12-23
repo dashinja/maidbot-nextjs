@@ -17,7 +17,8 @@ import Destroyer, {
   burglarDefense,
   bonusSass,
 } from 'src/utilities/bots'
-import { ChangeStateProp } from '@pages/api/bot'
+
+import { ChangeStateProp } from './api/bot'
 
 const App = () => {
   const [currentBot, setBot] = useState<BotInfo>({

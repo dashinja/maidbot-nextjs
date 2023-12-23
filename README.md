@@ -6,6 +6,7 @@ Database name should be `smallbot`
 
 Make a `.env` of the DATABASE_URL.
 Example:
+
 ```
 # Environment variables declared in this file are automatically made available to Prisma.
 # See the documentation for more detail: https://pris.ly/d/prisma-schema#accessing-environment-variables-from-the-schema
