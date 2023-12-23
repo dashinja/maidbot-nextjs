@@ -17,8 +17,11 @@ export default defineConfig({
     alias: [
       {
         find: '@components',
-        replacement: resolve(__dirname, './components'),
+        replacement: resolve(__dirname, 'src/components'),
       },
+      { find: '@pages', replacement: resolve(__dirname, 'src/pages') },
+      { find: '@styles', replacement: resolve(__dirname, 'src/styles') },
+      { find: '@utilities', replacement: resolve(__dirname, 'src/utilities') },
     ],
   },
 })
