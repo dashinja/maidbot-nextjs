@@ -5,7 +5,7 @@ import TaskBanner from './TaskBanner'
 
 import 'dotenv/config'
 import { enabledButtonClasses } from '../ActionButton'
-import Destroyer, { Score, ScoreObject } from 'utilities/bots'
+import Destroyer, { Score, ScoreObject } from 'src/utilities/bots'
 import PrimaryButton from '../PrimaryButton'
 
 type InfoPanelProps = {

@@ -1,4 +1,4 @@
-import { CreateBotProps } from 'utilities/bots'
+import { CreateBotProps } from 'src/utilities/bots'
 import { ChangeStateProp } from '../../pages/api/bot'
 
 export type DropDownSelectionProps = Pick<

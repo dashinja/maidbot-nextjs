@@ -16,7 +16,7 @@ import Destroyer, {
   drillPractice,
   burglarDefense,
   bonusSass,
-} from '@utilities/bots'
+} from 'src/utilities/bots'
 
 import { ChangeStateProp } from './api/bot'
 

@@ -4,7 +4,7 @@ import {
   DrillPracticeProps,
   BurglarDefenseProps,
   CreateBotProps,
-} from 'utilities/bots'
+} from 'src/utilities/bots'
 import ActionButton from '../ActionButton'
 
 type ButtonPapelProps = {

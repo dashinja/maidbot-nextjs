@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import simpleCrypto from 'src/utilities/encrypt'
 import { PrismaClient } from '.prisma/client'
-import simpleCrypto from 'utilities/encrypt'
 
 type DateType = {
   returnDate: () => Date
