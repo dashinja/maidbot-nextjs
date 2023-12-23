@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ESNext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -20,14 +20,16 @@
       "@pages/*": ["pages/*"],
       "@styles/*": ["styles/*"],
       "@utilities/*": ["utilities/*"]
-    }
+    },
+    "types": ["@types/react", "@types/node"]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "types.d.ts",
-    "__tests__/*.(ts|tsx)"
+    "__tests__/*.(ts|tsx)",
+    "./vitest.setup.ts"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,9 +1,8 @@
-import { describe, test, expect } from 'vitest'
+import { describe, test, expect, vitest } from 'vitest'
 import { screen, render } from '@testing-library/react'
 import { CreateForm, CreateFormProps } from '@components/CreateForm/CreateForm'
 import { ChangeStateProp } from '@pages/api/bot'
 import { BotInfo } from 'utilities/bots'
-import { vitest } from 'vitest'
 
 describe('Create Form Component', () => {
   const renderSut = ({

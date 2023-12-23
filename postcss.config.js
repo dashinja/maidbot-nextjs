@@ -1,6 +1,8 @@
-module.exports = {
+let config = {
   plugins: {
     tailwindcss: {},
     autoprefixer: {},
   },
 }
+
+module.exports = config

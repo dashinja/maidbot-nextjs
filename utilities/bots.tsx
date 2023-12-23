@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import { CreateFormProps } from '@components/CreateForm/CreateForm'
 import axios, { AxiosResponse } from 'axios'

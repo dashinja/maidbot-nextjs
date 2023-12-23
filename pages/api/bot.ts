@@ -46,7 +46,9 @@ export default async function handler(
   }
 
   if (req.method === 'GET') {
+    console.log('Begin Get request for bots')
     const result = await bots.findMany()
+    console.log('finished Get request for bots')
     res.send(result)
   }
 }
