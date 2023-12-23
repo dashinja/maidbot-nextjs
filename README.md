@@ -1,3 +1,4 @@
+#### Local Development
 First:
 `npm install`
 
@@ -17,17 +18,22 @@ Example:
 DATABASE_URL="mysql://<sqlUser>:<sqlPassword>@<host>/smallbot"
 ```
 
+Once procuring a proper DATABASE_URL:
+This is a required step before running the dev script.
+`pnpm prisma generate`
+
 For Local Environment:
-`npm run dev`
+`pnpm run dev`
 
 To Build:
-`npm run build`
+`pnpm run build`
 
 To Test:
-`npm run test`
+`pnpm run test`
 
+#### Utility Scripts
 To prettier format everything:
-`npm run prettier-format`
+`pnpm run prettier-format`
 
 To run prettier only on staged items:
-`npm run pretty-quick`
+`pnpm run pretty-quick`
