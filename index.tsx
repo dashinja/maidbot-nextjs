@@ -17,34 +17,27 @@ import Destroyer, {
   burglarDefense,
   bonusSass,
 } from 'src/utilities/bots'
+
 import { ChangeStateProp } from '@pages/api/bot'
+import {
+  useCounter,
+  useCurrentBot,
+  useCurrentScore,
+  useIsDisabled,
+  useWinner,
+  useWorkTasks,
+} from '@utilities/state'
 
 const App = () => {
-  const [currentBot, setBot] = useState<BotInfo>({
-    botName: '',
-    botType: 'Bipedal',
-    semiPermaName: 'Bot',
-  })
-  const [workTasks, setWorkTasks] = useState<WorkTaskProp>({
-    workDone: 0,
-    currentTask: 'Awaiting Bot Creation',
-    nextTask: 0,
-    choreList: '',
-    taskIsComplete: true,
-  })
-  const [isDisabled, setIsDisabled] = useState<DisabledStateProp>({
-    isDisabledChore: true,
-    isDisabledBurglar: true,
-    isDisabledDrill: true,
-  })
-  const [currentScore, setCurrentScore] = useState<Score>('high score')
-  const [winner, setWinner] = useState<Destroyer['name'] | undefined>(undefined)
-  const [counters, setCounters] = useState<CounterProp>({
-    choreClick: 0,
-    submitClick: 0,
-    progressInterval: 0,
-  })
+  const [currentBot, setBot] = useCurrentBot()
 
+  const [workTasks, setWorkTasks] = useWorkTasks()
+
+  const [isDisabled, setIsDisabled] = useIsDisabled()
+
+  const [currentScore, setCurrentScore] = useCurrentScore()
+  const [winner, setWinner] = useWinner()
+  const [counters, setCounters] = useCounter()
   const [changeState, setChangeState] = useState<ChangeStateProp>({ text: '' })
   const [prevBots, setPrevBots] = useState<unknown[]>([])
 
@@ -65,6 +58,7 @@ const App = () => {
     }
 
     initializeDate()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleInputChange = (event: { target: any }) => {
