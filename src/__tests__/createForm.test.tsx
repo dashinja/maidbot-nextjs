@@ -1,9 +1,9 @@
-import { describe, test, expect, vitest } from 'vitest'
-import { screen, render } from '@testing-library/react'
+import CreateForm from '@components/CreateForm'
+import { render, screen } from '@testing-library/react'
+
+import { CreateFormProps } from '@components/CreateForm/CreateForm'
 import { ChangeStateProp } from '@pages/api/bot'
 import { BotInfo } from 'src/utilities/bots'
-import CreateForm from '@components/CreateForm'
-import { CreateFormProps } from '@components/CreateForm/CreateForm'
 
 describe('Create Form Component', () => {
   const renderSut = ({
@@ -46,10 +46,16 @@ describe('Create Form Component', () => {
       { name: 'NameInput', value: NameInput },
       { name: 'BotyTypeSelector', value: BotTypeSelector },
       { name: 'SubmitButton', value: SubmitButton },
-    ])('$name should be visible', (item) => {
-      renderSut({})
-      expect(item.value()).toBeVisible()
-      expect(item.value()).toBeDefined()
-    })
+    ])(
+      '$name should be visible',
+      (item: {
+        name: string
+        value: typeof NameInput | typeof BotTypeSelector | typeof SubmitButton
+      }) => {
+        renderSut({})
+        expect(item.value()).toBeVisible()
+        expect(item.value()).toBeDefined()
+      }
+    )
   })
 })

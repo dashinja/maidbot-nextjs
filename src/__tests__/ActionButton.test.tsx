@@ -1,13 +1,13 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import ActionButton from './ActionButton'
+import ActionButton from '@components/ActionButton'
 
 describe('Action Button', () => {
   it('should render correctly', () => {
     render(
       <ActionButton
         text='test text'
-        onClick={jest.fn()}
+        onClick={vitest.fn()}
         disabled={false}
       />
     )

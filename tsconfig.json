@@ -21,7 +21,17 @@
       "@styles/*": ["./style/*"],
       "@utilities/*": ["src/utilities/*"]
     },
-    "types": ["@types/react", "@types/node"]
+    "types": [
+      "@types/react",
+      "@types/node",
+      "vitest/globals",
+      "vitest/jest-dom",
+      "vitest/jest-dom/vitest",
+      "@testing-library/jest-dom/vitest",
+      "@testing-library/jest-dom/matchers",
+      "@testing-library/extent",
+      "@testing-library/jest-dom/extend-expect"
+    ]
   },
   "include": [
     "next-env.d.ts",
@@ -29,7 +39,7 @@
     "**/*.tsx",
     "types.d.ts",
     "__tests__/*.(ts|tsx)",
-    "./vitest.setup.ts"
+    "vitest.setup.ts"
   ],
   "exclude": ["node_modules"]
 }
