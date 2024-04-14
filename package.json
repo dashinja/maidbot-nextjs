@@ -11,6 +11,7 @@
     "test": "vitest --watch",
     "test:ci": "vitest --ci",
     "eslint": "pnpx eslint --fix",
+    "eslint-config": "pnpx @eslint/config-inspector",
     "lint-staged": "pnpx lint-staged --quiet",
     "studio": "pnpx prisma studio",
     "prettier-format": "prettier --config .prettierrc '{Pages,Components,Utils}/**/*{.ts,.tsx,.js,.jsx}' --write",
